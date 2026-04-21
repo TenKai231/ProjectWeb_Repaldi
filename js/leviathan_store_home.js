@@ -41,47 +41,47 @@ const LS_CART      = 'leviathanCart';
 
 const PRODUCTS_DATA = [
   // ── CONSOLE (Nereid) ──────────────────────────────────────
-  { id: 'nintendo_switch_2',  name: 'Nintendo Switch 2',         kasta: 'nereid',    category: 'console',   price: 'Rp 5.499.000',  img: 'assets/console/nintendo_switch_2.jpg' },
-  { id: 'ps5_pro',            name: 'PS5 Pro',                   kasta: 'nereid',    category: 'console',   price: 'Rp 9.999.000',  img: 'assets/console/ps_5_pro.jpg' },
-  { id: 'rog_ally_x',         name: 'ROG Ally X',                kasta: 'nereid',    category: 'console',   price: 'Rp 12.999.000', img: 'assets/console/rog_ally_x.jpg' },
-  { id: 'steam_deck_oled',    name: 'Steam Deck OLED',           kasta: 'nereid',    category: 'console',   price: 'Rp 7.499.000',  img: 'assets/console/steam_deck_oled.jpg' },
-  { id: 'xbox_series_x',      name: 'Xbox Series X',             kasta: 'nereid',    category: 'console',   price: 'Rp 7.999.000',  img: 'assets/console/x_box_series_x.jpg' },
+  { id: 'nintendo_switch_2',  name: 'Nintendo Switch 2',         kasta: 'nereid',    category: 'console',   price: 'Rp 5.499.000',  img: '../assets/console/nintendo_swicth_2.jpg' },
+  { id: 'ps5_pro',            name: 'PS5 Pro',                   kasta: 'nereid',    category: 'console',   price: 'Rp 9.999.000',  img: '../assets/console/ps_5_pro.jpg' },
+  { id: 'rog_ally_x',         name: 'ROG Ally X',                kasta: 'nereid',    category: 'console',   price: 'Rp 12.999.000', img: '../assets/console/rog_ally_x.jpg' },
+  { id: 'steam_deck_oled',    name: 'Steam Deck OLED',           kasta: 'nereid',    category: 'console',   price: 'Rp 7.499.000',  img: '../assets/console/steam_deck_oled.jpg' },
+  { id: 'xbox_series_x',      name: 'Xbox Series X',             kasta: 'nereid',    category: 'console',   price: 'Rp 7.999.000',  img: '../assets/console/x.box_series_x.jpg' },
 
   // ── HANDPHONE NEREID ──────────────────────────────────────
-  { id: 'infinix_gt30_pro',   name: 'Infinix GT 30 Pro',         kasta: 'nereid',    category: 'handphone', price: 'Rp 3.499.000',  img: 'assets/handphone/nereid/infinix_gt30_pro.jpg' },
-  { id: 'poco_x7_pro',        name: 'POCO X7 Pro',               kasta: 'nereid',    category: 'handphone', price: 'Rp 4.299.000',  img: 'assets/handphone/nereid/poco_x7_pro.jpg' },
-  { id: 'tecno_pova7_ultra',  name: 'Tecno Pova 7 Ultra',        kasta: 'nereid',    category: 'handphone', price: 'Rp 3.999.000',  img: 'assets/handphone/nereid/tecno_pova7_ultra.jpg' },
+  { id: 'infinix_gt30_pro',   name: 'Infinix GT 30 Pro',         kasta: 'nereid',    category: 'handphone', price: 'Rp 3.499.000',  img: '../assets/handphone/nereid/infinix_gt_30_pro.jpg' },
+  { id: 'poco_x7_pro',        name: 'POCO X7 Pro',               kasta: 'nereid',    category: 'handphone', price: 'Rp 4.299.000',  img: '../assets/handphone/nereid/poco_x7_pro.jpg' },
+  { id: 'tecno_pova7_ultra',  name: 'Tecno Pova 7 Ultra',        kasta: 'nereid',    category: 'handphone', price: 'Rp 3.999.000',  img: '../assets/handphone/nereid/tecno_pova7_ultra.jpg' },
 
   // ── HANDPHONE POSEIDON ────────────────────────────────────
-  { id: 'vivo_iqoo_neo9',     name: 'Vivo iQOO Neo 9',           kasta: 'poseidon',  category: 'handphone', price: 'Rp 5.999.000',  img: 'assets/handphone/poseidon/vivo_iqoo_neo9.jpg' },
-  { id: 'xiaomi_14t_pro',     name: 'Xiaomi 14T Pro',            kasta: 'poseidon',  category: 'handphone', price: 'Rp 7.499.000',  img: 'assets/handphone/poseidon/xiaomi_14t_pro.jpg' },
-  { id: 'poco_f7_pro',        name: 'POCO F7 Pro',               kasta: 'poseidon',  category: 'handphone', price: 'Rp 6.499.000',  img: 'assets/handphone/poseidon/poco_f7_pro.jpg' },
+  { id: 'vivo_iqoo_neo9',     name: 'Vivo iQOO Neo 9',           kasta: 'poseidon',  category: 'handphone', price: 'Rp 5.999.000',  img: '../assets/handphone/poseidon/vivo_iqoo_neo9.jpg' },
+  { id: 'xiaomi_14t_pro',     name: 'Xiaomi 14T Pro',            kasta: 'poseidon',  category: 'handphone', price: 'Rp 7.499.000',  img: '../assets/handphone/poseidon/xiaomi_14t_pro.jpg' },
+  { id: 'poco_f7_pro',        name: 'POCO F7 Pro',               kasta: 'poseidon',  category: 'handphone', price: 'Rp 6.499.000',  img: '../assets/handphone/poseidon/xiaomi_poco_f7_pro.jpg' },
 
   // ── HANDPHONE LEVIATHAN ───────────────────────────────────
-  { id: 'rog_phone9_pro',     name: 'ASUS ROG Phone 9 Pro',      kasta: 'leviathan', category: 'handphone', price: 'Rp 14.999.000', img: 'assets/handphone/leviathan/asus_rog_phone_9_pro.jpg' },
-  { id: 'samsung_s26_ultra',  name: 'Samsung Galaxy S26 Ultra',  kasta: 'leviathan', category: 'handphone', price: 'Rp 18.999.000', img: 'assets/handphone/leviathan/samsung_galaxy_s26_ultra.jpg' },
-  { id: 'redmagic_11_pro',    name: 'ZTE Red Magic 11 Pro',      kasta: 'leviathan', category: 'handphone', price: 'Rp 12.999.000', img: 'assets/handphone/leviathan/zte_redmagic_11_pro.jpg' },
+  { id: 'rog_phone9_pro',     name: 'ASUS ROG Phone 9 Pro',      kasta: 'leviathan', category: 'handphone', price: 'Rp 14.999.000', img: '../assets/handphone/leviathan/asus_rog_phone_9_pro.jpg' },
+  { id: 'samsung_s26_ultra',  name: 'Samsung Galaxy S26 Ultra',  kasta: 'leviathan', category: 'handphone', price: 'Rp 18.999.000', img: '../assets/handphone/leviathan/samsung_galaxy_s26_ultra_new.jpg' },
+  { id: 'redmagic_11_pro',    name: 'ZTE Red Magic 11 Pro',      kasta: 'leviathan', category: 'handphone', price: 'Rp 12.999.000', img: '../assets/handphone/leviathan/zte_nubia_redmagic_11_pro.jpeg' },
 
   // ── LAPTOP NEREID ─────────────────────────────────────────
-  { id: 'acer_aspire_lite',   name: 'Acer Aspire Lite AL14',     kasta: 'nereid',    category: 'laptop',    price: 'Rp 6.499.000',  img: 'assets/laptop/nereid/acer_aspire_lite.jpg' },
-  { id: 'asus_vivobook14',    name: 'ASUS Vivobook 14 A1404',    kasta: 'nereid',    category: 'laptop',    price: 'Rp 7.299.000',  img: 'assets/laptop/nereid/asus_vivobook14.jpg' },
-  { id: 'lenovo_ideapad3',    name: 'Lenovo IdeaPad Slim 3',     kasta: 'nereid',    category: 'laptop',    price: 'Rp 6.999.000',  img: 'assets/laptop/nereid/lenovo_ideapad_slim3.jpg' },
+  { id: 'acer_aspire_lite',   name: 'Acer Aspire Lite AL14',     kasta: 'nereid',    category: 'laptop',    price: 'Rp 6.499.000',  img: '../assets/laptop/nereid/acer_aspire__lite_al14_51m.jpeg' },
+  { id: 'asus_vivobook14',    name: 'ASUS Vivobook 14 A1404',    kasta: 'nereid',    category: 'laptop',    price: 'Rp 7.299.000',  img: '../assets/laptop/nereid/asus_vivobook_14_a1404.png' },
+  { id: 'lenovo_ideapad3',    name: 'Lenovo IdeaPad Slim 3',     kasta: 'nereid',    category: 'laptop',    price: 'Rp 6.999.000',  img: '../assets/laptop/nereid/lenovo_ideapad_slim 3.jpeg' },
 
   // ── LAPTOP POSEIDON ───────────────────────────────────────
-  { id: 'asus_tuf_a15',       name: 'ASUS TUF Gaming A15 2025',  kasta: 'poseidon',  category: 'laptop',    price: 'Rp 12.499.000', img: 'assets/laptop/poseidon/asus_tuf_a15_2025.jpg' },
-  { id: 'hp_victus16',        name: 'HP Victus 16',              kasta: 'poseidon',  category: 'laptop',    price: 'Rp 11.999.000', img: 'assets/laptop/poseidon/hp_victus16.jpg' },
-  { id: 'lenovo_loq15',       name: 'Lenovo LOQ 15',             kasta: 'poseidon',  category: 'laptop',    price: 'Rp 13.499.000', img: 'assets/laptop/poseidon/lenovo_loq15.jpg' },
+  { id: 'asus_tuf_a15',       name: 'ASUS TUF Gaming A15 2025',  kasta: 'poseidon',  category: 'laptop',    price: 'Rp 12.499.000', img: '../assets/laptop/poseidon/asus_tuf_gaming_a15_2025.jpeg' },
+  { id: 'hp_victus16',        name: 'HP Victus 16',              kasta: 'poseidon',  category: 'laptop',    price: 'Rp 11.999.000', img: '../assets/laptop/poseidon/hp_victus_16.jpeg' },
+  { id: 'lenovo_loq15',       name: 'Lenovo LOQ 15',             kasta: 'poseidon',  category: 'laptop',    price: 'Rp 13.499.000', img: '../assets/laptop/poseidon/lenovo_loq_15.jpeg' },
 
   // ── LAPTOP LEVIATHAN ──────────────────────────────────────
-  { id: 'asus_zenbook_s14',   name: 'ASUS Zenbook S14 OLED',     kasta: 'leviathan', category: 'laptop',    price: 'Rp 19.999.000', img: 'assets/laptop/leviathan/asus_zenbook_s14_oled.jpg' },
-  { id: 'legion_slim5i',      name: 'Legion Slim 5i',            kasta: 'leviathan', category: 'laptop',    price: 'Rp 17.499.000', img: 'assets/laptop/leviathan/legion_slim5i.jpg' },
-  { id: 'rog_zephyrus_g14',   name: 'ROG Zephyrus G14 2025',     kasta: 'leviathan', category: 'laptop',    price: 'Rp 29.999.000', img: 'assets/laptop/leviathan/rog_zephyrus_g14_2025.jpg' },
+  { id: 'asus_zenbook_s14',   name: 'ASUS Zenbook S14 OLED',     kasta: 'leviathan', category: 'laptop',    price: 'Rp 19.999.000', img: '../assets/laptop/leviathan/asus_zenbook_s14_oled.jpeg' },
+  { id: 'legion_slim5i',      name: 'Legion Slim 5i',            kasta: 'leviathan', category: 'laptop',    price: 'Rp 17.499.000', img: '../assets/laptop/leviathan/legion_slim_5i.jpeg' },
+  { id: 'rog_zephyrus_g14',   name: 'ROG Zephyrus G14 2025',     kasta: 'leviathan', category: 'laptop',    price: 'Rp 29.999.000', img: '../assets/laptop/leviathan/rog_zephyrus_g14_2025.jpeg' },
 
   // ── SET PC SOVEREIGN ──────────────────────────────────────
-  { id: 'set_red_comet',      name: 'Set Red Comet (ROG × Zaku II)',        kasta: 'leviathan', category: 'set_pc', price: 'Rp 70.000.000 – Rp 90.000.000',   img: 'assets/set_pc/leviathan/set_red_comet_zaku.jpg' },
-  { id: 'set_beast_mode',     name: 'Set Beast Mode (ROG × EVA-02)',        kasta: 'sovereign', category: 'set_pc', price: 'Rp 115.000.000 – Rp 135.000.000', img: 'assets/set_pc/sovereign/set_beast_mode_eva02.jpg' },
-  { id: 'set_eternal_melodies', name: 'Set Eternal Melodies (ROG × Miku)', kasta: 'sovereign', category: 'set_pc', price: 'Rp 85.000.000 – Rp 105.000.000',  img: 'assets/set_pc/sovereign/set_eternal_melodies_miku.jpg' },
-  { id: 'set_white_devil',    name: 'Set White Devil (ROG × Gundam)',       kasta: 'sovereign', category: 'set_pc', price: 'Rp 95.000.000 – Rp 120.000.000',  img: 'assets/set_pc/sovereign/set_white_devil_gundam.jpg' },
+  { id: 'set_red_comet',      name: 'Set Red Comet (ROG × Zaku II)',        kasta: 'leviathan', category: 'set_pc', price: 'Rp 70.000.000 – Rp 90.000.000',   img: '../assets/set_pc/set_leviathan_ zaku II.png' },
+  { id: 'set_beast_mode',     name: 'Set Beast Mode (ROG × EVA-02)',        kasta: 'sovereign', category: 'set_pc', price: 'Rp 115.000.000 – Rp 135.000.000', img: '../assets/set_pc/set_sovereign_rog_eva.jpeg' },
+  { id: 'set_eternal_melodies', name: 'Set Eternal Melodies (ROG × Miku)', kasta: 'sovereign', category: 'set_pc', price: 'Rp 85.000.000 – Rp 105.000.000',  img: '../assets/set_pc/set_sovereign_rog_hatsune_miku.jpeg' },
+  { id: 'set_white_devil',    name: 'Set White Devil (ROG × Gundam)',       kasta: 'sovereign', category: 'set_pc', price: 'Rp 95.000.000 – Rp 120.000.000',  img: '../assets/set_pc/set_sovereign_rog_gundam.jpeg' },
 ];
 
 /* ============================================================ */
@@ -325,7 +325,7 @@ function renderSuggestions(results, container, input) {
 
     item.innerHTML = `
       <img src="${product.img}" alt="${product.name}"
-           onerror="this.src='assets/placeholder.png'">
+           onerror="this.src='../assets/leviathan_store.png'">
       <div class="suggestion-item-info">
         <div class="suggestion-item-name">${highlightMatch(product.name, input.value)}</div>
         <div class="suggestion-item-kasta ${product.kasta}">${product.kasta.toUpperCase()} ◈ ${product.price}</div>
@@ -390,9 +390,9 @@ function initMiniCart() {
   const displayItems = HOME_STATE.cartItems.slice(0, 3);
   miniCartItems.innerHTML = displayItems.map(item => `
     <div class="mini-cart-item">
-      <img src="${item.img || 'assets/placeholder.png'}"
+      <img src="${item.img || '../assets/leviathan_store.png'}"
            alt="${item.name}"
-           onerror="this.src='assets/placeholder.png'">
+           onerror="this.src='../assets/leviathan_store.png'">
       <span class="mini-cart-item-name">${item.name}</span>
       <span class="mini-cart-item-price">${item.price}</span>
     </div>

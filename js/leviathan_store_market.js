@@ -248,3 +248,5 @@ window.addEventListener('scroll', () => {
 
 /* ─── INIT ───────────────────────────────────────────────────── */
 updateCartBadge();
+
+// Tidak ada image fetcher publik. Gambar diambil langsung dari tag img src lokal.
