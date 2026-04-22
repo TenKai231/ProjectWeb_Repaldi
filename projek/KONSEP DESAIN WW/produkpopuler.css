@@ -1,0 +1,122 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background:rgb(255, 255, 255);
+  min-height: 100vh;
+}
+
+/* HEADER */
+header {
+  background:black;
+  color: white;
+  padding: 40px 20px;
+  text-align: center;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+}
+
+header h1 {
+  font-size: 32px;
+}
+
+/* TITLE */
+.section-title {
+  text-align: center;
+  margin: 40px 0 20px;
+  color: rgb(0, 0, 0);
+}
+
+.sub-title {
+  margin: 20px;
+  color: rgb(0, 0, 0);
+}
+
+/* GRID */
+.produk-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+  padding: 0 20px;
+}
+
+/* CARD */
+.produk-card {
+  background: white;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  transition: 0.4s;
+  cursor: pointer;
+  position: relative;
+}
+
+.produk-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+}
+
+/* BADGE */
+.produk-card::before {
+  content: "🔥 Best Seller";
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #ff5722;
+  color: white;
+  padding: 5px 10px;
+  font-size: 12px;
+  border-radius: 20px;
+}
+
+/* IMAGE */
+.produk-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  transition: 0.4s;
+}
+
+.produk-card:hover img {
+  transform: scale(1.1);
+}
+
+/* TEXT */
+.produk-card h4 {
+  margin: 12px;
+  font-size: 18px;
+}
+
+.produk-card p {
+  margin: 0 12px;
+  color: #666;
+  font-size: 14px;
+}
+
+/* HARGA */
+.harga {
+  display: block;
+  margin: 12px;
+  font-weight: bold;
+  color: #1565c0;
+  font-size: 18px;
+}
+
+/* FOOTER */
+footer {
+  margin-top: 50px;
+  background: #000000;
+  color: white;
+  text-align: center;
+  padding: 20px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 24px;
+  }
+}

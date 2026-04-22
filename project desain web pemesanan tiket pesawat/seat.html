@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pilih Kursi - SkyBook</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+.seat-page { max-width:900px; margin:0 auto; padding:32px 5%; }
+.airplane-nose { text-align:center; margin-bottom:16px; }
+.airplane-nose-shape { display:inline-block; width:120px; height:60px; background:linear-gradient(135deg,var(--dark2),var(--secondary-d)); border-radius:50% 50% 0 0; display:flex; align-items:center; justify-content:center; color:#fff; font-size:1.5rem; }
+.seat-container { background:#fff; border-radius:20px; padding:24px; box-shadow:var(--shadow); }
+.cabin-divider { background:linear-gradient(90deg,var(--yellow),#FF8F00); color:var(--dark2); text-align:center; padding:8px; border-radius:8px; font-weight:800; font-size:0.78rem; font-family:'Poppins',sans-serif; letter-spacing:0.05em; margin:16px 0; }
+.selected-seats-bar { background:linear-gradient(135deg,var(--primary),#FF3D00); color:#fff; border-radius:12px; padding:14px 20px; margin-top:20px; display:flex; align-items:center; justify-content:space-between; }
+.flight-summary-card { background:#fff; border-radius:16px; padding:20px; box-shadow:var(--shadow); margin-bottom:24px; }
+</style>
+</head>
+<body>
+<nav class="navbar">
+  <a href="index.html" class="navbar-brand"><span class="logo-icon">✈️</span>Sky<span>Book</span></a>
+  <div id="navAuth"></div>
+</nav>
+
+<div class="seat-page">
+  <!-- Booking Steps -->
+  <div class="booking-steps">
+    <div class="step done"><div class="step-circle">✓</div><span class="step-label">Cari</span></div>
+    <div class="step-line done"></div>
+    <div class="step active"><div class="step-circle">2</div><span class="step-label">Pilih Kursi</span></div>
+    <div class="step-line"></div>
+    <div class="step"><div class="step-circle">3</div><span class="step-label">Data Penumpang</span></div>
+    <div class="step-line"></div>
+    <div class="step"><div class="step-circle">4</div><span class="step-label">Pembayaran</span></div>
+    <div class="step-line"></div>
+    <div class="step"><div class="step-circle">5</div><span class="step-label">E-Tiket</span></div>
+  </div>
+
+  <!-- Flight Summary -->
+  <div class="flight-summary-card" id="flightSummary"></div>
+
+  <!-- Seat Map -->
+  <div class="card mb-3">
+    <div class="card-header">
+      <h3>💺 Pilih Kursi</h3>
+      <span id="seatCountLabel" style="font-size:0.85rem;color:var(--text-light);font-weight:600;"></span>
+    </div>
+    <div class="card-body">
+      <div class="seat-legend">
+        <div class="seat-legend-item"><div class="seat available" style="width:24px;height:24px;font-size:0"></div> Tersedia</div>
+        <div class="seat-legend-item"><div class="seat taken" style="width:24px;height:24px;font-size:0"></div> Terisi</div>
+        <div class="seat-legend-item"><div class="seat selected" style="width:24px;height:24px;font-size:0"></div> Dipilih</div>
+        <div class="seat-legend-item"><div class="seat business" style="width:24px;height:24px;font-size:0"></div> Bisnis</div>
+      </div>
+
+      <div class="airplane-nose">
+        <div class="airplane-nose-shape" style="margin:0 auto;">✈️</div>
+      </div>
+
+      <div class="seat-map" id="seatMap"></div>
+
+      <div class="selected-seats-bar" id="selectedBar" style="display:none">
+        <div>
+          <div style="font-weight:800;font-family:'Poppins',sans-serif;">Kursi Dipilih: <span id="selectedSeatsList"></span></div>
+          <div style="font-size:0.78rem;opacity:0.85;margin-top:2px;" id="selectedSeatsCount"></div>
+        </div>
+        <button class="btn" style="background:#fff;color:var(--primary);font-weight:700;" onclick="proceedToBooking()">
+          Lanjut Data Penumpang →
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/app.js"></script>
+<script>
+  if (!SkyBookAuth.requireLogin('seat.html' + window.location.search)) {}
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const flightId = urlParams.get('flight');
+  const cabin = urlParams.get('cabin') || 'economy';
+  const passengers = parseInt(urlParams.get('passengers') || '1');
+
+  const flight = SkyBookData.getFlightById(flightId);
+  if (!flight) { window.location.href = 'index.html'; }
+
+  const user = SkyBookAuth.getSession();
+  const navAuth = document.getElementById('navAuth');
+  if (user) {
+    navAuth.innerHTML = `<div class="navbar-user"><div class="navbar-avatar">${user.name.charAt(0)}</div><span class="navbar-username">${user.name.split(' ')[0]}</span></div>`;
+  }
+
+  // Render flight summary
+  const airline = SkyBookData.getAirlineById(flight.airline);
+  const fromAp = SkyBookData.getAirportById(flight.from);
+  const toAp = SkyBookData.getAirportById(flight.to);
+  const price = cabin === 'economy' ? flight.price.economy : flight.price.business;
+
+  document.getElementById('flightSummary').innerHTML = `
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div style="background:${airline?airline.color:'#333'};color:#fff;padding:8px 16px;border-radius:8px;font-family:'Poppins',sans-serif;font-weight:800;">${flight.flightNumber}</div>
+        <div>
+          <div style="font-size:0.78rem;color:var(--text-light);font-weight:600;">${airline?airline.name:flight.airline} · ${SkyBook.formatDate(flight.date)}</div>
+          <div style="font-family:'Poppins',sans-serif;font-weight:800;font-size:1.1rem;">
+            ${flight.from} ${flight.departureTime} → ${flight.to} ${flight.arrivalTime}
+          </div>
+          <div style="font-size:0.78rem;color:var(--text-light);">${fromAp?fromAp.city:flight.from} → ${toAp?toAp.city:flight.to} · ${SkyBook.formatDuration(flight.duration)}</div>
+        </div>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-size:0.78rem;color:var(--text-light);">${passengers} penumpang · ${cabin==='business'?'Bisnis':'Ekonomi'}</div>
+        <div style="font-family:'Poppins',sans-serif;font-weight:800;font-size:1.3rem;color:var(--primary);">${SkyBook.formatCurrency(price * passengers)}</div>
+        <div style="font-size:0.72rem;color:var(--text-light);">${SkyBook.formatCurrency(price)}/penumpang</div>
+      </div>
+    </div>`;
+
+  document.getElementById('seatCountLabel').textContent = `Pilih ${passengers} kursi`;
+
+  // Generate seat map
+  const aircraft = SkyBookData.getAircraftById(flight.aircraft);
+  const totalEco = aircraft ? aircraft.capacity.economy : 150;
+  const totalBiz = aircraft ? aircraft.capacity.business : 12;
+  const bizRows = Math.ceil(totalBiz / 4);
+  const ecoRows = Math.ceil(totalEco / 6);
+
+  // Pre-taken seats (random based on flight id for consistency)
+  const takenSeats = new Set();
+  const seed = flightId.replace(/\D/g,'');
+  for (let i = 0; i < totalEco * 0.4; i++) {
+    const r = (parseInt(seed) * (i+1) * 13 % ecoRows) + bizRows + 1;
+    const c = ['A','B','C','D','E','F'][parseInt(seed) * (i+7) % 6];
+    takenSeats.add(`${r}${c}`);
+  }
+  for (let i = 0; i < totalBiz * 0.3; i++) {
+    const r = (parseInt(seed) * (i+3) * 7 % bizRows) + 1;
+    const c = ['A','B','C','D'][parseInt(seed) * (i+5) % 4];
+    takenSeats.add(`${r}${c}`);
+  }
+
+  let selectedSeats = [];
+
+  function renderSeatMap() {
+    const map = document.getElementById('seatMap');
+    let html = '';
+
+    // Business rows
+    if (totalBiz > 0) {
+      html += `<div class="cabin-divider">💼 KELAS BISNIS</div>`;
+      for (let r = 1; r <= bizRows; r++) {
+        html += `<div class="seat-row"><div class="seat-row-num">${r}</div>`;
+        ['A','B'].forEach(c => {
+          const sid = `${r}${c}`;
+          const state = selectedSeats.includes(sid) ? 'selected business' : takenSeats.has(sid) ? 'taken' : 'business';
+          html += `<div class="seat ${state}" id="s${sid}" onclick="toggleSeat('${sid}','business')" title="${sid}">${sid}</div>`;
+        });
+        html += `<div class="seat-aisle"></div>`;
+        ['C','D'].forEach(c => {
+          const sid = `${r}${c}`;
+          const state = selectedSeats.includes(sid) ? 'selected business' : takenSeats.has(sid) ? 'taken' : 'business';
+          html += `<div class="seat ${state}" id="s${sid}" onclick="toggleSeat('${sid}','business')" title="${sid}">${sid}</div>`;
+        });
+        html += `</div>`;
+      }
+    }
+
+    // Economy rows
+    html += `<div class="cabin-divider">💺 KELAS EKONOMI</div>`;
+    for (let r = bizRows + 1; r <= bizRows + ecoRows; r++) {
+      html += `<div class="seat-row"><div class="seat-row-num">${r}</div>`;
+      ['A','B','C'].forEach(c => {
+        const sid = `${r}${c}`;
+        const state = selectedSeats.includes(sid) ? 'selected' : takenSeats.has(sid) ? 'taken' : 'available';
+        html += `<div class="seat ${state}" id="s${sid}" onclick="toggleSeat('${sid}','economy')" title="${sid}">${sid}</div>`;
+      });
+      html += `<div class="seat-aisle"></div>`;
+      ['D','E','F'].forEach(c => {
+        const sid = `${r}${c}`;
+        const state = selectedSeats.includes(sid) ? 'selected' : takenSeats.has(sid) ? 'taken' : 'available';
+        html += `<div class="seat ${state}" id="s${sid}" onclick="toggleSeat('${sid}','economy')" title="${sid}">${sid}</div>`;
+      });
+      html += `</div>`;
+    }
+
+    map.innerHTML = html;
+  }
+
+  function toggleSeat(seatId, seatCabin) {
+    if (takenSeats.has(seatId)) return;
+    // Cabin restriction
+    if (cabin === 'economy' && seatCabin === 'business') { SkyBook.toast('Anda memilih kelas Ekonomi, tidak bisa pilih kursi Bisnis', 'warning'); return; }
+    if (cabin === 'business' && seatCabin === 'economy') { SkyBook.toast('Anda memilih kelas Bisnis, tidak bisa pilih kursi Ekonomi', 'warning'); return; }
+
+    const idx = selectedSeats.indexOf(seatId);
+    if (idx !== -1) {
+      selectedSeats.splice(idx, 1);
+    } else {
+      if (selectedSeats.length >= passengers) {
+        SkyBook.toast(`Maksimal ${passengers} kursi`, 'warning'); return;
+      }
+      selectedSeats.push(seatId);
+    }
+    renderSeatMap();
+    updateBar();
+  }
+
+  function updateBar() {
+    const bar = document.getElementById('selectedBar');
+    if (selectedSeats.length > 0) {
+      bar.style.display = 'flex';
+      document.getElementById('selectedSeatsList').textContent = selectedSeats.join(', ');
+      document.getElementById('selectedSeatsCount').textContent = `${selectedSeats.length}/${passengers} kursi terpilih`;
+    } else {
+      bar.style.display = 'none';
+    }
+  }
+
+  function proceedToBooking() {
+    if (selectedSeats.length < passengers) {
+      SkyBook.toast(`Pilih ${passengers} kursi terlebih dahulu`, 'warning'); return;
+    }
+    const temp = JSON.parse(localStorage.getItem('sb_booking_temp') || '{}');
+    temp.selectedSeats = selectedSeats;
+    temp.flightId = flightId;
+    temp.cabin = cabin;
+    temp.passengers = passengers;
+    temp.step = 'booking';
+    localStorage.setItem('sb_booking_temp', JSON.stringify(temp));
+    window.location.href = `booking.html`;
+  }
+
+  renderSeatMap();
+</script>
+</body>
+</html>

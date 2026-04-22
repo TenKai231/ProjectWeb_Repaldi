@@ -1,0 +1,107 @@
+/* BODY */
+body {
+    background: linear-gradient(135deg, #000000, #000000);
+    font-family: 'Poppins', sans-serif;
+}
+
+/* JUDUL */
+#judul {
+    text-align: center;
+    margin: 30px 0;
+    color: white;
+}
+
+/* CONTAINER GRID */
+#hasil-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+/* CARD */
+.flight-card {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    transition: 0.3s;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+}
+
+.flight-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+
+/* LOGO */
+.flight-left {
+    display: flex;
+    justify-content: center;
+}
+
+.flight-left img {
+    width: 70px;
+    object-fit: contain;
+}
+
+/* MASKAPAI */
+.maskapai {
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+/* JAM */
+.jam {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* DURASI */
+.durasi {
+    font-size: 13px;
+    color: #777;
+}
+
+/* HARGA */
+.harga {
+    color: #2b7cff;
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+/* BUTTON */
+.btn-pilih {
+    margin-top: 10px;
+    padding: 10px;
+    background: linear-gradient(45deg, #2b7cff, #1f5edb);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-pilih:hover {
+    transform: scale(1.05);
+}
+.flight-card::before {
+    content: "";
+    height: 5px;
+    width: 100%;
+    background: linear-gradient(to right, #ff9800, #ff5722);
+    border-radius: 15px 15px 0 0;
+    display: block;
+    margin: -20px -20px 10px -20px;
+}
+.flight-left {
+    display: flex;
+    flex-direction: column; /* pastikan ke bawah */
+    align-items: center;
+    gap: 10px; /* jarak logo & nama */
+}

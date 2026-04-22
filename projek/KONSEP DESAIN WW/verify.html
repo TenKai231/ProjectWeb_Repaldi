@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Travel Booking</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="header">
+    <div class="logo">TravelKu</div>
+
+    <nav>
+        <ul>
+            <li>Pesawat</li>
+            <li>Hotel</li>
+            <li>Kereta</li>
+            <li>Bus & Travel</li>
+        </ul>
+    </nav>
+
+    <div class="auth">
+        <div class="profile-circle" id="profileBtn">NH</div>
+    </div>
+</header>
+<div class="profile-panel" id="profilePanel">
+    <div class="panel-header">
+        <div class="profile-avatar">NH</div>
+        <div>
+            <h3>Nur Haidi</h3>
+            <span class="badge">Pengguna Baru</span>
+        </div>
+        <span class="close-btn" id="closeBtn">✕</span>
+    </div>
+
+    <div class="panel-body">
+        <div class="info-card">
+            <p><strong>Email</strong></p>
+            <p>nurhaidi@gmail.com</p>
+        </div>
+
+        <div class="info-card">
+            <p><strong>Verifikasi akun</strong></p>
+            <p>Belum Verifikasi</p>
+        </div>
+
+        <div class="info-card">
+            <p><strong>Alamat Pengguna</strong></p>
+            <p>Tambahkan</p>
+        </div>
+
+        <div class="info-card">
+            <p><strong>Payments</strong></p>
+            
+        </div>
+        <div class="info-card">
+            <p><strong>Traveler Info</strong></p>
+        </div>
+        <div class="info-card">
+            <p><strong>Help Center</strong></p>
+        </div>
+        <div class="info-card">
+            <p><strong>Contact Us</strong></p>
+        </div>
+        <div class="info-card">
+            <p><strong>Settings</strong></p>
+        </div>
+
+        <button class="edit-btn">Edit Profil</button>
+    </div>
+</div>
+ <!-- MODE EDIT -->
+    <div id="profileEdit" style="display:none;">
+        <div class="info-card">
+            <label>Nama</label>
+            <input type="text" id="editName">
+        </div>
+
+        <div class="info-card">
+            <label>Email</label>
+            <input type="email" id="editEmail">
+        </div>
+
+        <div class="info-card">
+            <label>Alamat</label>
+            <input type="text" id="editAddress">
+        </div>
+
+        <button class="edit-btn" id="saveBtn">Simpan</button>
+    </div>
+
+</div>
+
+<!-- HERO SECTION -->
+<section class="hero">
+    <h1>Tiket Pesawat & Hotel Murah</h1>
+    <p>Pesan mudah, cepat dan terpercaya</p>
+
+    <div class="search-box">
+        <input type="text" placeholder="Dari">
+        <input type="text" placeholder="Ke">
+        <input type="date">
+        <input type="date">
+        <button>Cari Tiket</button>
+    </div>
+</section>
+
+<!-- PROMO SECTION -->
+<section class="promo">
+    <h2>Promo Spesial</h2>
+    <div class="promo-container">
+        <div class="card">Promo Ramadan</div>
+        <div class="card">Diskon Hotel 50%</div>
+        <div class="card">Cashback Hingga 30%</div>
+    </div>
+</section>
+
+<!-- PRODUK POPULER -->
+<section class="produk">
+    <h2>Produk Populer</h2>
+    <div class="produk-container">
+        <div class="card">Tiket Jakarta - Bali</div>
+        <div class="card">Hotel Bandung</div>
+        <div class="card">Trip Thailand</div>
+        <div class="card">Trip Jepang</div>
+    </div>
+</section>
+
+<!-- PARTNER -->
+<section class="partner">
+    <h2>Partner Maskapai & Hotel</h2>
+    <div class="partner-container">
+        <div class="logo-partner">Garuda</div>
+        <div class="logo-partner">AirAsia</div>
+        <div class="logo-partner">Lion Air</div>
+        <div class="logo-partner">Citilink</div>
+    </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+    <h2>Pertanyaan Umum</h2>
+    <details>
+        <summary>Bagaimana cara pesan tiket?</summary>
+        <p>Pilih rute, isi data, lalu lakukan pembayaran.</p>
+    </details>
+    <details>
+        <summary>Metode pembayaran apa saja?</summary>
+        <p>Transfer bank, e-wallet, kartu kredit.</p>
+    </details>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-container">
+        <div>
+            <h4>Perusahaan</h4>
+            <p>Tentang Kami</p>
+            <p>Karir</p>
+            <p>Blog</p>
+        </div>
+        <div>
+            <h4>Produk</h4>
+            <p>Pesawat</p>
+            <p>Hotel</p>
+            <p>Kereta</p>
+        </div>
+        <div>
+            <h4>Kontak</h4>
+            <p>Email: info@travelku.com</p>
+            <p>Telp: 08123456789</p>
+        </div>
+    </div>
+    <p class="copyright">© 2026 TravelKu</p>
+</footer>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+
+    const profileBtn = document.getElementById("profileBtn");
+    const panel = document.getElementById("profilePanel");
+    const closeBtn = document.getElementById("closeBtn");
+
+    profileBtn.onclick = () => panel.classList.add("active");
+    closeBtn.onclick = () => panel.classList.remove("active");
+
+    // Ambil elemen berdasarkan struktur HTML kamu
+    const nameText = document.querySelector(".panel-header h3");
+    const emailText = document.querySelectorAll(".info-card p")[1];
+    const addressText = document.querySelectorAll(".info-card p")[5];
+    const editButton = document.querySelector(".edit-btn");
+
+    const profileEdit = document.getElementById("profileEdit");
+    const editName = document.getElementById("editName");
+    const editEmail = document.getElementById("editEmail");
+    const editAddress = document.getElementById("editAddress");
+    const saveBtn = document.getElementById("saveBtn");
+
+    // Load dari localStorage
+    const savedData = JSON.parse(localStorage.getItem("profileData"));
+    if (savedData) {
+        nameText.textContent = savedData.name;
+        emailText.textContent = savedData.email;
+        addressText.textContent = savedData.address;
+    }
+
+    // Klik Edit
+    editButton.onclick = function() {
+        profileEdit.style.display = "block";
+
+        editName.value = nameText.textContent;
+        editEmail.value = emailText.textContent;
+        editAddress.value = addressText.textContent;
+    };
+
+    // Klik Simpan
+    saveBtn.onclick = function() {
+        nameText.textContent = editName.value;
+        emailText.textContent = editEmail.value;
+        addressText.textContent = editAddress.value;
+
+        localStorage.setItem("profileData", JSON.stringify({
+            name: editName.value,
+            email: editEmail.value,
+            address: editAddress.value
+        }));
+
+        profileEdit.style.display = "none";
+    };
+
+});
+</script>
+</body>
+</html>

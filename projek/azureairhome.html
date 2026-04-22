@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Azure Air — Pesan Tiket Pesawat Murah & Terpercaya</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="azureairhome.css">
+</head>
+<body>
+
+<!-- ===== LOADING OVERLAY – animasi pesawat terbang ===== -->
+<div class="search-loading-overlay" id="searchLoadingOverlay">
+    <div class="loading-inner">
+        <div class="plane-loader">
+            <span class="plane-fly">✈</span>
+            <div class="plane-trail"></div>
+        </div>
+        <p class="loading-title">Mencari Penerbangan Terbaik</p>
+        <p class="loading-sub">Kami sedang memeriksa 20 rute tersedia untuk Anda...</p>
+        <div class="loading-dots"><span></span><span></span><span></span></div>
+    </div>
+</div>
+
+<!-- ===== HEADER ===== -->
+<header id="main-header">
+    <div class="header-inner">
+        <a class="logo" onclick="navigateTo('home')">
+            <div class="logo-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                    <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                    <line x1="12" y1="22.08" x2="12" y2="12"/>
+                </svg>
+            </div>
+            <span class="logo-text">Azure <span>Air</span></span>
+        </a>
+
+        <!-- Nav lebih lebar + style khas pesawat -->
+        <nav>
+            <span class="nav-plane-deco">✈</span>
+            <a class="active" id="nav-beranda" onclick="navigateTo('home')"><span class="nav-icon">🏠</span>Beranda</a>
+            <a id="nav-jadwal" onclick="navigateTo('jadwal')"><span class="nav-icon">📅</span>Jadwal</a>
+            <a id="nav-cek-pesanan" onclick="navigateTo('cek-pesanan')"><span class="nav-icon">🔍</span>Cek Pesanan</a>
+            <a id="nav-promo" onclick="navigateTo('promo')"><span class="nav-icon">🏷️</span>Promo</a>
+            <a id="nav-bantuan" onclick="navigateTo('bantuan')"><span class="nav-icon">💬</span>Bantuan</a>
+        </nav>
+
+        <!-- Hanya Masuk — Daftar Gratis dihapus -->
+        <div class="header-auth" id="header-auth">
+            <button class="btn-header" onclick="openAuthModal('login')">
+                <i class="fas fa-sign-in-alt"></i> Masuk
+            </button>
+        </div>
+
+        <!-- User Pill diperbesar -->
+        <div class="user-pill" id="user-pill" style="display:none" onclick="toggleDropdown(event)">
+            <div class="user-avatar" id="user-avatar-initial">A</div>
+            <div class="user-info-wrap">
+                <div class="user-name" id="user-pill-name">Pengguna</div>
+                <div class="user-sub">Azure Air Member</div>
+            </div>
+            <span class="pill-arrow"><i class="fas fa-chevron-down"></i></span>
+            <div class="user-dropdown" id="user-dropdown">
+                <div class="dropdown-header">
+                    <div class="d-name" id="dd-name">Pengguna</div>
+                    <div class="d-email" id="dd-email">user@azureair.id</div>
+                </div>
+                <button class="dropdown-item" onclick="openProfilModal()">👤 Profil Saya</button>
+                <button class="dropdown-item" onclick="navigateTo('cek-pesanan')">🎫 Riwayat Pesanan</button>
+                <button class="dropdown-item" onclick="navigateTo('jadwal')">📅 Lihat Jadwal</button>
+                <button class="dropdown-item danger" onclick="logout()">🚪 Keluar</button>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+    <div class="hero-bg-photo"></div>
+    <div class="hero-bg-overlay"></div>
+    <div class="hero-content">
+        <div class="hero-eyebrow">
+            <span class="pulse-dot"></span>
+            ✈ Promo Spesial — Hemat hingga 45% untuk semua rute
+        </div>
+        <!-- Heading diperbaiki: line-height normal, tidak cramped -->
+        <h1>Terbang ke Mana Saja<br>Bersama <em>Azure Air</em></h1>
+        <p class="hero-desc">Platform pemesanan tiket pesawat terpercaya. Harga transparan, proses cepat, hemat lebih banyak.</p>
+
+        <div class="booking-card">
+            <div class="trip-tabs">
+                <button class="trip-tab active" data-trip="sekali"><i class="fas fa-plane"></i> Sekali Jalan</button>
+                <button class="trip-tab" data-trip="pulang"><i class="fas fa-exchange-alt"></i> Pulang Pergi</button>
+            </div>
+            <form id="searchForm" onsubmit="handleSearch(event)">
+                <div class="form-row-airports">
+                    <div class="form-group">
+                        <label class="form-label"><i class="fas fa-plane-departure"></i> Dari</label>
+                        <select class="form-select" id="from-station">
+                            <option value="">Pilih Bandara Asal</option>
+                            <option value="CGK">CGK — Soekarno-Hatta, Jakarta</option>
+                            <option value="DPS">DPS — Ngurah Rai, Bali</option>
+                            <option value="PLM">PLM — SMB II, Palembang</option>
+                            <option value="PKU">PKU — SSK II, Pekanbaru</option>
+                            <option value="UPG">UPG — Sultan Hasanuddin, Makassar</option>
+                        </select>
+                    </div>
+                    <button type="button" class="swap-btn" onclick="swapAirports()"><i class="fas fa-arrow-right-arrow-left"></i></button>
+                    <div class="form-group">
+                        <label class="form-label"><i class="fas fa-plane-arrival"></i> Ke</label>
+                        <select class="form-select" id="to-station">
+                            <option value="">Pilih Bandara Tujuan</option>
+                            <option value="CGK">CGK — Soekarno-Hatta, Jakarta</option>
+                            <option value="DPS">DPS — Ngurah Rai, Bali</option>
+                            <option value="PLM">PLM — SMB II, Palembang</option>
+                            <option value="PKU">PKU — SSK II, Pekanbaru</option>
+                            <option value="UPG">UPG — Sultan Hasanuddin, Makassar</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row-details">
+                    <div class="form-group">
+                        <label class="form-label"><i class="far fa-calendar-alt"></i> Berangkat</label>
+                        <input type="date" class="form-input" id="depart-date" required>
+                    </div>
+                    <div class="form-group" id="return-group" style="display:none">
+                        <label class="form-label"><i class="far fa-calendar-check"></i> Kembali</label>
+                        <input type="date" class="form-input" id="return-date">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label"><i class="fas fa-users"></i> Penumpang</label>
+                        <div class="passenger-group">
+                            <button type="button" class="pax-btn" onclick="changePax(-1)">−</button>
+                            <span class="pax-count" id="pax-count">1</span>
+                            <span class="pax-label">Dewasa</span>
+                            <button type="button" class="pax-btn" onclick="changePax(1)">+</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label"><i class="fas fa-chair"></i> Kelas</label>
+                        <select class="form-select" id="seat-class">
+                            <option value="Ekonomi">✈ Ekonomi</option>
+                            <option value="Bisnis">💼 Bisnis</option>
+                            <option value="First">👑 First Class</option>
+                        </select>
+                    </div>
+                    <div class="form-group search-group">
+                        <label class="form-label" style="opacity:0">_</label>
+                        <button type="submit" class="search-btn" id="searchBtn">
+                            <i class="fas fa-search"></i><span>Cari Penerbangan</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="hero-trust">
+            <div class="trust-item"><i class="fas fa-shield-alt"></i> Pembayaran Aman</div>
+            <div class="trust-sep">•</div>
+            <div class="trust-item"><i class="fas fa-bolt"></i> E-Tiket Instan</div>
+            <div class="trust-sep">•</div>
+            <div class="trust-item"><i class="fas fa-headset"></i> CS 24 Jam</div>
+            <div class="trust-sep">•</div>
+            <div class="trust-item"><i class="fas fa-tag"></i> Harga Terbaik</div>
+        </div>
+    </div>
+    <div class="hero-deco hero-deco-1"></div>
+    <div class="hero-deco hero-deco-2"></div>
+</section>
+
+<!-- ===== STATS ===== -->
+<section class="stats-section">
+    <div class="stats-grid">
+        <div class="stat-item">
+            <div class="stat-number" data-target="19" data-suffix="Jt+">0</div>
+            <div class="stat-label">Penumpang Dilayani</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number" data-target="20" data-suffix=" / Hari">0</div>
+            <div class="stat-label">Rute Penerbangan</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number" data-target="3" data-suffix="">0</div>
+            <div class="stat-label">Maskapai Partner</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number" data-target="99" data-suffix="%">0</div>
+            <div class="stat-label">% Ketepatan Waktu</div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== RUTE POPULER ===== -->
+<section class="section">
+    <div class="section-inner">
+        <div class="section-header">
+            <div class="section-eyebrow">Destinasi</div>
+            <h2 class="section-title">Rute Paling Diminati</h2>
+            <p class="section-desc">Penerbangan langsung ke destinasi favorit dengan harga terbaik</p>
+        </div>
+        <div class="routes-grid">
+            <div class="route-card" onclick="quickSearch('CGK','DPS','Jakarta','Bali')">
+                <div class="route-img" style="background:linear-gradient(135deg,#2B8FE8,#0056c7)"><span>🌴</span></div>
+                <div class="route-info">
+                    <div class="route-cities">Jakarta <span class="route-arrow">→</span> Bali</div>
+                    <div class="route-code">CGK — DPS</div>
+                    <div class="route-meta"><i class="fas fa-clock"></i> 1j 45m • Non-stop</div>
+                </div>
+                <div class="route-price-wrap"><div class="route-price-from">Mulai</div><div class="route-price">Rp 750rb</div></div>
+            </div>
+            <div class="route-card" onclick="quickSearch('CGK','PLM','Jakarta','Palembang')">
+                <div class="route-img" style="background:linear-gradient(135deg,#3498DB,#2B8FE8)"><span>🌉</span></div>
+                <div class="route-info">
+                    <div class="route-cities">Jakarta <span class="route-arrow">→</span> Palembang</div>
+                    <div class="route-code">CGK — PLM</div>
+                    <div class="route-meta"><i class="fas fa-clock"></i> 1j 00m • Non-stop</div>
+                </div>
+                <div class="route-price-wrap"><div class="route-price-from">Mulai</div><div class="route-price">Rp 420rb</div></div>
+            </div>
+            <div class="route-card" onclick="quickSearch('DPS','UPG','Bali','Makassar')">
+                <div class="route-img" style="background:linear-gradient(135deg,#4BA3D9,#1A6FC4)"><span>🌊</span></div>
+                <div class="route-info">
+                    <div class="route-cities">Bali <span class="route-arrow">→</span> Makassar</div>
+                    <div class="route-code">DPS — UPG</div>
+                    <div class="route-meta"><i class="fas fa-clock"></i> 1j 00m • Non-stop</div>
+                </div>
+                <div class="route-price-wrap"><div class="route-price-from">Mulai</div><div class="route-price">Rp 380rb</div></div>
+            </div>
+            <div class="route-card" onclick="quickSearch('PLM','PKU','Palembang','Pekanbaru')">
+                <div class="route-img" style="background:linear-gradient(135deg,#5B9BD5,#2B8FE8)"><span>🏙️</span></div>
+                <div class="route-info">
+                    <div class="route-cities">Palembang <span class="route-arrow">→</span> Pekanbaru</div>
+                    <div class="route-code">PLM — PKU</div>
+                    <div class="route-meta"><i class="fas fa-clock"></i> 0j 48m • Non-stop</div>
+                </div>
+                <div class="route-price-wrap"><div class="route-price-from">Mulai</div><div class="route-price">Rp 310rb</div></div>
+            </div>
+            <div class="route-card" onclick="quickSearch('CGK','UPG','Jakarta','Makassar')">
+                <div class="route-img" style="background:linear-gradient(135deg,#1A6FC4,#2B8FE8)"><span>🌟</span></div>
+                <div class="route-info">
+                    <div class="route-cities">Jakarta <span class="route-arrow">→</span> Makassar</div>
+                    <div class="route-code">CGK — UPG</div>
+                    <div class="route-meta"><i class="fas fa-clock"></i> 2j 20m • Non-stop</div>
+                </div>
+                <div class="route-price-wrap"><div class="route-price-from">Mulai</div><div class="route-price">Rp 890rb</div></div>
+            </div>
+            <div class="route-card" onclick="quickSearch('PKU','DPS','Pekanbaru','Bali')">
+                <div class="route-img" style="background:linear-gradient(135deg,#2B8FE8,#7BC8F7)"><span>🏝️</span></div>
+                <div class="route-info">
+                    <div class="route-cities">Pekanbaru <span class="route-arrow">→</span> Bali</div>
+                    <div class="route-code">PKU — DPS</div>
+                    <div class="route-meta"><i class="fas fa-clock"></i> 1j 42m • Non-stop</div>
+                </div>
+                <div class="route-price-wrap"><div class="route-price-from">Mulai</div><div class="route-price">Rp 720rb</div></div>
+            </div>
+        </div>
+        <div class="section-cta">
+            <button class="btn-outline-primary" onclick="navigateTo('jadwal')">Lihat Semua Jadwal <i class="fas fa-arrow-right"></i></button>
+        </div>
+    </div>
+</section>
+
+<!-- ===== MASKAPAI (3 saja, centered) ===== -->
+<section class="section section-alt">
+    <div class="section-inner">
+        <div class="section-header">
+            <div class="section-eyebrow">Maskapai</div>
+            <h2 class="section-title">Partner Maskapai Terpercaya</h2>
+            <p class="section-desc">Terbang bersama maskapai terbaik pilihan jutaan penumpang Indonesia</p>
+        </div>
+        <div class="airlines-grid">
+            <div class="airline-card airline-garuda">
+                <div class="airline-logo-text" style="color:#e32526;">GA</div>
+                <div class="airline-name">Garuda Indonesia</div>
+                <div class="airline-tag" style="background:rgba(227,37,38,.1);color:#e32526;">⭐ Premium</div>
+                <p class="airline-desc">Maskapai penerbangan nasional flag carrier Indonesia</p>
+            </div>
+            <div class="airline-card airline-lion">
+                <div class="airline-logo-text" style="color:#ff6600;">JT</div>
+                <div class="airline-name">Lion Air</div>
+                <div class="airline-tag" style="background:rgba(255,102,0,.1);color:#cc5200;">🔥 Terlaris</div>
+                <p class="airline-desc">Maskapai terlaris dengan ribuan penerbangan setiap harinya</p>
+            </div>
+            <div class="airline-card airline-sriwijaya">
+                <div class="airline-logo-text" style="color:#cc0000;">SJ</div>
+                <div class="airline-name">Sriwijaya Air</div>
+                <div class="airline-tag" style="background:rgba(204,0,0,.1);color:#aa0000;">🇮🇩 Nasional</div>
+                <p class="airline-desc">Penerbangan domestik andalan Sumatera dan Indonesia Timur</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== PROMO ===== -->
+<section class="section">
+    <div class="section-inner">
+        <div class="section-header">
+            <div class="section-eyebrow">Penawaran</div>
+            <h2 class="section-title">Promo Spesial Azure Air</h2>
+            <p class="section-desc">Jangan lewatkan kesempatan hemat terbatas hanya untuk Anda</p>
+        </div>
+        <div class="promo-grid">
+            <div class="promo-card promo-blue" onclick="navigateTo('promo')">
+                <div class="promo-deco">✈</div>
+                <div class="promo-tag">🎄 Akhir Tahun</div>
+                <div class="promo-title">Liburan Akhir Tahun</div>
+                <div class="promo-desc">Rayakan akhir tahun dengan penerbangan spesial ke semua rute favorit Anda</div>
+                <div class="promo-bottom">
+                    <div class="promo-discount">45% OFF</div>
+                    <div class="promo-code">AZURE45</div>
+                </div>
+                <div class="promo-valid">Berlaku s/d 31 Des 2025</div>
+            </div>
+            <div class="promo-card promo-amber" onclick="navigateTo('promo')">
+                <div class="promo-deco">🛫</div>
+                <div class="promo-tag" style="background:rgba(255,150,50,.18);color:#b85a00;">🏠 Mudik</div>
+                <div class="promo-title">Diskon Mudik Seru</div>
+                <div class="promo-desc">Pulang kampung makin hemat! Diskon spesial untuk semua rute domestik</div>
+                <div class="promo-bottom">
+                    <div class="promo-discount" style="color:#b85a00;">30% OFF</div>
+                    <div class="promo-code" style="border-color:rgba(184,90,0,.2);color:#b85a00;">MUDIK30</div>
+                </div>
+                <div class="promo-valid">Berlaku untuk semua rute</div>
+            </div>
+            <div class="promo-card promo-soft" onclick="navigateTo('promo')">
+                <div class="promo-deco">⭐</div>
+                <div class="promo-tag" style="background:rgba(43,143,232,.12);color:#1A6FC4;">⭐ Member</div>
+                <div class="promo-title">Azure Loyalty Member</div>
+                <div class="promo-desc">Daftar sekarang dan dapatkan keuntungan eksklusif di setiap pemesanan</div>
+                <div class="promo-bottom">
+                    <div class="promo-discount">20% OFF</div>
+                    <div class="promo-code">MEMBER20</div>
+                </div>
+                <div class="promo-valid">Berlaku untuk member baru</div>
+            </div>
+        </div>
+        <div class="section-cta">
+            <button class="btn-outline-primary" onclick="navigateTo('promo')">Semua Promo <i class="fas fa-arrow-right"></i></button>
+        </div>
+    </div>
+</section>
+
+<!-- ===== FITUR (tanpa Bebas Reschedule) ===== -->
+<section class="section section-alt">
+    <div class="section-inner">
+        <div class="section-header">
+            <div class="section-eyebrow">Keunggulan</div>
+            <h2 class="section-title">Mengapa Memilih Azure Air?</h2>
+            <p class="section-desc">Kami hadir dengan layanan terdepan untuk kenyamanan perjalanan Anda</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon-wrap" style="background:rgba(43,143,232,.10);color:#2B8FE8"><i class="fas fa-shield-alt"></i></div>
+                <h3 class="feature-title">Aman & Terpercaya</h3>
+                <p class="feature-desc">Berlisensi DGCA, SSL 256-bit, pembayaran terenkripsi penuh.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon-wrap" style="background:rgba(255,150,50,.12);color:#d06800"><i class="fas fa-bolt"></i></div>
+                <h3 class="feature-title">Booking Kilat</h3>
+                <p class="feature-desc">Proses pemesanan selesai kurang dari 3 menit, kapan saja.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon-wrap" style="background:rgba(34,197,94,.12);color:#16a34a"><i class="fas fa-credit-card"></i></div>
+                <h3 class="feature-title">Banyak Metode Bayar</h3>
+                <p class="feature-desc">Transfer bank, GoPay, OVO, Dana, QRIS, kartu kredit & debit.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon-wrap" style="background:rgba(168,85,247,.1);color:#7c3aed"><i class="fas fa-ticket-alt"></i></div>
+                <h3 class="feature-title">E-Tiket Instan</h3>
+                <p class="feature-desc">Dikirim ke email & WhatsApp hitungan detik setelah bayar.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon-wrap" style="background:rgba(43,143,232,.10);color:#2B8FE8"><i class="fas fa-headset"></i></div>
+                <h3 class="feature-title">CS 24 Jam</h3>
+                <p class="feature-desc">Tim dukungan siap via WhatsApp, email, dan live chat.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section class="cta-section">
+    <div class="section-inner">
+        <div class="cta-card">
+            <div class="cta-deco">✈</div>
+            <div class="cta-text">
+                <h2>Siap Terbang Bersama Azure Air?</h2>
+                <p>Masuk sekarang dan nikmati diskon 20% untuk pemesanan pertama Anda</p>
+            </div>
+            <div class="cta-actions">
+                <button class="btn-cta-white" onclick="openAuthModal('login')">Masuk Sekarang <i class="fas fa-arrow-right"></i></button>
+                <button class="btn-cta-outline" onclick="navigateTo('bantuan')"><i class="fas fa-info-circle"></i> Pelajari Lebih Lanjut</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+    <div class="footer-inner">
+        <div class="footer-grid">
+            <div>
+                <div class="footer-brand">Azure <span>Air</span></div>
+                <div class="footer-tagline">Platform pemesanan tiket pesawat terpercaya. Melayani jutaan penumpang di seluruh Indonesia setiap harinya.</div>
+                <div class="footer-socials">
+                    <a class="social-icon" href="#"><i class="fab fa-twitter"></i></a>
+                    <a class="social-icon" href="#"><i class="fab fa-instagram"></i></a>
+                    <a class="social-icon" href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a class="social-icon" href="#"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+            <div>
+                <div class="footer-col-title">Pembelian</div>
+                <ul class="footer-links">
+                    <li><a onclick="navigateTo('home')">Cari Tiket</a></li>
+                    <li><a onclick="navigateTo('promo')">Tiket Promo</a></li>
+                    <li><a onclick="navigateTo('jadwal')">Cek Jadwal</a></li>
+                    <li><a onclick="navigateTo('cek-pesanan')">Cek Pesanan</a></li>
+                </ul>
+            </div>
+            <div>
+                <div class="footer-col-title">Layanan</div>
+                <ul class="footer-links">
+                    <li><a href="#">Refund</a></li>
+                    <li><a href="#">Status Booking</a></li>
+                    <li><a href="#">Azure Loyalty</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+            </div>
+            <div>
+                <div class="footer-col-title">Bantuan</div>
+                <ul class="footer-links">
+                    <li><a onclick="navigateTo('bantuan')">Pusat Bantuan</a></li>
+                    <li><a onclick="navigateTo('bantuan')">Hubungi Kami</a></li>
+                    <li><a href="#">Syarat &amp; Ketentuan</a></li>
+                    <li><a href="#">Kebijakan Privasi</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div>© 2025 Azure Air. Hak cipta dilindungi undang-undang.</div>
+            <div class="footer-badges">
+                <span class="badge">🔒 SSL Secured</span>
+                <span class="badge">✈ Berlisensi DGCA</span>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<div class="toast" id="toast">
+    <span class="toast-icon" id="toast-icon">✓</span>
+    <span id="toastMessage">Berhasil!</span>
+</div>
+
+<script src="azureairhome.js"></script>
+</body>
+</html>

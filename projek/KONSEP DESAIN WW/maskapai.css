@@ -1,0 +1,119 @@
+/* RESET */
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(to right, #f5f7fa, #e4ecff);
+    margin: 0;
+    padding: 40px;
+    /* BACKGROUND ANIMASI */
+    background: linear-gradient(270deg, #0095ff, #ff0000, #00b7ff);
+    background-size: 600% 600%;
+    animation: gradientMove 8s ease infinite;
+    color:white;
+}
+/* ANIMASI BACKGROUND */
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* TITLE */
+.title {
+    font-size: 28px;
+    margin-bottom: 30px;
+    font-weight: bold;
+}
+
+/* GRID */
+.airlines {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 25px; 
+}
+
+
+/* CARD */
+.airline-item {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    position: relative;
+    cursor: pointer;
+
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+}
+
+/* LOGO */
+.airline-item img {
+    width: 70px;
+    transition: 0.3s;
+}
+
+/* TEXT */
+.airline-item {
+  text-decoration: none;
+  color: black;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+/* ICON PESAWAT */
+.airline-item i {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 16px;
+    color: #4a6cf7;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: 0.4s;
+}
+
+/* HOVER CARD */
+.airline-item:hover {
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+}
+
+/* LOGO EFFECT */
+.airline-item:hover img {
+    transform: rotate(-5deg) scale(1.1);
+}
+
+/* PESAWAT TERBANG MASUK */
+.airline-item:hover i {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* ANIMASI PESAWAT TERBANG */
+.airline-item::after {
+    content: "✈";
+    position: absolute;
+    bottom: 10px;
+    left: -20px;
+    font-size: 14px;
+    opacity: 0;
+    transition: 0.5s;
+}
+
+/* PESAWAT JALAN */
+.airline-item:hover::after {
+    left: 90%;
+    opacity: 1;
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+    body {
+        padding: 20px;
+    }
+
+    .title {
+        text-align: center;
+    }
+}

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+
+<div class="auth-container">
+    <h2>Masuk Akun</h2>
+
+    <input type="email" id="loginEmail" placeholder="Email">
+    <input type="password" id="loginPassword" placeholder="Password">
+
+    <button onclick="login()">Masuk</button>
+
+    <p>Belum punya akun? <a href="daftar.html">Daftar</a></p>
+</div>
+
+<script>
+function login() {
+
+    const email = document.getElementById("loginEmail").value;
+    const password = document.getElementById("loginPassword").value;
+
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+
+    const validUser = users.find(user =>
+        user.email === email && user.password === password
+    );
+
+    if (!validUser) {
+        alert("Email atau password salah!");
+        return;
+    }
+
+    // Simpan user login
+    localStorage.setItem("currentUser", JSON.stringify(validUser));
+
+    alert("Login berhasil!");
+    window.location.href = "verifikasi.html";
+}
+</script>
+
+</body>
+</html>

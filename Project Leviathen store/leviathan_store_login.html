@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<!-- ============================================================ -->
+<!--           LOGIN PAGE HTML START - LEVIATHAN STORE            -->
+<!--              System Identification Protocol v1.0             -->
+<!-- ============================================================ -->
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leviathan | System Identification</title>
+
+  <!-- FONTS -->
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;500;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+
+  <!-- FONT AWESOME ICONS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <!-- CSS LOGIN -->
+  <link rel="stylesheet" href="leviathan_store_login.css">
+</head>
+
+<body>
+
+  <!-- ============================================================ -->
+  <!-- SECTION: LOADING OVERLAY                                     -->
+  <!-- Muncul saat login berhasil, animasi progress bar ke home     -->
+  <!-- ============================================================ -->
+  <div id="loading-overlay">
+    <div class="loading-inner">
+      <div class="loading-logo">
+        <!-- ✏️ EDIT: Ganti src dengan path logo kamu -->
+        <img src="assets/leviathan_store.png" alt="Leviathan" class="loading-crest">
+      </div>
+      <h2 class="loading-title">INITIALIZING SYSTEM...</h2>
+      <p class="loading-sub">Authenticating Hunter Identity</p>
+      <div class="loading-bar-wrapper">
+        <div id="progress-bar"></div>
+      </div>
+      <p class="loading-percent" id="loadingPercent">0%</p>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SECTION: BACKGROUND PARTICLES                                -->
+  <!-- Partikel mana biru melayang di background                    -->
+  <!-- ============================================================ -->
+  <div class="mana-particles" aria-hidden="true">
+    <div style="left: 5%;  animation-delay: 0s;   animation-duration: 10s;"></div>
+    <div style="left: 15%; animation-delay: 1.5s; animation-duration: 14s;"></div>
+    <div style="left: 28%; animation-delay: 3s;   animation-duration: 11s;"></div>
+    <div style="left: 42%; animation-delay: 0.8s; animation-duration: 13s;"></div>
+    <div style="left: 57%; animation-delay: 2.2s; animation-duration: 9s; "></div>
+    <div style="left: 68%; animation-delay: 4s;   animation-duration: 15s;"></div>
+    <div style="left: 80%; animation-delay: 1s;   animation-duration: 12s;"></div>
+    <div style="left: 91%; animation-delay: 3.5s; animation-duration: 10s;"></div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SECTION: SCAN LINE EFFECT                                    -->
+  <!-- Garis biru scan bergerak dari atas ke bawah                 -->
+  <!-- ============================================================ -->
+  <div class="scan-line-global" aria-hidden="true"></div>
+
+  <!-- ============================================================ -->
+  <!-- SECTION: MAIN LOGIN / REGISTER WRAPPER                       -->
+  <!-- ============================================================ -->
+  <section class="auth-section">
+
+    <!-- DEPTH INDICATOR - pojok kiri atas -->
+    <div class="depth-indicator" aria-hidden="true">
+      <span class="depth-label">DEPTH</span>
+      <span class="depth-value">0.000m</span>
+      <span class="depth-status">◈ SURFACE PROTOCOL</span>
+    </div>
+
+    <!-- KOORDINAT pojok kanan atas -->
+    <div class="coord-indicator" aria-hidden="true">
+      <!-- ✏️ EDIT: Bisa kamu ganti koordinat ini dengan koordinat kotamu kalau mau -->
+      <span>LAT: -6.2088° S</span>
+      <span>LON: 106.8456° E</span>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- LOGIN CONTAINER                                              -->
+    <!-- ============================================================ -->
+    <div class="login-container" id="loginContainer">
+
+      <!-- Scan line dalam box -->
+      <div class="scan-line-inner" aria-hidden="true"></div>
+
+      <!-- Label sistem pojok kiri atas box -->
+      <div class="system-label" aria-hidden="true">[ SYSTEM IDENTIFICATION ]</div>
+
+      <!-- Logo di dalam box -->
+      <div class="auth-logo">
+        <!-- ✏️ EDIT: Ganti src dengan path logo kamu -->
+        <img src="assets/leviathan_store.png" alt="Logo" class="auth-crest">
+        <div class="auth-logo-glow" aria-hidden="true"></div>
+      </div>
+
+      <!-- ============================================================ -->
+      <!-- TAB SWITCHER: LOGIN / REGISTER                               -->
+      <!-- ============================================================ -->
+      <div class="tab-switcher">
+        <button class="tab-btn active" id="tabLogin" onclick="switchTab('login')">
+          LOGIN
+        </button>
+        <button class="tab-btn" id="tabRegister" onclick="switchTab('register')">
+          REGISTER
+        </button>
+      </div>
+
+      <!-- ============================================================ -->
+      <!-- FORM: LOGIN                                                   -->
+      <!-- ============================================================ -->
+      <div class="form-panel" id="panelLogin">
+        <h2 class="auth-title">HUNTER LOGIN</h2>
+        <p class="auth-subtitle">Identify yourself to enter the Abyss</p>
+
+        <form id="loginForm" novalidate>
+
+          <!-- Email -->
+          <div class="input-group">
+            <span class="input-icon"><i class="fas fa-envelope"></i></span>
+            <input
+              type="email"
+              id="loginEmail"
+              placeholder="Hunter Email Address"
+              autocomplete="email"
+              required
+            >
+            <!-- Error message -->
+            <span class="input-error" id="loginEmailError"></span>
+          </div>
+
+          <!-- Password -->
+          <div class="input-group">
+            <span class="input-icon"><i class="fas fa-lock"></i></span>
+            <input
+              type="password"
+              id="loginPassword"
+              placeholder="Secret Code"
+              autocomplete="current-password"
+              required
+            >
+            <!-- Toggle show/hide password -->
+            <button type="button" class="toggle-pw" onclick="togglePassword('loginPassword', this)" aria-label="Toggle password">
+              <i class="fas fa-eye"></i>
+            </button>
+            <span class="input-error" id="loginPasswordError"></span>
+          </div>
+
+          <!-- Remember me & Forgot -->
+          <div class="form-meta">
+            <label class="remember-label">
+              <input type="checkbox" id="rememberMe">
+              <span>Remember Hunter</span>
+            </label>
+            <a href="#" class="forgot-link" onclick="showForgotModal()">Forgot Secret Code?</a>
+          </div>
+
+          <!-- Submit -->
+          <button type="submit" class="btn-auth" id="loginBtn">
+            <span class="btn-text">ENTER THE ABYSS</span>
+            <span class="btn-icon"><i class="fas fa-chevron-right"></i></span>
+          </button>
+
+        </form>
+
+        <!-- Divider -->
+        <div class="auth-divider">
+          <span>OR CONNECT VIA</span>
+        </div>
+
+        <!-- Google Login -->
+        <button class="google-btn" id="googleLoginBtn" onclick="handleGoogleLogin()">
+          <!-- ✏️ EDIT: Ganti src path google logo kamu -->
+          <img src="assets/google.webp" alt="Google" class="google-icon">
+          <span>Login with System Google</span>
+        </button>
+
+        <!-- Switch ke register -->
+        <p class="switch-link">
+          New Hunter? <a href="#" onclick="switchTab('register')">Register here</a>
+        </p>
+
+      </div>
+      <!-- END PANEL LOGIN -->
+
+      <!-- ============================================================ -->
+      <!-- FORM: REGISTER                                                -->
+      <!-- ============================================================ -->
+      <div class="form-panel hidden" id="panelRegister">
+        <h2 class="auth-title">HUNTER REGISTRATION</h2>
+        <p class="auth-subtitle">Join the Leviathan Abyss Fleet</p>
+
+        <form id="registerForm" novalidate>
+
+          <!-- Nama -->
+          <div class="input-group">
+            <span class="input-icon"><i class="fas fa-user"></i></span>
+            <input
+              type="text"
+              id="registerName"
+              placeholder="Hunter Codename"
+              autocomplete="name"
+              required
+            >
+            <span class="input-error" id="registerNameError"></span>
+          </div>
+
+          <!-- Email -->
+          <div class="input-group">
+            <span class="input-icon"><i class="fas fa-envelope"></i></span>
+            <input
+              type="email"
+              id="registerEmail"
+              placeholder="Hunter Email Address"
+              autocomplete="email"
+              required
+            >
+            <span class="input-error" id="registerEmailError"></span>
+          </div>
+
+          <!-- Password -->
+          <div class="input-group">
+            <span class="input-icon"><i class="fas fa-lock"></i></span>
+            <input
+              type="password"
+              id="registerPassword"
+              placeholder="Create Secret Code (min. 8 chars)"
+              autocomplete="new-password"
+              required
+            >
+            <button type="button" class="toggle-pw" onclick="togglePassword('registerPassword', this)" aria-label="Toggle password">
+              <i class="fas fa-eye"></i>
+            </button>
+            <!-- Password strength bar -->
+            <div class="pw-strength-bar">
+              <div class="pw-strength-fill" id="pwStrengthFill"></div>
+            </div>
+            <span class="pw-strength-label" id="pwStrengthLabel"></span>
+            <span class="input-error" id="registerPasswordError"></span>
+          </div>
+
+          <!-- Confirm Password -->
+          <div class="input-group">
+            <span class="input-icon"><i class="fas fa-shield-alt"></i></span>
+            <input
+              type="password"
+              id="registerConfirm"
+              placeholder="Confirm Secret Code"
+              autocomplete="new-password"
+              required
+            >
+            <button type="button" class="toggle-pw" onclick="togglePassword('registerConfirm', this)" aria-label="Toggle password">
+              <i class="fas fa-eye"></i>
+            </button>
+            <span class="input-error" id="registerConfirmError"></span>
+          </div>
+
+          <!-- Terms -->
+          <div class="terms-group">
+            <label class="remember-label">
+              <input type="checkbox" id="agreeTerms" required>
+              <span>I accept the <a href="leviathan_store_other.html" target="_blank">Hunter's Code</a></span>
+            </label>
+            <span class="input-error" id="termsError"></span>
+          </div>
+
+          <!-- Submit -->
+          <button type="submit" class="btn-auth" id="registerBtn">
+            <span class="btn-text">DEPLOY TO ABYSS</span>
+            <span class="btn-icon"><i class="fas fa-chevron-right"></i></span>
+          </button>
+
+        </form>
+
+        <!-- Google Register -->
+        <div class="auth-divider">
+          <span>OR CONNECT VIA</span>
+        </div>
+
+        <button class="google-btn" onclick="handleGoogleLogin()">
+          <!-- ✏️ EDIT: Ganti src path google logo kamu -->
+          <img src="assets/google.webp" alt="Google" class="google-icon">
+          <span>Register with System Google</span>
+        </button>
+
+        <!-- Switch ke login -->
+        <p class="switch-link">
+          Already a Hunter? <a href="#" onclick="switchTab('login')">Login here</a>
+        </p>
+
+      </div>
+      <!-- END PANEL REGISTER -->
+
+    </div>
+    <!-- END LOGIN CONTAINER -->
+
+  </section>
+  <!-- END AUTH SECTION -->
+
+  <!-- ============================================================ -->
+  <!-- MODAL: FORGOT PASSWORD                                        -->
+  <!-- ============================================================ -->
+  <div class="modal-overlay hidden" id="forgotModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <span>[ RECOVERY PROTOCOL ]</span>
+        <button class="modal-close" onclick="hideForgotModal()"><i class="fas fa-times"></i></button>
+      </div>
+      <h3 class="modal-title">RESET SECRET CODE</h3>
+      <p class="modal-desc">Enter your Hunter email to receive a recovery transmission.</p>
+      <div class="input-group">
+        <span class="input-icon"><i class="fas fa-envelope"></i></span>
+        <input type="email" id="forgotEmail" placeholder="Hunter Email Address">
+        <span class="input-error" id="forgotEmailError"></span>
+      </div>
+      <button class="btn-auth" onclick="handleForgotPassword()">
+        <span class="btn-text">SEND RECOVERY LINK</span>
+        <span class="btn-icon"><i class="fas fa-paper-plane"></i></span>
+      </button>
+      <p class="modal-note" id="forgotSuccess"></p>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- TOAST NOTIFICATION                                            -->
+  <!-- Muncul di pojok kanan bawah untuk feedback aksi             -->
+  <!-- ============================================================ -->
+  <div class="toast" id="toastNotif">
+    <span class="toast-icon"><i class="fas fa-info-circle"></i></span>
+    <span class="toast-msg" id="toastMsg">Message here</span>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- FOOTER MINI                                                   -->
+  <!-- ============================================================ -->
+  <footer class="login-footer">
+    <span>© 2025 LEVIATHAN STORE</span>
+    <span class="footer-sep">◈</span>
+    <span>Absolute Apex Performance</span>
+    <span class="footer-sep">◈</span>
+    <!-- ✏️ EDIT: Ganti link sesuai halaman other kamu -->
+    <a href="leviathan_store_other.html">Privacy Policy</a>
+    <span class="footer-sep">◈</span>
+    <a href="leviathan_store_other.html">Terms</a>
+  </footer>
+
+  <!-- ============================================================ -->
+  <!-- JS LOGIN                                                      -->
+  <!-- ============================================================ -->
+  <script src="leviathan_store_login.js"></script>
+
+</body>
+</html>
+<!-- ============================================================ -->
+<!--                  LOGIN PAGE HTML END                          -->
+<!-- ============================================================ -->

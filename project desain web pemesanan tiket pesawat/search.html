@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cari Tiket - SkyBook</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+.search-header { background:linear-gradient(135deg,var(--dark2),var(--secondary-d)); padding:28px 5%; }
+.search-summary { display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+.route-display { display:flex; align-items:center; gap:10px; }
+.route-code { font-family:'Poppins',sans-serif; font-weight:800; font-size:1.4rem; color:#fff; }
+.route-arrow { font-size:1.2rem; color:var(--primary); }
+.route-info { color:rgba(255,255,255,0.6); font-size:0.82rem; margin-top:2px; }
+.search-meta { display:flex; gap:12px; flex-wrap:wrap; margin-top:8px; }
+.search-meta-item { background:rgba(255,255,255,0.1); color:rgba(255,255,255,0.85); padding:5px 12px; border-radius:20px; font-size:0.78rem; font-weight:600; font-family:'Poppins',sans-serif; }
+.search-layout { display:grid; grid-template-columns:260px 1fr; gap:24px; padding:24px 5%; max-width:1200px; margin:0 auto; }
+.sort-bar { display:flex; align-items:center; gap:10px; background:#fff; border-radius:12px; padding:12px 16px; margin-bottom:16px; box-shadow:var(--shadow); flex-wrap:wrap; }
+.sort-label { font-size:0.82rem; font-weight:700; color:var(--text-light); font-family:'Poppins',sans-serif; }
+.sort-btn { padding:6px 14px; border-radius:8px; border:2px solid var(--border); background:#fff; font-size:0.78rem; font-weight:700; cursor:pointer; font-family:'Poppins',sans-serif; color:var(--text-light); transition:all var(--transition); }
+.sort-btn.active { border-color:var(--primary); color:var(--primary); background:#FFF8F5; }
+.result-count { font-size:0.82rem; color:var(--text-light); font-weight:600; margin-left:auto; }
+.airline-filter { display:flex; flex-direction:column; gap:6px; }
+.airline-check { display:flex; align-items:center; gap:8px; cursor:pointer; padding:6px 0; }
+.airline-check input { accent-color:var(--primary); width:16px; height:16px; cursor:pointer; }
+.airline-check span { font-size:0.85rem; font-weight:600; }
+.price-range { margin-top:8px; }
+.price-range input[type=range] { width:100%; accent-color:var(--primary); }
+.price-display { display:flex; justify-content:space-between; font-size:0.78rem; font-weight:700; font-family:'Poppins',sans-serif; color:var(--primary); margin-top:4px; }
+.modify-search { background:var(--white); border-radius:12px; padding:16px; box-shadow:var(--shadow); margin-bottom:16px; }
+.modify-search h4 { font-size:0.88rem; margin-bottom:12px; color:var(--dark2); }
+.no-flight { text-align:center; padding:60px 20px; background:#fff; border-radius:var(--radius); box-shadow:var(--shadow); }
+.no-flight .icon { font-size:4rem; margin-bottom:16px; }
+@media(max-width:900px){.search-layout{grid-template-columns:1fr;}.filter-panel{display:none;}}
+</style>
+</head>
+<body>
+<nav class="navbar">
+  <a href="index.html" class="navbar-brand"><span class="logo-icon">✈️</span>Sky<span>Book</span></a>
+  <div class="navbar-menu">
+    <a href="index.html" class="navbar-link">Beranda</a>
+    <a href="search.html" class="navbar-link active">Cari Tiket</a>
+  </div>
+  <div id="navAuth"></div>
+</nav>
+
+<div class="search-header">
+  <div id="searchSummary" class="search-summary"></div>
+  <div class="search-meta" id="searchMeta"></div>
+</div>
+
+<div class="search-layout">
+  <!-- Filter Sidebar -->
+  <div>
+    <div class="filter-panel">
+      <div class="filter-title">🎛️ Filter</div>
+
+      <div class="divider"></div>
+      <p style="font-size:0.78rem;font-weight:700;color:var(--text-light);margin-bottom:10px;text-transform:uppercase;letter-spacing:0.05em;">Maskapai</p>
+      <div class="airline-filter" id="airlineFilter"></div>
+
+      <div class="divider"></div>
+      <p style="font-size:0.78rem;font-weight:700;color:var(--text-light);margin-bottom:10px;text-transform:uppercase;letter-spacing:0.05em;">Harga Maks</p>
+      <div class="price-range">
+        <input type="range" id="priceRange" min="0" max="5000000" step="50000" value="5000000" oninput="updatePriceDisplay()">
+        <div class="price-display">
+          <span>Rp 0</span>
+          <span id="priceRangeMax">Rp 5.000.000</span>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+      <p style="font-size:0.78rem;font-weight:700;color:var(--text-light);margin-bottom:10px;text-transform:uppercase;letter-spacing:0.05em;">Waktu Berangkat</p>
+      <div style="display:flex;flex-direction:column;gap:6px;" id="timeFilter">
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:0.83rem;font-weight:600;padding:6px 0;">
+          <input type="checkbox" value="early" checked style="accent-color:var(--primary);width:16px;height:16px;"> 🌅 Pagi (00-12)
+        </label>
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:0.83rem;font-weight:600;padding:6px 0;">
+          <input type="checkbox" value="afternoon" checked style="accent-color:var(--primary);width:16px;height:16px;"> ☀️ Siang (12-18)
+        </label>
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:0.83rem;font-weight:600;padding:6px 0;">
+          <input type="checkbox" value="night" checked style="accent-color:var(--primary);width:16px;height:16px;"> 🌙 Malam (18-24)
+        </label>
+      </div>
+
+      <div class="divider"></div>
+      <button class="btn btn-outline btn-block btn-sm" onclick="resetFilters()">🔄 Reset Filter</button>
+    </div>
+  </div>
+
+  <!-- Results -->
+  <div>
+    <div class="sort-bar">
+      <span class="sort-label">Urutkan:</span>
+      <button class="sort-btn active" onclick="setSort('price',this)">💰 Harga Termurah</button>
+      <button class="sort-btn" onclick="setSort('departure',this)">⏰ Berangkat Awal</button>
+      <button class="sort-btn" onclick="setSort('duration',this)">⚡ Tercepat</button>
+      <span class="result-count" id="resultCount"></span>
+    </div>
+
+    <div id="flightResults"></div>
+
+    <div id="noResults" class="no-flight hidden">
+      <div class="icon">✈️</div>
+      <h3 style="margin-bottom:8px;">Tidak Ada Penerbangan</h3>
+      <p>Tidak ada penerbangan tersedia untuk rute dan tanggal ini.<br>Coba ubah tanggal atau rute perjalanan Anda.</p>
+      <a href="index.html" class="btn btn-primary mt-3">🔍 Cari Ulang</a>
+    </div>
+  </div>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/app.js"></script>
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const from = params.get('from') || '';
+  const to = params.get('to') || '';
+  const date = params.get('date') || '';
+  const passengers = parseInt(params.get('passengers') || '1');
+  const cabin = params.get('cabin') || 'economy';
+
+  // Nav Auth
+  const user = SkyBookAuth.getSession();
+  const navAuth = document.getElementById('navAuth');
+  if (user) {
+    navAuth.innerHTML = `<div class="dropdown"><div class="navbar-user"><div class="navbar-avatar">${user.name.charAt(0)}</div><span class="navbar-username">${user.name.split(' ')[0]}</span> ▾</div><div class="dropdown-menu">${user.role==='admin'?'<a class="dropdown-item" href="admin/index.html">🛡️ Admin Panel</a><div class="dropdown-divider"></div>':''}<a class="dropdown-item" href="dashboard.html">👤 Dashboard</a><div class="dropdown-divider"></div><div class="dropdown-item" onclick="SkyBookAuth.logout()">🚪 Keluar</div></div></div>`;
+  } else {
+    navAuth.innerHTML = `<div style="display:flex;gap:8px;"><a href="login.html" class="btn btn-ghost btn-sm">Masuk</a><a href="register.html" class="btn btn-primary btn-sm">Daftar</a></div>`;
+  }
+
+  // Render header
+  const fromAp = SkyBookData.getAirportById(from);
+  const toAp = SkyBookData.getAirportById(to);
+  document.getElementById('searchSummary').innerHTML = `
+    <div class="route-display">
+      <div><div class="route-code">${from}</div><div class="route-info">${fromAp ? fromAp.city : from}</div></div>
+      <div class="route-arrow">✈</div>
+      <div><div class="route-code">${to}</div><div class="route-info">${toAp ? toAp.city : to}</div></div>
+    </div>
+    <div style="margin-left:auto;">
+      <a href="index.html" class="btn btn-outline btn-sm" style="color:#fff;border-color:rgba(255,255,255,0.3);">✏️ Ubah Pencarian</a>
+    </div>`;
+  document.getElementById('searchMeta').innerHTML = `
+    <span class="search-meta-item">📅 ${SkyBook.formatDate(date)}</span>
+    <span class="search-meta-item">👥 ${passengers} Penumpang</span>
+    <span class="search-meta-item">${cabin === 'business' ? '💼 Bisnis' : '💺 Ekonomi'}</span>`;
+
+  // Load & filter flights
+  let allFlights = SkyBookData.searchFlights(from, to, date, passengers, cabin);
+  let selectedAirlines = new Set(SkyBookData.getAirlines().map(a => a.id));
+  let maxPrice = 5000000;
+  let sortBy = 'price';
+
+  // Build airline filter
+  const airlines = SkyBookData.getAirlines();
+  const airlineFilter = document.getElementById('airlineFilter');
+  airlines.forEach(a => {
+    const count = allFlights.filter(f => f.airline === a.id).length;
+    if (count === 0) return;
+    airlineFilter.innerHTML += `
+      <label class="airline-check">
+        <input type="checkbox" value="${a.id}" checked onchange="filterFlights()">
+        <span>${a.logo} ${a.name} <span style="color:var(--text-light);font-size:0.75rem;">(${count})</span></span>
+      </label>`;
+  });
+
+  function updatePriceDisplay() {
+    maxPrice = parseInt(document.getElementById('priceRange').value);
+    document.getElementById('priceRangeMax').textContent = SkyBook.formatCurrency(maxPrice);
+    filterFlights();
+  }
+
+  function setSort(s, el) {
+    sortBy = s;
+    document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+    renderFlights();
+  }
+
+  function resetFilters() {
+    document.querySelectorAll('#airlineFilter input').forEach(i => i.checked = true);
+    document.querySelectorAll('#timeFilter input').forEach(i => i.checked = true);
+    document.getElementById('priceRange').value = 5000000;
+    maxPrice = 5000000;
+    document.getElementById('priceRangeMax').textContent = 'Rp 5.000.000';
+    filterFlights();
+  }
+
+  function filterFlights() {
+    selectedAirlines = new Set();
+    document.querySelectorAll('#airlineFilter input:checked').forEach(i => selectedAirlines.add(i.value));
+    const times = new Set();
+    document.querySelectorAll('#timeFilter input:checked').forEach(i => times.add(i.value));
+    renderFlights(selectedAirlines, maxPrice, times);
+  }
+
+  function renderFlights(airlineSet, priceMax, timeSet) {
+    airlineSet = airlineSet || selectedAirlines;
+    priceMax = priceMax !== undefined ? priceMax : maxPrice;
+    timeSet = timeSet || new Set(['early','afternoon','night']);
+
+    let filtered = allFlights.filter(f => {
+      const price = cabin === 'economy' ? f.price.economy : f.price.business;
+      if (!airlineSet.has(f.airline)) return false;
+      if (price > priceMax) return false;
+      const hour = parseInt(f.departureTime.split(':')[0]);
+      if (hour < 12 && !timeSet.has('early')) return false;
+      if (hour >= 12 && hour < 18 && !timeSet.has('afternoon')) return false;
+      if (hour >= 18 && !timeSet.has('night')) return false;
+      return true;
+    });
+
+    // Sort
+    filtered.sort((a, b) => {
+      if (sortBy === 'price') return (cabin==='economy'?a.price.economy:a.price.business) - (cabin==='economy'?b.price.economy:b.price.business);
+      if (sortBy === 'departure') return a.departureTime.localeCompare(b.departureTime);
+      if (sortBy === 'duration') return a.duration - b.duration;
+      return 0;
+    });
+
+    document.getElementById('resultCount').textContent = `${filtered.length} penerbangan ditemukan`;
+    const container = document.getElementById('flightResults');
+    const noRes = document.getElementById('noResults');
+
+    if (filtered.length === 0) {
+      container.innerHTML = '';
+      noRes.classList.remove('hidden');
+      return;
+    }
+    noRes.classList.add('hidden');
+
+    const airline_data = {};
+    SkyBookData.getAirlines().forEach(a => airline_data[a.id] = a);
+
+    container.innerHTML = filtered.map(f => {
+      const al = airline_data[f.airline] || {};
+      const price = cabin === 'economy' ? f.price.economy : f.price.business;
+      const seats = cabin === 'economy' ? f.seats.economy.available : f.seats.business.available;
+      const seatColor = seats < 10 ? '#FF3D00' : seats < 30 ? '#FF8F00' : '#00C853';
+      const fromAp = SkyBookData.getAirportById(f.from);
+      const toAp = SkyBookData.getAirportById(f.to);
+      return `
+        <div class="flight-card fade-in" onclick="selectFlight('${f.id}')">
+          <div class="flight-card-header">
+            <div class="airline-badge">
+              <span style="font-size:1.1rem">${al.logo || '✈'}</span>
+              <div>
+                <div class="airline-name" style="color:${al.color||'#333'}">${al.name || f.airline}</div>
+                <div style="font-size:0.7rem;color:var(--text-light)">${f.flightNumber}</div>
+              </div>
+            </div>
+            <div style="text-align:right">
+              <div class="flight-price">
+                <div class="price-amount">${SkyBook.formatCurrency(price)}</div>
+                <div class="price-label">/penumpang · ${cabin === 'business' ? 'Bisnis' : 'Ekonomi'}</div>
+              </div>
+            </div>
+          </div>
+          <div class="flight-route">
+            <div class="flight-city">
+              <div class="city-code">${f.from}</div>
+              <div class="city-time">${f.departureTime}</div>
+              <div class="city-name">${fromAp ? fromAp.city : f.from}</div>
+            </div>
+            <div class="flight-path">
+              <div class="flight-path-line"></div>
+              <div class="flight-duration">${SkyBook.formatDuration(f.duration)}</div>
+            </div>
+            <div class="flight-city">
+              <div class="city-code">${f.to}</div>
+              <div class="city-time">${f.arrivalTime}</div>
+              <div class="city-name">${toAp ? toAp.city : f.to}</div>
+            </div>
+          </div>
+          <div class="flight-tags">
+            <span class="flight-tag">🧳 Bagasi ${cabin==='economy'?f.baggage.economy:f.baggage.business}kg</span>
+            ${cabin==='business'||f.meals.business?'<span class="flight-tag">🍽️ Makan termasuk</span>':''}
+            <span class="flight-tag" style="color:${seatColor};background:${seatColor}15;">💺 ${seats} kursi tersisa</span>
+            ${seats < 10 ? '<span class="flight-tag" style="color:#FF3D00;background:#FFEBEE;font-weight:800;">🔥 HAMPIR HABIS!</span>' : ''}
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  function selectFlight(flightId) {
+    if (!SkyBookAuth.isLoggedIn()) {
+      SkyBook.toast('Silakan login terlebih dahulu', 'warning');
+      setTimeout(() => window.location.href = 'login.html?redirect=' + encodeURIComponent(window.location.href), 1000);
+      return;
+    }
+    // Store booking context
+    localStorage.setItem('sb_booking_temp', JSON.stringify({
+      flightId, cabin, passengers,
+      from, to, date,
+      step: 'seat'
+    }));
+    window.location.href = `seat.html?flight=${flightId}&cabin=${cabin}&passengers=${passengers}`;
+  }
+
+  renderFlights();
+  document.querySelectorAll('#timeFilter input').forEach(i => i.addEventListener('change', filterFlights));
+</script>
+</body>
+</html>

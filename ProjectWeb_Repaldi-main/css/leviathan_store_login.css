@@ -1,0 +1,1295 @@
+/* ============================================================ */
+/* SECTION 1: CSS VARIABLES & RESET                             */
+/* ============================================================ */
+
+:root {
+  /* Warna Utama */
+  --deep-black:    #020508;
+  --monarch-blue:  #00e5ff;
+  --deep-ocean:    #0056b3;
+  --system-blue:   #1B2E4B;
+  --text-gray:     #a0a0a0;
+
+  /* Glow Effects */
+  --mana-glow:     rgba(0, 229, 255, 0.25);
+  --mana-core:     rgba(0, 229, 255, 0.9);
+  --mana-soft:     rgba(0, 229, 255, 0.08);
+
+  /* Kasta Warna (untuk referensi global) */
+  --nereid-color:    #00e5ff;
+  --poseidon-color:  #0056b3;
+  --leviathan-color: #8B0000;
+  --sovereign-color: #FFD700;
+
+  /* Typography */
+  --font-title:  'Bebas Neue', sans-serif;
+  --font-hud:    'Orbitron', sans-serif;
+  --font-body:   'Space Grotesk', sans-serif;
+
+  /* Transitions */
+  --transition-fast:   0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow:   0.5s ease;
+}
+
+/* Reset */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  background-color: var(--deep-black);
+  color: #ffffff;
+  font-family: var(--font-body);
+  overflow: hidden; /* login page tidak perlu scroll */
+  min-height: 100vh;
+  position: relative;
+  /* Texture overlay seperti homepage */
+  background-image:
+    linear-gradient(to bottom, rgba(2, 5, 8, 0.95), rgba(2, 5, 8, 1)),
+    url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
+}
+
+/* ============================================================ */
+/* SECTION 2: LOADING OVERLAY                                   */
+/* ============================================================ */
+
+#loading-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: var(--deep-black);
+  z-index: 9999;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.loading-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+/* Logo di loading */
+.loading-crest {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 2px solid var(--monarch-blue);
+  object-fit: cover;
+  /* ✏️ EDIT: Kalau logo kamu tidak berbentuk bulat, hapus border-radius */
+  animation: loadingCrestPulse 1.5s infinite ease-in-out;
+  filter: drop-shadow(0 0 20px var(--monarch-blue));
+}
+
+@keyframes loadingCrestPulse {
+  0%, 100% { transform: scale(1);    opacity: 0.85; }
+  50%       { transform: scale(1.08); opacity: 1;    }
+}
+
+.loading-title {
+  font-family: var(--font-title);
+  font-size: 2rem;
+  letter-spacing: 6px;
+  color: #ffffff;
+  text-shadow: 0 0 20px var(--monarch-blue);
+}
+
+.loading-sub {
+  font-family: var(--font-hud);
+  font-size: 0.7rem;
+  letter-spacing: 3px;
+  color: var(--text-gray);
+}
+
+/* Progress Bar */
+.loading-bar-wrapper {
+  width: 240px;
+  height: 2px;
+  background: var(--system-blue);
+  position: relative;
+  overflow: hidden;
+}
+
+#progress-bar {
+  width: 0%;
+  height: 100%;
+  background: var(--monarch-blue);
+  box-shadow: 0 0 12px var(--monarch-blue);
+  transition: width 0.03s linear;
+}
+
+.loading-percent {
+  font-family: var(--font-hud);
+  font-size: 0.75rem;
+  color: var(--monarch-blue);
+  letter-spacing: 2px;
+}
+
+/* ============================================================ */
+/* SECTION 3: BACKGROUND PARTICLES                              */
+/* ============================================================ */
+
+.mana-particles {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.mana-particles div {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: var(--monarch-blue);
+  box-shadow: 0 0 8px var(--monarch-blue), 0 0 20px var(--mana-glow);
+  border-radius: 50%;
+  opacity: 0;
+  animation: particleMove 12s linear infinite;
+}
+
+@keyframes particleMove {
+  0%   { opacity: 0;   top: -5%;  transform: translateX(0px)  scale(0.5); }
+  15%  { opacity: 0.8; top: 10%;  transform: translateX(10px) scale(1);   }
+  85%  { opacity: 0.6; top: 90%;  transform: translateX(30px) scale(0.8); }
+  100% { opacity: 0;   top: 105%; transform: translateX(50px) scale(0.3); }
+}
+/* ============================================================ */
+/* SECTION 4: SCAN LINE GLOBAL                                  */
+/* ============================================================ */
+.scan-line-global {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--monarch-blue);
+  box-shadow: 0 0 15px var(--monarch-blue);
+  opacity: 0.15;
+  z-index: 9998;
+  pointer-events: none;
+  animation: scanLineGlobal 8s linear infinite;
+}
+
+@keyframes scanLineGlobal {
+  0%   { top: -2%;  }
+  100% { top: 102%; }
+}
+/* ============================================================ */
+/* SECTION 5: HUD INDICATORS (DEPTH & COORDINATE)              */
+/* ============================================================ */
+.depth-indicator {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.depth-label {
+  font-family: var(--font-hud);
+  font-size: 0.55rem;
+  letter-spacing: 4px;
+  color: var(--text-gray);
+}
+
+.depth-value {
+  font-family: var(--font-hud);
+  font-size: 1rem;
+  letter-spacing: 2px;
+  color: var(--monarch-blue);
+  text-shadow: 0 0 10px var(--monarch-blue);
+}
+
+.depth-status {
+  font-family: var(--font-hud);
+  font-size: 0.55rem;
+  letter-spacing: 2px;
+  color: var(--text-gray);
+}
+
+.coord-indicator {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.coord-indicator span {
+  font-family: var(--font-hud);
+  font-size: 0.55rem;
+  letter-spacing: 2px;
+  color: var(--text-gray);
+}
+/* ============================================================ */
+/* SECTION 6: AUTH SECTION (WRAPPER UTAMA)                     */
+/* ============================================================ */
+.auth-section {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+  padding: 20px;
+  /* Radial gradient di tengah seperti login lama */
+  background-image: radial-gradient(ellipse at center, #0a1520 0%, transparent 70%);
+}
+
+/* ============================================================ */
+/* SECTION 7: LOGIN CONTAINER BOX                               */
+/* ============================================================ */
+
+.login-container {
+  position: relative;
+  z-index: 10;
+  width: 420px;
+  max-width: 100%;
+  padding: 50px 40px 36px;
+  background: rgba(4, 12, 20, 0.88);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 2px solid var(--system-blue);
+
+  /* Clip-path sudut terpotong seperti desain cyberpunk -->
+  clip-path: polygon(0 0, 92% 0, 100% 8%, 100% 100%, 8% 100%, 0 92%);
+
+  box-shadow:
+    0 0 40px rgba(0, 0, 0, 0.9),
+    0 0 60px rgba(0, 229, 255, 0.04),
+    inset 0 0 30px rgba(0, 229, 255, 0.02);
+
+  /* Transisi saat tab switch */
+  transition: box-shadow var(--transition-slow);
+}
+
+/* Glow saat hover seluruh container */
+.login-container:hover {
+  box-shadow:
+    0 0 40px rgba(0, 0, 0, 0.9),
+    0 0 80px rgba(0, 229, 255, 0.08),
+    inset 0 0 30px rgba(0, 229, 255, 0.04);
+}
+
+/* Label [SYSTEM IDENTIFICATION] pojok kiri atas */
+.system-label {
+  position: absolute;
+  top: 12px;
+  left: 20px;
+  font-family: var(--font-title);
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  color: var(--monarch-blue);
+  opacity: 0.8;
+}
+
+/* Scan line di dalam box */
+.scan-line-inner {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to right, transparent, var(--monarch-blue), transparent);
+  opacity: 0.3;
+  animation: scanMove 4s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes scanMove {
+  0%   { top: 0%;   }
+  100% { top: 100%; }
+}
+
+/* ============================================================ */
+/* SECTION 8: AUTH LOGO DI DALAM BOX                           */
+/* ============================================================ */
+
+.auth-logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.auth-crest {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 2px solid var(--monarch-blue);
+  object-fit: cover;
+  position: relative;
+  z-index: 2;
+  animation: coreManaPulse 2.5s infinite ease-in-out;
+}
+
+/* Glow lingkaran di belakang logo */
+.auth-logo-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--monarch-blue);
+  filter: blur(6px);
+  opacity: 0.2;
+  animation: coreManaPulse 2.5s infinite ease-in-out;
+  z-index: 1;
+}
+
+@keyframes coreManaPulse {
+  0%, 100% { transform: scale(1);    opacity: 0.8; }
+  50%       { transform: scale(1.12); opacity: 1;   }
+}
+
+/* ============================================================ */
+/* SECTION 9: TAB SWITCHER LOGIN / REGISTER                    */
+/* ============================================================ */
+
+.tab-switcher {
+  display: flex;
+  gap: 0;
+  margin-bottom: 20px;
+  border: 1px solid var(--system-blue);
+  overflow: hidden;
+  /* Clip path ringan di tab switcher */
+  clip-path: polygon(4% 0, 100% 0, 96% 100%, 0% 100%);
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 10px;
+  background: transparent;
+  border: none;
+  color: var(--text-gray);
+  font-family: var(--font-title);
+  font-size: 1rem;
+  letter-spacing: 3px;
+  cursor: pointer;
+  transition: var(--transition-normal);
+  clip-path: none; /* override global button clip-path */
+  width: auto;
+  margin-top: 0;
+}
+
+.tab-btn:hover {
+  color: var(--monarch-blue);
+  background: var(--mana-soft);
+  box-shadow: none;
+}
+
+.tab-btn.active {
+  background: rgba(0, 229, 255, 0.12);
+  color: var(--monarch-blue);
+  border-bottom: 2px solid var(--monarch-blue);
+  box-shadow: inset 0 -2px 10px var(--mana-glow);
+}
+
+/* ============================================================ */
+/* SECTION 10: AUTH TITLE & SUBTITLE                            */
+/* ============================================================ */
+
+.auth-title {
+  font-family: var(--font-title);
+  font-size: 2rem;
+  letter-spacing: 4px;
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.auth-subtitle {
+  font-size: 0.75rem;
+  color: var(--text-gray);
+  text-align: center;
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+}
+
+/* ============================================================ */
+/* SECTION 11: INPUT GROUPS                                     */
+/* ============================================================ */
+
+.input-group {
+  position: relative;
+  margin-bottom: 14px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px 44px 12px 40px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--system-blue);
+  color: #ffffff;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  outline: none;
+  transition: var(--transition-normal);
+  letter-spacing: 0.5px;
+}
+
+.input-group input::placeholder {
+  color: rgba(160, 160, 160, 0.6);
+  font-size: 0.82rem;
+}
+
+.input-group input:focus {
+  border-color: var(--monarch-blue);
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 0 12px var(--mana-glow), inset 0 0 8px rgba(0, 229, 255, 0.03);
+}
+
+/* Icon di kiri input */
+.input-icon {
+  position: absolute;
+  left: 13px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--system-blue);
+  font-size: 0.85rem;
+  transition: var(--transition-normal);
+  pointer-events: none;
+}
+
+.input-group:focus-within .input-icon {
+  color: var(--monarch-blue);
+}
+
+/* Toggle show/hide password */
+.toggle-pw {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: var(--text-gray);
+  font-size: 0.82rem;
+  cursor: pointer;
+  padding: 4px;
+  width: auto;
+  clip-path: none;
+  margin-top: 0;
+  transition: var(--transition-fast);
+}
+
+.toggle-pw:hover {
+  color: var(--monarch-blue);
+  background: transparent;
+  box-shadow: none;
+}
+
+/* Error message */
+.input-error {
+  display: block;
+  font-size: 0.7rem;
+  color: #ff4444;
+  margin-top: 4px;
+  letter-spacing: 0.5px;
+  min-height: 14px;
+}
+
+/* ============================================================ */
+/* SECTION 12: PASSWORD STRENGTH BAR                           */
+/* ============================================================ */
+
+.pw-strength-bar {
+  height: 2px;
+  background: var(--system-blue);
+  margin-top: 6px;
+  overflow: hidden;
+}
+
+.pw-strength-fill {
+  height: 100%;
+  width: 0%;
+  transition: width 0.4s ease, background 0.4s ease;
+}
+
+.pw-strength-fill.weak   { width: 33%; background: #ff4444; box-shadow: 0 0 6px #ff4444; }
+.pw-strength-fill.medium { width: 66%; background: #ffaa00; box-shadow: 0 0 6px #ffaa00; }
+.pw-strength-fill.strong { width: 100%; background: var(--monarch-blue); box-shadow: 0 0 6px var(--monarch-blue); }
+
+.pw-strength-label {
+  font-size: 0.65rem;
+  letter-spacing: 1px;
+  margin-top: 3px;
+  display: block;
+}
+
+.pw-strength-label.weak   { color: #ff4444; }
+.pw-strength-label.medium { color: #ffaa00; }
+.pw-strength-label.strong { color: var(--monarch-blue); }
+
+/* ============================================================ */
+/* SECTION 13: FORM META (REMEMBER ME & FORGOT)                */
+/* ============================================================ */
+
+.form-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.remember-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 0.78rem;
+  color: var(--text-gray);
+  user-select: none;
+}
+
+.remember-label input[type="checkbox"] {
+  width: 14px;
+  height: 14px;
+  accent-color: var(--monarch-blue);
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+
+.forgot-link {
+  font-size: 0.78rem;
+  color: var(--monarch-blue);
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  transition: var(--transition-fast);
+}
+
+.forgot-link:hover {
+  text-decoration: underline;
+  text-shadow: 0 0 8px var(--monarch-blue);
+}
+
+/* Terms group */
+.terms-group {
+  margin-bottom: 16px;
+}
+
+.terms-group a {
+  color: var(--monarch-blue);
+  text-decoration: none;
+}
+
+.terms-group a:hover {
+  text-decoration: underline;
+}
+
+/* ============================================================ */
+/* SECTION 14: AUTH BUTTON UTAMA                               */
+/* ============================================================ */
+
+.btn-auth {
+  width: 100%;
+  padding: 13px 20px;
+  background: rgba(0, 229, 255, 0.06);
+  border: 1px solid var(--monarch-blue);
+  color: var(--monarch-blue);
+  font-family: var(--font-title);
+  font-size: 1.1rem;
+  letter-spacing: 3px;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: var(--transition-normal);
+  clip-path: polygon(8% 0, 100% 0, 92% 100%, 0% 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Shine effect saat hover */
+.btn-auth::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0, 229, 255, 0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+.btn-auth:hover::before {
+  left: 100%;
+}
+
+.btn-auth:hover {
+  background: var(--monarch-blue);
+  color: #000000;
+  box-shadow: 0 0 25px var(--monarch-blue), 0 0 50px var(--mana-glow);
+}
+
+.btn-auth:active {
+  transform: scale(0.98);
+}
+
+.btn-text {
+  flex: 1;
+  text-align: center;
+}
+
+.btn-icon {
+  font-size: 0.9rem;
+}
+
+/* ============================================================ */
+/* SECTION 15: DIVIDER & GOOGLE BUTTON                         */
+/* ============================================================ */
+
+.auth-divider {
+  text-align: center;
+  margin: 18px 0;
+  position: relative;
+}
+
+.auth-divider::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 0;
+  width: 100%; height: 1px;
+  background: var(--system-blue);
+  z-index: 0;
+}
+
+.auth-divider span {
+  position: relative;
+  z-index: 1;
+  background: rgba(4, 12, 20, 0.88);
+  padding: 0 12px;
+  font-size: 0.7rem;
+  letter-spacing: 3px;
+  color: var(--system-blue);
+  font-family: var(--font-hud);
+}
+
+.google-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 11px 20px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--system-blue);
+  color: #ffffff;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: var(--transition-normal);
+  clip-path: none;
+  margin-top: 0;
+  letter-spacing: 0.5px;
+}
+
+.google-btn:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: var(--monarch-blue);
+  box-shadow: 0 0 10px var(--mana-glow);
+}
+
+.google-icon {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+
+/* Switch link */
+.switch-link {
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--text-gray);
+  margin-top: 16px;
+}
+
+.switch-link a {
+  color: var(--monarch-blue);
+  text-decoration: none;
+  font-weight: 600;
+  transition: var(--transition-fast);
+}
+
+.switch-link a:hover {
+  text-decoration: underline;
+  text-shadow: 0 0 8px var(--monarch-blue);
+}
+
+/* ============================================================ */
+/* SECTION 16: FORM PANEL SHOW/HIDE                            */
+/* ============================================================ */
+
+.form-panel {
+  animation: panelFadeIn 0.35s ease forwards;
+}
+
+.form-panel.hidden {
+  display: none;
+}
+
+@keyframes panelFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0);   }
+}
+
+/* ============================================================ */
+/* SECTION 17: FOOTER MINI                                     */
+/* ============================================================ */
+
+.login-footer {
+  position: fixed;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.65rem;
+  color: var(--text-gray);
+  letter-spacing: 1px;
+  white-space: nowrap;
+  font-family: var(--font-hud);
+}
+
+.login-footer a {
+  color: var(--text-gray);
+  text-decoration: none;
+  transition: var(--transition-fast);
+}
+
+.login-footer a:hover {
+  color: var(--monarch-blue);
+}
+
+.footer-sep {
+  color: var(--system-blue);
+}
+
+/* ============================================================ */
+/*          LOGIN PAGE CSS 2 START - LEVIATHAN STORE            */
+/*       Modal + Toast + Scrollbar + Responsive + Polish        */
+/* ============================================================ */
+
+/* ============================================================ */
+/* SECTION 18: MODAL OVERLAY (FORGOT PASSWORD)                 */
+/* ============================================================ */
+
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(2, 5, 8, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 5000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: modalOverlayIn 0.3s ease forwards;
+}
+
+.modal-overlay.hidden {
+  display: none;
+}
+
+@keyframes modalOverlayIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ============================================================ */
+/* SECTION 19: MODAL BOX                                       */
+/* ============================================================ */
+
+.modal-box {
+  position: relative;
+  width: 380px;
+  max-width: 90%;
+  padding: 36px 32px;
+  background: rgba(4, 12, 20, 0.96);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 2px solid var(--system-blue);
+  clip-path: polygon(0 0, 92% 0, 100% 8%, 100% 100%, 8% 100%, 0 92%);
+  box-shadow:
+    0 0 60px rgba(0, 0, 0, 0.95),
+    0 0 40px rgba(0, 229, 255, 0.05);
+  animation: modalBoxIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes modalBoxIn {
+  from { opacity: 0; transform: scale(0.88) translateY(20px); }
+  to   { opacity: 1; transform: scale(1)    translateY(0);    }
+}
+
+/* Header modal */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.modal-header span {
+  font-family: var(--font-title);
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  color: var(--monarch-blue);
+  opacity: 0.8;
+}
+
+/* Tombol close modal */
+.modal-close {
+  background: transparent;
+  border: 1px solid var(--system-blue);
+  color: var(--text-gray);
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: var(--transition-fast);
+  clip-path: none;
+  padding: 0;
+  margin-top: 0;
+  flex-shrink: 0;
+}
+
+.modal-close:hover {
+  border-color: var(--monarch-blue);
+  color: var(--monarch-blue);
+  background: rgba(0, 229, 255, 0.08);
+  box-shadow: 0 0 8px var(--mana-glow);
+}
+
+.modal-title {
+  font-family: var(--font-title);
+  font-size: 1.6rem;
+  letter-spacing: 3px;
+  color: #ffffff;
+  margin-bottom: 8px;
+}
+
+.modal-desc {
+  font-size: 0.78rem;
+  color: var(--text-gray);
+  line-height: 1.6;
+  margin-bottom: 20px;
+  letter-spacing: 0.3px;
+}
+
+/* Pesan sukses forgot password */
+.modal-note {
+  margin-top: 12px;
+  font-size: 0.75rem;
+  color: var(--monarch-blue);
+  text-align: center;
+  letter-spacing: 0.5px;
+  min-height: 18px;
+}
+
+/* ============================================================ */
+/* SECTION 20: TOAST NOTIFICATION                              */
+/* ============================================================ */
+
+.toast {
+  position: fixed;
+  bottom: 50px;
+  right: 24px;
+  z-index: 9000;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  background: rgba(4, 12, 20, 0.95);
+  border: 1px solid var(--system-blue);
+  border-left: 3px solid var(--monarch-blue);
+  color: #ffffff;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  letter-spacing: 0.5px;
+  min-width: 240px;
+  max-width: 320px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.8), 0 0 15px var(--mana-glow);
+
+  /* Default tersembunyi */
+  opacity: 0;
+  transform: translateX(120%);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+}
+
+/* Toast muncul */
+.toast.show {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+/* Variasi warna toast */
+.toast.success {
+  border-left-color: #00ff88;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.8), 0 0 15px rgba(0, 255, 136, 0.2);
+}
+
+.toast.error {
+  border-left-color: #ff4444;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.8), 0 0 15px rgba(255, 68, 68, 0.2);
+}
+
+.toast.warning {
+  border-left-color: #ffaa00;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.8), 0 0 15px rgba(255, 170, 0, 0.2);
+}
+
+.toast-icon {
+  font-size: 1rem;
+  color: var(--monarch-blue);
+  flex-shrink: 0;
+}
+
+.toast.success .toast-icon { color: #00ff88; }
+.toast.error   .toast-icon { color: #ff4444; }
+.toast.warning .toast-icon { color: #ffaa00; }
+
+.toast-msg {
+  flex: 1;
+  line-height: 1.4;
+}
+
+/* ============================================================ */
+/* SECTION 21: SCROLLBAR CUSTOM                                */
+/* Untuk register form yang lebih panjang                      */
+/* ============================================================ */
+
+.login-container::-webkit-scrollbar {
+  width: 3px;
+}
+
+.login-container::-webkit-scrollbar-track {
+  background: var(--deep-black);
+}
+
+.login-container::-webkit-scrollbar-thumb {
+  background: var(--system-blue);
+  border-radius: 2px;
+}
+
+.login-container::-webkit-scrollbar-thumb:hover {
+  background: var(--monarch-blue);
+}
+
+/* Scrollable saat register form terlalu panjang di layar kecil */
+.login-container.scrollable {
+  overflow-y: auto;
+  max-height: 90vh;
+}
+
+/* ============================================================ */
+/* SECTION 22: ANIMASI BORDER GLOW SAAT AKTIF                 */
+/* Border box berubah warna saat user mulai ketik             */
+/* ============================================================ */
+
+.login-container.typing {
+  border-color: rgba(0, 229, 255, 0.4);
+  box-shadow:
+    0 0 40px rgba(0, 0, 0, 0.9),
+    0 0 80px rgba(0, 229, 255, 0.1),
+    inset 0 0 30px rgba(0, 229, 255, 0.05);
+}
+
+/* ============================================================ */
+/* SECTION 23: INPUT VALID / INVALID STATE                     */
+/* ============================================================ */
+
+/* Input valid (setelah validasi JS) */
+.input-group input.valid {
+  border-color: #00ff88;
+  box-shadow: 0 0 8px rgba(0, 255, 136, 0.2);
+}
+
+/* Input invalid */
+.input-group input.invalid {
+  border-color: #ff4444;
+  box-shadow: 0 0 8px rgba(255, 68, 68, 0.2);
+  animation: inputShake 0.4s ease;
+}
+
+@keyframes inputShake {
+  0%, 100% { transform: translateX(0);    }
+  20%       { transform: translateX(-6px); }
+  40%       { transform: translateX(6px);  }
+  60%       { transform: translateX(-4px); }
+  80%       { transform: translateX(4px);  }
+}
+
+/* ============================================================ */
+/* SECTION 24: BUTTON LOADING STATE                            */
+/* Saat form submit, button berubah jadi loading               */
+/* ============================================================ */
+
+.btn-auth.loading {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.btn-auth.loading .btn-text::after {
+  content: '';
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  margin-left: 10px;
+  animation: btnSpinner 0.6s linear infinite;
+  vertical-align: middle;
+}
+
+@keyframes btnSpinner {
+  to { transform: rotate(360deg); }
+}
+
+/* ============================================================ */
+/* SECTION 25: CORNER DECORATIONS                              */
+/* Sudut dekoratif cyberpunk di pojok container                */
+/* ============================================================ */
+
+.login-container::before {
+  content: '';
+  position: absolute;
+  bottom: 0; right: 0;
+  width: 20px; height: 20px;
+  border-bottom: 2px solid var(--monarch-blue);
+  border-right: 2px solid var(--monarch-blue);
+  opacity: 0.5;
+  transition: opacity var(--transition-normal);
+}
+
+.login-container:hover::before {
+  opacity: 1;
+  box-shadow: 4px 4px 10px var(--mana-glow);
+}
+
+/* Dekorasi pojok kiri atas */
+.login-container::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 20px; height: 20px;
+  border-top: 2px solid var(--monarch-blue);
+  border-left: 2px solid var(--monarch-blue);
+  opacity: 0.5;
+  transition: opacity var(--transition-normal);
+}
+
+.login-container:hover::after {
+  opacity: 1;
+  box-shadow: -4px -4px 10px var(--mana-glow);
+}
+
+/* ============================================================ */
+/* SECTION 26: RESPONSIVE — TABLET (max-width: 768px)         */
+/* ============================================================ */
+
+@media (max-width: 768px) {
+
+  /* Sembunyikan HUD indicator di tablet kecil */
+  .depth-indicator,
+  .coord-indicator {
+    display: none;
+  }
+
+  /* Container lebih kecil */
+  .login-container {
+    width: 100%;
+    max-width: 400px;
+    padding: 44px 28px 30px;
+  }
+
+  .auth-title {
+    font-size: 1.7rem;
+  }
+
+  /* Footer tetap tapi font lebih kecil */
+  .login-footer {
+    font-size: 0.58rem;
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: center;
+    bottom: 10px;
+  }
+
+  /* Toast lebih kecil */
+  .toast {
+    right: 12px;
+    min-width: 200px;
+    max-width: 260px;
+    font-size: 0.75rem;
+    padding: 10px 14px;
+  }
+}
+
+/* ============================================================ */
+/* SECTION 27: RESPONSIVE — MOBILE (max-width: 480px)         */
+/* ============================================================ */
+
+@media (max-width: 480px) {
+
+  body {
+    overflow-y: auto; /* mobile bisa scroll */
+  }
+
+  .auth-section {
+    padding: 16px;
+    align-items: flex-start;
+    padding-top: 40px;
+  }
+
+  .login-container {
+    padding: 40px 20px 28px;
+    /* clip-path lebih ringan di mobile biar tidak terpotong */
+    clip-path: polygon(0 0, 96% 0, 100% 4%, 100% 100%, 4% 100%, 0 96%);
+  }
+
+  .auth-title {
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+  }
+
+  .auth-subtitle {
+    font-size: 0.7rem;
+  }
+
+  .tab-btn {
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    padding: 9px 6px;
+  }
+
+  .input-group input {
+    font-size: 0.82rem;
+    padding: 11px 40px 11px 36px;
+  }
+
+  .btn-auth {
+    font-size: 0.95rem;
+    letter-spacing: 2px;
+    padding: 12px 16px;
+  }
+
+  .google-btn {
+    font-size: 0.78rem;
+    padding: 10px 14px;
+  }
+
+  .modal-box {
+    padding: 28px 20px;
+    clip-path: polygon(0 0, 96% 0, 100% 4%, 100% 100%, 4% 100%, 0 96%);
+  }
+
+  .modal-title {
+    font-size: 1.3rem;
+  }
+
+  /* Toast di bawah tengah di mobile */
+  .toast {
+    right: 50%;
+    transform: translateX(50%) translateY(20px);
+    bottom: 20px;
+    min-width: 180px;
+    max-width: 85vw;
+  }
+
+  .toast.show {
+    transform: translateX(50%) translateY(0);
+  }
+
+  /* Footer disembunyikan di mobile sangat kecil */
+  .login-footer {
+    display: none;
+  }
+
+  /* Particles dikurangi opacity agar tidak berat */
+  .mana-particles div {
+    opacity: 0;
+    animation-duration: 18s;
+  }
+}
+
+/* ============================================================ */
+/* SECTION 28: REDUCED MOTION                                  */
+/* Untuk user yang matikan animasi di OS                       */
+/* ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================================ */
+/* SECTION 29: SELECTION COLOR                                 */
+/* ============================================================ */
+
+::selection {
+  background: rgba(0, 229, 255, 0.25);
+  color: #ffffff;
+}
+
+::-moz-selection {
+  background: rgba(0, 229, 255, 0.25);
+  color: #ffffff;
+}
+
+/* ============================================================ */
+/* SECTION 30: FOCUS VISIBLE (ACCESSIBILITY)                   */
+/* ============================================================ */
+
+:focus-visible {
+  outline: 1px solid var(--monarch-blue);
+  outline-offset: 2px;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+  outline: 1px solid var(--monarch-blue);
+  outline-offset: 2px;
+  box-shadow: 0 0 8px var(--mana-glow);
+}
+/* ============================================================ */
+/*          LOGIN PAGE CSS 2 END - LEVIATHAN STORE              */
+/* ============================================================ */

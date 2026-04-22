@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<!-- ============================================================ -->
+<!--           HOME PAGE HTML 1 START - LEVIATHAN STORE           -->
+<!--              Absolute Apex Performance v1.0                  -->
+<!-- ============================================================ -->
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leviathan Store | Absolute Apex Performance</title>
+
+  <!-- FONTS -->
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;500;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+
+  <!-- FONT AWESOME -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+  <!-- CSS HOME -->
+  <link rel="stylesheet" href="leviathan_store_home.css">
+</head>
+
+<body>
+
+  <!-- ============================================================ -->
+  <!-- SCAN LINE GLOBAL                                             -->
+  <!-- ============================================================ -->
+  <div class="scan-line-global" aria-hidden="true"></div>
+
+  <!-- ============================================================ -->
+  <!-- SECTION: HEADER STICKY                                       -->
+  <!-- ============================================================ -->
+  <header id="mainHeader">
+
+    <!-- LOGO GROUP -->
+    <div class="logo-group">
+      <div class="crest-wrapper">
+        <!-- ✏️ EDIT: Ganti src dengan path logo kamu -->
+        <img src="assets/leviathan_store.png" alt="Leviathan Logo" class="header-crest">
+        <div class="crest-glow" aria-hidden="true"></div>
+      </div>
+      <div class="logo-text-group">
+        <h1 class="logo-title">LEVIATHAN</h1>
+        <span class="logo-sub">STORE</span>
+      </div>
+    </div>
+
+    <!-- SEARCH BAR -->
+    <div class="search-container">
+      <div class="search-wrapper">
+        <i class="fas fa-search search-icon"></i>
+        <input
+          type="text"
+          id="globalSearch"
+          placeholder="Search Planetary Arsenal (Marcuone, Uraven, Nepturne...)"
+          autocomplete="off"
+        >
+        <!-- Clear button -->
+        <button class="search-clear hidden" id="searchClear" aria-label="Clear search">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <!-- Search suggestion dropdown -->
+      <div class="search-suggestions hidden" id="searchSuggestions"></div>
+    </div>
+
+    <!-- USER TOOLS -->
+    <div class="user-tools">
+
+      <!-- Notifikasi -->
+      <a href="#" class="tool-btn" title="Notifications" id="notifBtn">
+        <i class="fas fa-bell"></i>
+        <span class="tool-badge hidden" id="notifBadge">0</span>
+      </a>
+
+      <!-- Keranjang -->
+      <a href="leviathan_store_transaksi.html" class="tool-btn" title="Cart" id="cartBtn">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="tool-badge hidden" id="cartBadge">0</span>
+        <!-- Mini cart hover -->
+        <div class="mini-cart" id="miniCart">
+          <div class="mini-cart-header">
+            <span>[ ARSENAL CART ]</span>
+          </div>
+          <div class="mini-cart-items" id="miniCartItems">
+            <p class="mini-cart-empty">Cart is empty, Hunter.</p>
+          </div>
+          <div class="mini-cart-footer">
+            <span class="mini-cart-total">Total: <strong id="miniCartTotal">Rp 0</strong></span>
+            <a href="leviathan_store_transaksi.html" class="mini-cart-go">View Cart →</a>
+          </div>
+        </div>
+      </a>
+
+      <!-- Home (active) -->
+      <a href="leviathan_store_home.html" class="tool-btn active" title="Home">
+        <i class="fas fa-home"></i>
+      </a>
+
+      <!-- Market -->
+      <a href="leviathan_store_market.html" class="tool-btn" title="Enter Market">
+        <i class="fas fa-store"></i>
+      </a>
+
+      <!-- Auth Container (login/profil) -->
+      <div id="authContainer">
+        <a href="leviathan_store_login.html" class="tool-btn" title="Login" id="authButton">
+          <i class="fas fa-user-circle"></i>
+        </a>
+      </div>
+
+    </div>
+  </header>
+  <!-- END HEADER -->
+
+  <!-- ============================================================ -->
+  <!-- SECTION: ARSENAL CATEGORY (CORE UNIVERSAL SYSTEM)           -->
+  <!-- ============================================================ -->
+  <section class="arsenal-section" id="arsenalSection">
+    <div class="category-header">
+      <span class="category-tag">[ CORE UNIVERSAL SYSTEM ]</span>
+      <h2 class="category-title">SELECT YOUR ARSENAL</h2>
+    </div>
+
+    <div class="arsenal-grid">
+
+      <!-- Card 1: Marcuone Mobile -->
+      <a href="leviathan_store_market.html?category=handphone" class="arsenal-card" data-category="handphone">
+        <div class="arsenal-card-icon">
+          <i class="fas fa-mobile-alt"></i>
+        </div>
+        <h3 class="arsenal-card-title">MARCUONE MOBILE</h3>
+        <p class="arsenal-card-sub">Mobile Devices</p>
+        <div class="arsenal-card-glow" aria-hidden="true"></div>
+      </a>
+
+      <!-- Card 2: Nepturne Portable -->
+      <a href="leviathan_store_market.html?category=laptop" class="arsenal-card" data-category="laptop">
+        <div class="arsenal-card-icon">
+          <i class="fas fa-laptop"></i>
+        </div>
+        <h3 class="arsenal-card-title">NEPTURNE PORTABLE</h3>
+        <p class="arsenal-card-sub">Computer Portable</p>
+        <div class="arsenal-card-glow" aria-hidden="true"></div>
+      </a>
+
+      <!-- Card 3: Void Saturnix -->
+      <a href="leviathan_store_market.html?category=console" class="arsenal-card" data-category="console">
+        <div class="arsenal-card-icon">
+          <i class="fas fa-gamepad"></i>
+        </div>
+        <h3 class="arsenal-card-title">VOID SATURNIX</h3>
+        <p class="arsenal-card-sub">Next-Gen Consoles</p>
+        <div class="arsenal-card-glow" aria-hidden="true"></div>
+      </a>
+
+      <!-- Card 4: Uraven Command -->
+      <a href="leviathan_store_market.html?category=set_pc" class="arsenal-card" data-category="set_pc">
+        <div class="arsenal-card-icon">
+          <i class="fas fa-desktop"></i>
+        </div>
+        <h3 class="arsenal-card-title">URAVEN COMMAND</h3>
+        <p class="arsenal-card-sub">Set Personal Computer</p>
+        <div class="arsenal-card-glow" aria-hidden="true"></div>
+      </a>
+
+      <!-- Card 5: Veetwo Sensors -->
+      <a href="leviathan_store_market.html?category=gear" class="arsenal-card" data-category="gear">
+        <div class="arsenal-card-icon">
+          <i class="fas fa-mouse"></i>
+        </div>
+        <h3 class="arsenal-card-title">VEETWO SENSORS</h3>
+        <p class="arsenal-card-sub">Gear Set PC</p>
+        <div class="arsenal-card-glow" aria-hidden="true"></div>
+      </a>
+
+    </div>
+  </section>
+  <!-- END ARSENAL SECTION -->
+
+  <!-- ============================================================ -->
+  <!-- SECTION: HERO                                                -->
+  <!-- ============================================================ -->
+  <main class="hero" id="heroSection">
+
+    <!-- Hero Content Kiri -->
+    <div class="hero-content">
+      <span class="hero-tag">[ THE TOP LEVIATHAN ]</span>
+      <!-- ✏️ EDIT: Ganti teks headline jika mau -->
+      <h2 class="main-headline">RISE YOUR<br>GAMING<br>LEVEL</h2>
+      <p class="manifesto-text">
+        "Where legends are imprisoned and only the strongest can return.
+        We are the Leviathan, the seventh primordial sovereign of the deep.
+        Through the apex of technology, we do not just provide gear —
+        we deliver nightmares to your enemies."
+      </p>
+      <p class="motto-text">
+        Deploying only the absolute monsters, from the elite of the elite.
+      </p>
+      <div class="hero-buttons">
+        <a href="leviathan_store_market.html" class="btn-deep">
+          <span>ENTER THE ABYSS</span>
+          <i class="fas fa-chevron-right"></i>
+        </a>
+        <a href="leviathan_store_other.html#about" class="btn-ghost">
+          <span>OUR LORE</span>
+        </a>
+      </div>
+
+      <!-- Stats row -->
+      <div class="hero-stats">
+        <div class="stat-item">
+          <span class="stat-number">32+</span>
+          <span class="stat-label">MONSTERS</span>
+        </div>
+        <div class="stat-divider" aria-hidden="true">◈</div>
+        <div class="stat-item">
+          <span class="stat-number">4</span>
+          <span class="stat-label">KASTA</span>
+        </div>
+        <div class="stat-divider" aria-hidden="true">◈</div>
+        <div class="stat-item">
+          <span class="stat-number">∞</span>
+          <span class="stat-label">APEX POWER</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hero Product Slider Kanan -->
+    <div class="product-slider-container" aria-label="Featured products">
+      <div class="slider-track" id="sliderTrack">
+
+        <!-- Slide 1: Nintendo Switch 2 -->
+        <div class="slide-item">
+          <!-- ✏️ EDIT: Ganti src dengan path gambar console kamu -->
+          <img src="assets/console/nintendo_switch_2.jpg" alt="Nintendo Switch 2" loading="lazy">
+          <div class="slide-label">
+            <span class="slide-kasta nereid">NEREID</span>
+            <span class="slide-name">Nintendo Switch 2</span>
+          </div>
+        </div>
+
+        <!-- Slide 2: Xbox Series X -->
+        <div class="slide-item">
+          <!-- ✏️ EDIT: Ganti src dengan path gambar console kamu -->
+          <img src="assets/console/x_box_series_x.jpg" alt="Xbox Series X" loading="lazy">
+          <div class="slide-label">
+            <span class="slide-kasta nereid">NEREID</span>
+            <span class="slide-name">Xbox Series X</span>
+          </div>
+        </div>
+
+        <!-- Slide 3: PS5 Pro -->
+        <div class="slide-item">
+          <!-- ✏️ EDIT: Ganti src dengan path gambar console kamu -->
+          <img src="assets/console/ps_5_pro.jpg" alt="PS5 Pro" loading="lazy">
+          <div class="slide-label">
+            <span class="slide-kasta nereid">NEREID</span>
+            <span class="slide-name">PS5 Pro</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Slider dots indicator -->
+      <div class="slider-dots" aria-label="Slide indicators">
+        <button class="dot active" data-slide="0" aria-label="Slide 1"></button>
+        <button class="dot" data-slide="1" aria-label="Slide 2"></button>
+        <button class="dot" data-slide="2" aria-label="Slide 3"></button>
+      </div>
+
+      <!-- Slider nav arrows -->
+      <button class="slider-arrow slider-prev" id="sliderPrev" aria-label="Previous slide">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      <button class="slider-arrow slider-next" id="sliderNext" aria-label="Next slide">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+
+    </div>
+    <!-- END SLIDER -->
+
+  </main>
+  <!-- END HERO -->
+<!-- ============================================================ -->
+<!--           HOME PAGE HTML 2 START - LEVIATHAN STORE           -->
+<!--        Footer + Featured Products + Newsletter + Misc        -->
+<!-- ============================================================ -->
+
+  <!-- ============================================================ -->
+  <!-- SECTION: FEATURED PRODUCTS (PRODUK UNGGULAN)                -->
+  <!-- Sambungan setelah hero di home.html                         -->
+  <!-- ============================================================ -->
+  <section class="featured-section" id="featuredSection">
+
+    <div class="section-header">
+      <span class="section-tag">[ MONSTER SHOWCASE ]</span>
+      <h2 class="section-title">TOP TIER ARSENAL</h2>
+      <p class="section-sub">The absolute apex, handpicked from the Abyss</p>
+    </div>
+
+    <div class="featured-grid">
+
+      <!-- Featured Card 1: ASUS ROG Phone 9 Pro — Leviathan -->
+      <div class="featured-card kasta-leviathan">
+        <div class="featured-card-img-wrapper">
+          <!-- ✏️ EDIT: Ganti src path gambar -->
+          <img src="assets/handphone/leviathan/asus_rog_phone_9_pro.jpg"
+               alt="ASUS ROG Phone 9 Pro" loading="lazy">
+          <span class="kasta-badge leviathan">LEVIATHAN</span>
+          <span class="stock-label ready">Ready Stock</span>
+        </div>
+        <div class="featured-card-body">
+          <h3 class="featured-card-name">ASUS ROG Phone 9 Pro</h3>
+          <p class="featured-card-price">Rp 14.999.000</p>
+          <div class="featured-card-actions">
+            <a href="leviathan_store_market.html?id=rog_phone_9_pro" class="btn-view">
+              View Monster
+            </a>
+          </div>
+        </div>
+        <div class="leviathan-ink-bg" aria-hidden="true"></div>
+      </div>
+
+      <!-- Featured Card 2: ROG Zephyrus G14 2025 — Leviathan -->
+      <div class="featured-card kasta-leviathan">
+        <div class="featured-card-img-wrapper">
+          <!-- ✏️ EDIT: Ganti src path gambar -->
+          <img src="assets/laptop/leviathan/rog_zephyrus_g14_2025.jpg"
+               alt="ROG Zephyrus G14 2025" loading="lazy">
+          <span class="kasta-badge leviathan">LEVIATHAN</span>
+          <span class="stock-label ready">Ready Stock</span>
+        </div>
+        <div class="featured-card-body">
+          <h3 class="featured-card-name">ROG Zephyrus G14 2025</h3>
+          <p class="featured-card-price">Rp 29.999.000</p>
+          <div class="featured-card-actions">
+            <a href="leviathan_store_market.html?id=rog_zephyrus_g14_2025" class="btn-view">
+              View Monster
+            </a>
+          </div>
+        </div>
+        <div class="leviathan-ink-bg" aria-hidden="true"></div>
+      </div>
+
+      <!-- Featured Card 3: Set Eternal Melodies — Sovereign -->
+      <div class="featured-card kasta-sovereign sovereign-miku">
+        <div class="featured-card-img-wrapper">
+          <!-- ✏️ EDIT: Ganti src path gambar -->
+          <img src="assets/set_pc/sovereign/set_eternal_melodies_miku.jpg"
+               alt="Set Eternal Melodies ROG x Hatsune Miku" loading="lazy">
+          <span class="kasta-badge sovereign">SOVEREIGN</span>
+          <span class="stock-label preorder">Pre-Order</span>
+        </div>
+        <div class="featured-card-body">
+          <h3 class="featured-card-name">Set Eternal Melodies</h3>
+          <p class="featured-card-edition">ROG × Hatsune Miku Edition</p>
+          <p class="featured-card-price">Rp 85.000.000 – Rp 105.000.000</p>
+          <div class="featured-card-actions">
+            <a href="leviathan_store_market.html?id=set_eternal_melodies" class="btn-view">
+              View Monster
+            </a>
+          </div>
+        </div>
+        <!-- Aura Miku -->
+        <div class="sovereign-aura aura-miku" aria-hidden="true"></div>
+      </div>
+
+      <!-- Featured Card 4: Set White Devil — Sovereign -->
+      <div class="featured-card kasta-sovereign sovereign-gundam">
+        <div class="featured-card-img-wrapper">
+          <!-- ✏️ EDIT: Ganti src path gambar -->
+          <img src="assets/set_pc/sovereign/set_white_devil_gundam.jpg"
+               alt="Set White Devil ROG x Gundam RX-78-2" loading="lazy">
+          <span class="kasta-badge sovereign">SOVEREIGN</span>
+          <span class="stock-label preorder">Pre-Order</span>
+        </div>
+        <div class="featured-card-body">
+          <h3 class="featured-card-name">Set White Devil</h3>
+          <p class="featured-card-edition">ROG × Gundam RX-78-2 Edition</p>
+          <p class="featured-card-price">Rp 95.000.000 – Rp 120.000.000</p>
+          <div class="featured-card-actions">
+            <a href="leviathan_store_market.html?id=set_white_devil" class="btn-view">
+              View Monster
+            </a>
+          </div>
+        </div>
+        <!-- Aura Gundam -->
+        <div class="sovereign-aura aura-gundam" aria-hidden="true"></div>
+      </div>
+
+    </div>
+
+    <!-- Tombol lihat semua -->
+    <div class="featured-cta">
+      <a href="leviathan_store_market.html" class="btn-deep-outline">
+        <span>EXPLORE ALL MONSTERS</span>
+        <i class="fas fa-arrow-right"></i>
+      </a>
+    </div>
+
+  </section>
+  <!-- END FEATURED SECTION -->
+
+  <!-- ============================================================ -->
+  <!-- SECTION: LORE BANNER                                         -->
+  <!-- ============================================================ -->
+  <section class="lore-banner" id="loreBanner">
+    <div class="lore-banner-inner">
+      <div class="lore-banner-text">
+        <span class="lore-tag">[ ABYSS LORE ]</span>
+        <h2 class="lore-title">FROM THE DEPTHS OF THE MARIANA</h2>
+        <p class="lore-desc">
+          Nereid haunts the deepest trenches. Poseidon rules the majesty of Atlantis.
+          Leviathan — the demon imprisoned at the ocean floor — breaks free through technology.
+          And Sovereign... the god-monster, the evolved apex, walks among deities.
+          We do not sell products. We unleash monsters upon your enemies.
+        </p>
+        <a href="leviathan_store_other.html#about" class="btn-ghost-lore">
+          READ THE FULL LORE →
+        </a>
+      </div>
+      <div class="lore-banner-visual" aria-hidden="true">
+        <div class="lore-depth-meter">
+          <div class="depth-line">
+            <span class="depth-dot nereid"></span>
+            <span class="depth-text">0m — NEREID TERRITORY</span>
+          </div>
+          <div class="depth-connector"></div>
+          <div class="depth-line">
+            <span class="depth-dot poseidon"></span>
+            <span class="depth-text">3.000m — POSEIDON TERRITORY</span>
+          </div>
+          <div class="depth-connector"></div>
+          <div class="depth-line">
+            <span class="depth-dot leviathan"></span>
+            <span class="depth-text">6.000m — LEVIATHAN TERRITORY</span>
+          </div>
+          <div class="depth-connector"></div>
+          <div class="depth-line">
+            <span class="depth-dot sovereign"></span>
+            <span class="depth-text">10.000m — SOVEREIGN TERRITORY</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- END LORE BANNER -->
+
+  <!-- ============================================================ -->
+  <!-- SECTION: NEWSLETTER SIGNUP                                   -->
+  <!-- ============================================================ -->
+  <section class="newsletter-section" id="newsletterSection">
+    <div class="newsletter-inner">
+      <div class="newsletter-text">
+        <span class="section-tag">[ TRANSMISSION RELAY ]</span>
+        <h3 class="newsletter-title">RECEIVE ABYSS TRANSMISSIONS</h3>
+        <p class="newsletter-sub">
+          Get the latest drops, exclusive offers, and Sovereign-tier alerts
+          delivered directly to your system.
+        </p>
+      </div>
+      <div class="newsletter-form">
+        <div class="newsletter-input-group">
+          <i class="fas fa-envelope newsletter-icon"></i>
+          <input
+            type="email"
+            id="newsletterEmail"
+            placeholder="Enter Hunter Email Address"
+            autocomplete="email"
+          >
+          <button class="btn-newsletter" id="newsletterBtn" onclick="handleNewsletter()">
+            TRANSMIT
+          </button>
+        </div>
+        <p class="newsletter-note" id="newsletterNote"></p>
+      </div>
+    </div>
+  </section>
+  <!-- END NEWSLETTER -->
+
+  <!-- ============================================================ -->
+  <!-- SECTION: FOOTER                                              -->
+  <!-- ============================================================ -->
+  <footer class="main-footer" id="mainFooter">
+
+    <div class="footer-inner">
+
+      <!-- Footer Col 1: Brand -->
+      <div class="footer-col footer-brand">
+        <div class="footer-logo-group">
+          <!-- ✏️ EDIT: Ganti src logo -->
+          <img src="assets/leviathan_store.png" alt="Leviathan Store" class="footer-logo">
+          <span class="footer-logo-text">LEVIATHAN STORE</span>
+        </div>
+        <p class="footer-tagline">
+          Absolute Apex Performance.<br>
+          We don't sell gear — we unleash monsters.
+        </p>
+        <!-- Social Media -->
+        <div class="footer-socials">
+          <!-- ✏️ EDIT: Ganti href dengan link sosmed kamu -->
+          <a href="#" class="social-btn" title="Instagram" target="_blank" rel="noopener">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="#" class="social-btn" title="YouTube" target="_blank" rel="noopener">
+            <i class="fab fa-youtube"></i>
+          </a>
+          <a href="#" class="social-btn" title="TikTok" target="_blank" rel="noopener">
+            <i class="fab fa-tiktok"></i>
+          </a>
+          <a href="#" class="social-btn" title="WhatsApp Admin" target="_blank" rel="noopener">
+            <i class="fab fa-whatsapp"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Footer Col 2: Arsenal Links -->
+      <div class="footer-col">
+        <h4 class="footer-col-title">ARSENAL</h4>
+        <ul class="footer-links">
+          <li><a href="leviathan_store_market.html?category=handphone">Marcuone Mobile</a></li>
+          <li><a href="leviathan_store_market.html?category=laptop">Nepturne Portable</a></li>
+          <li><a href="leviathan_store_market.html?category=console">Void Saturnix</a></li>
+          <li><a href="leviathan_store_market.html?category=set_pc">Uraven Command</a></li>
+          <li><a href="leviathan_store_market.html?category=gear">Veetwo Sensors</a></li>
+        </ul>
+      </div>
+
+      <!-- Footer Col 3: Hunter Links -->
+      <div class="footer-col">
+        <h4 class="footer-col-title">HUNTER HQ</h4>
+        <ul class="footer-links">
+          <li><a href="leviathan_store_user.html">My Account</a></li>
+          <li><a href="leviathan_store_transaksi.html">Cart</a></li>
+          <li><a href="leviathan_store_user.html#orders">Order History</a></li>
+          <li><a href="leviathan_store_user.html#wishlist">Wishlist</a></li>
+          <li><a href="leviathan_store_other.html#contact">Contact Admin</a></li>
+        </ul>
+      </div>
+
+      <!-- Footer Col 4: Info Links -->
+      <div class="footer-col">
+        <h4 class="footer-col-title">INTEL</h4>
+        <ul class="footer-links">
+          <li><a href="leviathan_store_other.html#about">About Us</a></li>
+          <li><a href="leviathan_store_other.html#faq">FAQ</a></li>
+          <li><a href="leviathan_store_other.html#shipping">Shipping Policy</a></li>
+          <li><a href="leviathan_store_other.html#return">Return Policy</a></li>
+          <li><a href="leviathan_store_other.html#privacy">Privacy Policy</a></li>
+          <li><a href="leviathan_store_other.html#terms">Terms & Conditions</a></li>
+        </ul>
+      </div>
+
+      <!-- Footer Col 5: Contact -->
+      <div class="footer-col">
+        <h4 class="footer-col-title">CONTACT</h4>
+        <ul class="footer-contact-list">
+          <!-- ✏️ EDIT: Ganti dengan info kontak asli kamu -->
+          <li>
+            <i class="fab fa-whatsapp"></i>
+            <a href="https://wa.me/081367615515" target="_blank" rel="noopener">
+              +62 8xx-xxxx-xxxx
+            </a>
+          </li>
+          <li>
+            <i class="fas fa-envelope"></i>
+            <a href="mailto:admin@leviathan.store">
+              admin@leviathan.store
+            </a>
+          </li>
+          <li>
+            <i class="fas fa-map-marker-alt"></i>
+            <!-- ✏️ EDIT: Ganti dengan alamat tokomu -->
+            <span>Palembang, South Sumatra, ID</span>
+          </li>
+        </ul>
+
+        <!-- Secure Payment Icons -->
+        <div class="payment-icons">
+          <span class="payment-label">SECURE PAYMENT</span>
+          <div class="payment-icons-row">
+            <span class="payment-icon-item">VISA</span>
+            <span class="payment-icon-item">BCA</span>
+            <span class="payment-icon-item">QRIS</span>
+            <span class="payment-icon-item">COD</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Footer Bottom Bar -->
+    <div class="footer-bottom">
+      <p class="footer-copy">
+        © 2025 LEVIATHAN STORE ◈ Absolute Apex Performance ◈ All Rights Reserved
+      </p>
+      <div class="footer-bottom-links">
+        <a href="leviathan_store_other.html#privacy">Privacy</a>
+        <span>◈</span>
+        <a href="leviathan_store_other.html#terms">Terms</a>
+        <span>◈</span>
+        <a href="leviathan_store_other.html#return">Return Policy</a>
+      </div>
+    </div>
+
+  </footer>
+  <!-- END FOOTER -->
+
+  <!-- ============================================================ -->
+  <!-- BACK TO TOP BUTTON                                           -->
+  <!-- ============================================================ -->
+  <button class="back-to-top hidden" id="backToTop" aria-label="Back to top">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <!-- ============================================================ -->
+  <!-- TOAST NOTIFICATION                                           -->
+  <!-- ============================================================ -->
+  <div class="toast" id="toastNotif">
+    <span class="toast-icon"><i class="fas fa-info-circle"></i></span>
+    <span class="toast-msg" id="toastMsg">Message</span>
+  </div>
+
+<!-- ============================================================ -->
+<!--           HOME PAGE HTML 2 END - LEVIATHAN STORE             -->
+<!-- ============================================================ -->
+  <!-- ============================================================ -->
+  <!-- JS HOME                                                      -->
+  <!-- ============================================================ -->
+  <script src="leviathan_store_home.js"></script>
+
+</body>
+</html>
+<!-- ============================================================ -->
+<!--              HOME PAGE HTML 1 END - LEVIATHAN STORE          -->
+<!-- ============================================================ -->
