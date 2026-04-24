@@ -109,9 +109,10 @@ function initAuthContainer() {
   const authContainer = document.getElementById('authContainer');
   if (!authContainer) return;
 
-  const isLoggedIn = localStorage.getItem(LS_LOGGED_IN);
-  const userEmail  = localStorage.getItem(LS_EMAIL);
-  const userName   = localStorage.getItem(LS_NAME);
+  // ✅ BACA DARI sessionStorage (bukan localStorage)
+  const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+  const userEmail  = sessionStorage.getItem('userEmail');
+  const userName   = sessionStorage.getItem('userName');
 
   if (isLoggedIn === 'true' && userEmail) {
     const initial     = (userName || userEmail).charAt(0).toUpperCase();
@@ -124,9 +125,19 @@ function initAuthContainer() {
       </div>
     `;
 
-    document.getElementById('profilePill').addEventListener('click', () => {
-      window.location.href = PAGES.user;
-    });
+    const profilePill = document.getElementById('profilePill');
+    if (profilePill) {
+      profilePill.addEventListener('click', () => {
+        window.location.href = PAGES.user;
+      });
+    }
+  } else {
+    // 🔄 Kembalikan ke tombol login
+    authContainer.innerHTML = `
+      <a href="leviathan_store_login.html" class="tool-btn" title="Login" id="authButton">
+        <i class="fas fa-user-circle"></i>
+      </a>
+    `;
   }
 }
 
