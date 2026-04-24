@@ -3,103 +3,257 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leviathan Store | Gaming Device Apex</title>
+    <title>Leviathan Store | Ascend to the Abyss</title>
     <meta name="description" content="Leviathan Store — Absolute Apex Performance gaming devices. Enter The Abyss Arsenal.">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
-    
+
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;700&display=swap" rel="stylesheet">
+
     <style>
-        html { scroll-behavior: smooth; }
+        /* ========== RESET & VARIABLE ========== */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
-            --deep-ocean: #050a0f;
+            --deep-ocean: #020508;
+            --abyss-blue: #0A192F;
             --electric-blue: #00d4ff;
-            --ocean-gradient: linear-gradient(135deg, #00d4ff, #0056b3);
+            --monarch-blue: #00e5ff;
+            --dark-rock: #0B1A2D;
             --charcoal: #121a24;
             --text-light: #e0e0e0;
+            --text-muted: #8899a6;
+            --red-accent: #ff3333;
+            --gold: #FFD700;
+
+            --font-display: 'Orbitron', sans-serif;
+            --font-body: 'Rajdhani', sans-serif;
         }
+
         body {
-            margin: 0; padding: 0;
-            background-color: #050a0f;
-            color: #e0e0e0;
-            font-family: 'Rajdhani', sans-serif;
+            background-color: var(--deep-ocean);
+            color: var(--text-light);
+            font-family: var(--font-body);
+            line-height: 1.6;
             overflow-x: hidden;
-        }
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 5%;
-            background: rgba(5, 10, 15, 0.9);
-            border-bottom: 2px solid var(--electric-blue);
-            backdrop-filter: blur(10px);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        .logo-section { display: flex; align-items: center; gap: 15px; }
-        .logo-section img {
-            width: 60px; height: 60px;
-            object-fit: cover; border-radius: 50%;
-            filter: drop-shadow(0 0 5px var(--electric-blue));
-        }
-        .brand-name {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.6rem;
-            background: var(--ocean-gradient);
-            -webkit-background-clip: text; background-clip: text;
-            -webkit-text-fill-color: transparent; color: transparent;
-            letter-spacing: 3px;
-        }
-        nav a {
-            color: var(--text-light); text-decoration: none;
-            margin-left: 25px; font-weight: bold;
-            text-transform: uppercase; letter-spacing: 1px; transition: 0.3s;
-        }
-        nav a:hover { color: var(--electric-blue); text-shadow: 0 0 8px var(--electric-blue); }
-        .hero {
-            height: 90vh; display: flex;
-            flex-direction: column; justify-content: center;
-            align-items: center; text-align: center;
             position: relative;
-            background: radial-gradient(circle at center, #102a43 0%, #050a0f 100%);
+            margin: 0;
+            padding: 0;
+            font-size: 1rem;
         }
-        .hero::before {
+
+        /* Tekstur carbon fibre sangat tipis */
+        body::before {
             content: "";
-            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            background: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+            background-repeat: repeat;
+            opacity: 0.06;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Konten di atas tekstur */
+        header, section, footer, .hero, .product-section, .abyss-footer {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Scan line global */
+        body::after {
+            content: "";
+            position: fixed; top: 0; left: 0; width: 100%; height: 2px;
+            background: var(--monarch-blue);
+            box-shadow: 0 0 20px var(--monarch-blue);
+            z-index: 9999; pointer-events: none;
+            animation: scanLine 8s linear infinite;
             opacity: 0.1;
         }
-        .hero h1 {
-            font-family: 'Orbitron', sans-serif; font-size: 5rem;
-            margin: 0; color: white;
-            text-shadow: 0 0 20px rgba(0, 212, 255, 0.6); z-index: 1;
+        @keyframes scanLine { 0% { top: -2%; } 100% { top: 102%; } }
+
+        /* ========== HEADER ========== */
+        .leviathan-header {
+            position: sticky; top: 0; z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px 5%;
+            background: rgba(2, 5, 8, 0.94);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--electric-blue);
+            box-shadow: 0 2px 15px rgba(0, 212, 255, 0.1);
         }
-        .hero p {
-            font-size: 1.4rem; max-width: 700px;
-            color: #8899a6; margin: 20px 0; z-index: 1;
+        .logo-group { display: flex; align-items: center; gap: 10px; text-decoration: none; color: inherit; }
+        .logo-group img {
+            width: 38px; height: 38px; border-radius: 50%;
+            border: 1px solid var(--monarch-blue);
+            filter: drop-shadow(0 0 6px var(--monarch-blue));
+            object-fit: cover;
         }
-        .cta-btn {
-            z-index: 1; margin-top: 20px;
-            padding: 18px 50px; background: transparent;
-            color: var(--electric-blue); border: 2px solid var(--electric-blue);
-            font-family: 'Orbitron', sans-serif; font-size: 1rem;
-            font-weight: bold; cursor: pointer; transition: 0.5s;
-            text-decoration: none; display: inline-block;
-            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
+        .brand-name {
+            font-family: var(--font-display); font-size: 1.4rem; font-weight: 700;
+            letter-spacing: 3px;
+            background: linear-gradient(135deg, #fff, var(--monarch-blue));
+            -webkit-background-clip: text; background-clip: text;
+            -webkit-text-fill-color: transparent; color: transparent;
         }
-        .cta-btn:hover {
-            background: var(--electric-blue); color: var(--deep-ocean);
-            box-shadow: 0 0 30px var(--electric-blue); transform: scale(1.05);
+        .nav-links { display: flex; gap: 18px; align-items: center; }
+        .nav-links a {
+            color: var(--text-muted); text-decoration: none;
+            font-family: var(--font-body); font-weight: 600; font-size: 1rem;
+            letter-spacing: 1px; text-transform: uppercase;
+            padding: 6px 0; position: relative; transition: color 0.3s;
+        }
+        .nav-links a::after {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 1px;
+            background: var(--monarch-blue); transition: width 0.3s ease;
+        }
+        .nav-links a:hover { color: var(--monarch-blue); }
+        .nav-links a:hover::after { width: 100%; }
+
+        /* ========== HERO ========== */
+        .hero {
+            min-height: 80vh; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; text-align: center;
+            padding: 40px 20px;
+            background: radial-gradient(circle at 50% 30%, rgba(0, 180, 220, 0.1) 0%, transparent 60%),
+                        radial-gradient(circle at 80% 70%, rgba(0, 100, 200, 0.06) 0%, transparent 50%);
+        }
+        .hero-title {
+            font-family: var(--font-display); font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 900; color: white;
+            text-shadow: 0 0 25px rgba(0, 212, 255, 0.4);
+            letter-spacing: 5px; margin-bottom: 15px;
+        }
+        .hero-subtitle { font-size: 1.2rem; max-width: 550px; color: var(--text-muted); margin-bottom: 25px; }
+        .cta-button {
+            display: inline-block; padding: 14px 35px;
+            background: transparent; color: var(--monarch-blue);
+            border: 1px solid var(--monarch-blue);
+            font-family: var(--font-display); font-size: 1rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 2px; text-decoration: none;
+            clip-path: polygon(8% 0, 100% 0, 92% 100%, 0% 100%);
+            transition: all 0.4s ease; position: relative; overflow: hidden;
+        }
+        .cta-button::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 229, 255, 0.25), transparent);
+            transition: left 0.5s;
+        }
+        .cta-button:hover { background: var(--monarch-blue); color: #000; box-shadow: 0 0 25px var(--monarch-blue); transform: scale(1.03); }
+        .cta-button:hover::before { left: 100%; }
+
+        /* ========== PRODUCT SECTION ========== */
+        .product-section {
+            padding: 70px 5%;
+            border-bottom: none;
+            position: relative;
+            z-index: 1;
+            background-color: var(--deep-ocean); /* background polos hitam pekat */
+        }
+
+        .product-container {
+            display: flex; align-items: center; gap: 40px; flex-wrap: wrap;
+            max-width: 1100px; margin: 0 auto;
+        }
+
+        .product-image-col {
+            flex: 1; min-width: 250px; text-align: center;
+            position: relative;
+        }
+
+        /* Glow biru hanya di sekitar gambar */
+        .glow-image-only {
+            position: relative;
+            display: inline-block;
+        }
+        .glow-image-only::after {
+            content: "";
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%; height: 100%;
+            background: radial-gradient(
+                circle,
+                rgba(0, 136, 255, 0.6) 0%,
+                rgba(0, 212, 255, 0.3) 35%,
+                transparent 70%
+            );
+            border-radius: 20px;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .glow-image-only img {
+            position: relative;
+            z-index: 1;
+            display: block;
+            width: 100%;
+            max-width: 320px;
+            border-radius: 10px;
+            box-shadow: 0 0 25px rgba(0, 212, 255, 0.15);
+            transition: transform 0.4s;
+        }
+        .glow-image-only img:hover { transform: scale(1.02); }
+
+        .product-text-col { flex: 1; min-width: 300px; }
+        .product-text-col h2 {
+            font-family: var(--font-display); font-size: 2.2rem; font-weight: 900;
+            background: linear-gradient(to right, #fff, var(--monarch-blue));
+            -webkit-background-clip: text; background-clip: text;
+            -webkit-text-fill-color: transparent; color: transparent;
+            margin-bottom: 10px; letter-spacing: 2px;
+        }
+        .product-text-col .tagline { font-size: 1rem; color: var(--text-muted); margin-bottom: 12px; font-weight: 500; }
+        .product-text-col details { margin-top: 10px; cursor: pointer; color: #b0b0b0; }
+        .product-text-col summary {
+            font-weight: 700; color: var(--monarch-blue); letter-spacing: 1px;
+            list-style: none; display: flex; align-items: center; gap: 8px; font-size: 0.9rem;
+        }
+        .product-text-col summary::before {
+            content: '▶'; display: inline-block; transition: transform 0.3s; font-size: 0.7rem;
+        }
+        .product-text-col details[open] summary::before { transform: rotate(90deg); }
+        .specs-list { margin-top: 10px; list-style: none; padding-left: 0; display: flex; flex-direction: column; gap: 6px; }
+        .specs-list li { display: flex; align-items: baseline; gap: 6px; font-size: 0.9rem; }
+        .specs-list li i { color: var(--monarch-blue); width: 18px; text-align: center; }
+        .price-box {
+            margin-top: 20px; padding: 15px 20px; background: rgba(18, 26, 36, 0.7);
+            border: 1px solid var(--monarch-blue); border-radius: 6px;
+            display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;
+        }
+        .price-box .price { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; color: white; }
+        .btn-market {
+            display: inline-block; padding: 10px 25px; background: var(--electric-blue); color: #000;
+            font-family: var(--font-display); font-weight: 700; text-decoration: none;
+            font-size: 0.9rem; letter-spacing: 1px; border-radius: 4px;
+            transition: 0.3s; border: 1px solid transparent; white-space: nowrap;
+        }
+        .btn-market:hover { background: #000; color: var(--electric-blue); border-color: var(--electric-blue); box-shadow: 0 0 15px var(--electric-blue); }
+
+        /* ========== FOOTER ========== */
+        .abyss-footer {
+            padding: 50px 5% 30px; background: #010306;
+            border-top: 1px solid var(--monarch-blue); text-align: center; position: relative; z-index: 1;
+        }
+        .abyss-footer h2 { font-family: var(--font-display); font-size: 1.6rem; color: var(--monarch-blue); margin-bottom: 12px; }
+        .abyss-footer p { color: var(--text-muted); font-size: 1rem; }
+        .wa-link { display: inline-block; margin-top: 18px; font-size: 1.4rem; color: white; text-decoration: none; font-family: var(--font-display); transition: color 0.3s; }
+        .wa-link:hover { color: var(--monarch-blue); }
+        .copyright { margin-top: 35px; font-size: 0.8rem; color: #555; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .leviathan-header { flex-direction: column; gap: 12px; }
+            .product-text-col h2 { font-size: 2rem; }
+            .glow-image-only img { max-width: 260px; }
         }
     </style>
 </head>
 <body>
-
-    <header>
-        <div class="logo-section">
-            <img src="assets/leviathan_store.png" alt="leviathan store">
+    <!-- ==================== HEADER ==================== -->
+    <header class="leviathan-header">
+        <a href="#" class="logo-group">
+            <img src="assets/leviathan_store.png" alt="Leviathan Logo">
             <span class="brand-name">LEVIATHAN</span>
-        </div>
-        <nav>
+        </a>
+        <nav class="nav-links">
             <a href="#">Home</a>
             <a href="#first-product">Devices</a>
             <a href="pages/leviathan_store_home.html">Store</a>
@@ -107,121 +261,125 @@
         </nav>
     </header>
 
-    <main>
-        <section class="hero">
-            <h1>ASCEND TO APEX</h1>
-            <p>Evolusi perangkat gaming dimulai di sini. Raihlah Kekuatan Absolote di Leviathan store.</p>
-            <a href="pages/leviathan_store_home.html" class="cta-btn">Enter The Deep</a>
-        </section>
+    <!-- ==================== HERO ==================== -->
+    <section class="hero">
+        <h1 class="hero-title">DIVE INTO THE ABYSS</h1>
+        <p class="hero-subtitle">Where monsters are born and legends are forged. Experience gaming hardware from the deepest trenches.</p>
+        <a href="pages/leviathan_store_home.html" class="cta-button">Enter The Deep</a>
+    </section>
 
-        <section id="first-product" style="padding: 100px 5%; background-color: var(--deep-ocean); border-bottom: 1px solid #1c232d;">
-            <div style="display: flex; align-items: center; gap: 50px; flex-wrap: wrap;">
-                <div style="flex: 1; min-width: 300px; text-align: center;">
-                    <img src="assets/handphone/leviathan/asus_rog_phone_9_pro.jpg" alt="Gaming Phone" style="width: 100%; max-width: 450px; border-radius: 20px; box-shadow: 0 0 30px rgba(0, 212, 255, 0.2);">
-                </div>
-                <div style="flex: 1; min-width: 300px;">
-                    <h2 style="font-family: 'Orbitron', sans-serif; color: var(--electric-blue); font-size: 2.5rem; margin-bottom: 10px;">ROG PHONE 9 PRO</h2>
-                    <p style="color: #8899a6; line-height: 1.6; font-size: 1.1rem;">AI ON GAME ON, mahakarya seluler yang memadukan gaming berkekuatan tinggi dengan estetika ramping dan modern</p>
-                    <details style="margin-top: 20px; color: #b0b0b0; cursor: pointer;">
-                        <summary style="font-weight: bold; color: var(--electric-blue);">Selengkapnya...</summary>
-                        <ul style="margin-top: 15px; list-style: none; padding-left: 0; line-height: 2;">
-                            <li>⚡ 16/24GB RAM &amp; chipset Snapdragon 8 Elite</li>
-                            <li>🧊 Sistem Pendingin SoC 360° Gen 3 &amp; AI CAPTURE 2.0</li>
-                            <li>📱 AMOLED E6 6,78 &amp; kecepatan refresh hingga 185 Hz</li>
-                            <li>🔋 5800mAh (SUPPORT NIRKABEL 60W DAN WIRELESS CHARGING 15W)</li>
-                        </ul>
-                        <div style="margin-top: 30px; padding: 20px; background: var(--charcoal); border-radius: 10px;">
-                            <span style="font-size: 1.8rem; color: white; font-weight: bold; display: block; margin-bottom: 15px;">Rp 19.999.000 / Rp 21.999.999</span>
-                            <a href="pages/leviathan_store_market.html" style="background: #ff0000; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold; font-family: 'Orbitron', sans-serif;">LIHAT DI MARKET</a>
-                        </div>
-                    </details>
+    <!-- ==================== PRODUCT 1: ROG PHONE 9 PRO ==================== -->
+    <section id="first-product" class="product-section">
+        <div class="product-container">
+            <div class="product-image-col glow-image-only">
+                <img src="assets/handphone/leviathan/asus_rog_phone_9_pro.jpg" alt="ROG Phone 9 Pro">
+            </div>
+            <div class="product-text-col">
+                <h2>ROG PHONE 9 PRO</h2>
+                <p class="tagline">AI ON GAME ON — mahakarya seluler yang memadukan gaming berkekuatan tinggi dengan estetika ramping.</p>
+                <details>
+                    <summary>Selengkapnya</summary>
+                    <ul class="specs-list">
+                        <li><i>⚡</i> 16/24GB RAM & Snapdragon 8 Elite</li>
+                        <li><i>🧊</i> Pendingin SoC 360° Gen 3 & AI CAPTURE 2.0</li>
+                        <li><i>📱</i> AMOLED E6 6,78" 185Hz</li>
+                        <li><i>🔋</i> 5800mAh (Wireless 15W)</li>
+                    </ul>
+                </details>
+                <div class="price-box">
+                    <span class="price">Rp 19.999.000</span>
+                    <a href="pages/leviathan_store_market.html" class="btn-market">LIHAT DI MARKET</a>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section style="padding: 100px 5%; background-color: var(--deep-ocean); border-bottom: 1px solid #1c232d;">
-            <div style="display: flex; align-items: center; gap: 50px; flex-wrap: wrap;">
-                <div style="flex: 1; min-width: 300px; text-align: center;">
-                    <img src="assets/handphone/leviathan/zte_nubia_redmagic_11_pro.jpeg" alt="Red Magic 11 Pro" style="width: 100%; max-width: 450px; border-radius: 20px; box-shadow: 0 0 30px rgba(0, 212, 255, 0.2);">
-                </div>
-                <div style="flex: 1; min-width: 300px;">
-                    <h2 style="font-family: 'Orbitron', sans-serif; color: var(--electric-blue); font-size: 2.5rem; margin-bottom: 10px;">RED MAGIC 11 PRO</h2>
-                    <p style="color: #8899a6; line-height: 1.6; font-size: 1.1rem;">Ignite the Next-Gen &amp; Win More Games</p>
-                    <details style="margin-top: 20px; color: #b0b0b0; cursor: pointer;">
-                        <summary style="font-weight: bold; color: var(--electric-blue);">Selengkapnya...</summary>
-                        <ul style="margin-top: 15px; list-style: none; padding-left: 0; line-height: 2;">
-                            <li>⚡ 16/24GB RAM &amp; Chipset Snapdragon 8 Elite Gen 5</li>
-                            <li>🧊 AquaCore Cooling System</li>
-                            <li>📱 BOE X10 AMOLED &amp; refresh 144Hz 1.5K</li>
-                            <li>🔋 7.500 mAh (SUPPORT WIRELESS 80W)</li>
-                        </ul>
-                        <div style="margin-top: 30px; padding: 20px; background: var(--charcoal); border-radius: 10px;">
-                            <span style="font-size: 1.8rem; color: white; font-weight: bold; display: block; margin-bottom: 15px;">Rp 19.500.000 / Rp 23.000.000</span>
-                            <a href="pages/leviathan_store_market.html" style="background: #ff0000; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold; font-family: 'Orbitron', sans-serif;">LIHAT DI MARKET</a>
-                        </div>
-                    </details>
+    <!-- ==================== PRODUCT 2: RED MAGIC 11 PRO ==================== -->
+    <section class="product-section">
+        <div class="product-container">
+            <div class="product-image-col glow-image-only">
+                <img src="assets/handphone/leviathan/zte_nubia_redmagic_11_pro.jpeg" alt="Red Magic 11 Pro">
+            </div>
+            <div class="product-text-col">
+                <h2>RED MAGIC 11 PRO</h2>
+                <p class="tagline">Ignite the Next-Gen & Win More Games.</p>
+                <details>
+                    <summary>Selengkapnya</summary>
+                    <ul class="specs-list">
+                        <li><i>⚡</i> Snapdragon 8 Elite Gen 5</li>
+                        <li><i>🧊</i> AquaCore Cooling System</li>
+                        <li><i>📱</i> BOE X10 AMOLED 144Hz 1.5K</li>
+                        <li><i>🔋</i> 7.500mAh (80W Wireless)</li>
+                    </ul>
+                </details>
+                <div class="price-box">
+                    <span class="price">Rp 19.500.000</span>
+                    <a href="pages/leviathan_store_market.html" class="btn-market">LIHAT DI MARKET</a>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section style="padding: 100px 5%; background-color: var(--deep-ocean); border-bottom: 1px solid #1c232d;">
-            <div style="display: flex; align-items: center; gap: 50px; flex-wrap: wrap;">
-                <div style="flex: 1; min-width: 300px; text-align: center;">
-                    <img src="assets/handphone/poseidon/xiaomi_14t_pro.jpg" alt="Xiaomi" style="width: 100%; max-width: 450px; border-radius: 20px; box-shadow: 0 0 30px rgba(0, 212, 255, 0.2);">
-                </div>
-                <div style="flex: 1; min-width: 300px;">
-                    <h2 style="font-family: 'Orbitron', sans-serif; color: var(--electric-blue); font-size: 2.5rem; margin-bottom: 10px;">XIAOMI 14T PRO</h2>
-                    <p style="color: #8899a6; line-height: 1.6; font-size: 1.1rem;">Make friends with users and be the coolest company</p>
-                    <details style="margin-top: 20px; color: #b0b0b0; cursor: pointer;">
-                        <summary style="font-weight: bold; color: var(--electric-blue);">Selengkapnya...</summary>
-                        <ul style="margin-top: 15px; list-style: none; padding-left: 0; line-height: 2;">
-                            <li>⚡ MediaTek Dimensity 9300+</li>
-                            <li>📱 6.67" AMOLED 144Hz 4000 nits</li>
-                            <li>📸 50MP Leica Summilux triple cam</li>
-                            <li>🔋 5000mAh + 120W HyperCharge</li>
-                        </ul>
-                        <div style="margin-top: 30px; padding: 20px; background: var(--charcoal); border-radius: 10px;">
-                            <span style="font-size: 1.8rem; color: white; font-weight: bold; display: block; margin-bottom: 15px;">Rp 7.499.000</span>
-                            <a href="pages/leviathan_store_market.html" style="background: #ff0000; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold; font-family: 'Orbitron', sans-serif;">LIHAT DI MARKET</a>
-                        </div>
-                    </details>
+    <!-- ==================== PRODUCT 3: XIAOMI 14T PRO ==================== -->
+    <section class="product-section">
+        <div class="product-container">
+            <div class="product-image-col glow-image-only">
+                <img src="assets/handphone/poseidon/xiaomi_14t_pro.jpg" alt="Xiaomi 14T Pro">
+            </div>
+            <div class="product-text-col">
+                <h2>XIAOMI 14T PRO</h2>
+                <p class="tagline">Make friends with users and be the coolest company.</p>
+                <details>
+                    <summary>Selengkapnya</summary>
+                    <ul class="specs-list">
+                        <li><i>⚡</i> MediaTek Dimensity 9300+</li>
+                        <li><i>📱</i> 6.67" AMOLED 144Hz 4000 nits</li>
+                        <li><i>📸</i> 50MP Leica Summilux triple cam</li>
+                        <li><i>🔋</i> 5000mAh + 120W HyperCharge</li>
+                    </ul>
+                </details>
+                <div class="price-box">
+                    <span class="price">Rp 7.499.000</span>
+                    <a href="pages/leviathan_store_market.html" class="btn-market">LIHAT DI MARKET</a>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section style="padding: 100px 5%; background-color: var(--deep-ocean); border-bottom: 1px solid #1c232d;">
-            <div style="display: flex; align-items: center; gap: 50px; flex-wrap: wrap;">
-                <div style="flex: 1; min-width: 300px; text-align: center;">
-                    <img src="assets/handphone/leviathan/samsung_galaxy_s26_ultra_new.jpg" alt="Samsung Galaxy S26 Ultra" style="width: 100%; max-width: 450px; border-radius: 20px; box-shadow: 0 0 30px rgba(0, 212, 255, 0.2);">
-                </div>
-                <div style="flex: 1; min-width: 300px;">
-                    <h2 style="font-family: 'Orbitron', sans-serif; color: var(--electric-blue); font-size: 2.5rem; margin-bottom: 10px;">SAMSUNG GALAXY S26 ULTRA</h2>
-                    <p style="color: #8899a6; line-height: 1.6; font-size: 1.1rem;">The Next Big Thing Is You</p>
-                    <details style="margin-top: 20px; color: #b0b0b0; cursor: pointer;">
-                        <summary style="font-weight: bold; color: var(--electric-blue);">Selengkapnya...</summary>
-                        <ul style="margin-top: 15px; list-style: none; padding-left: 0; line-height: 2;">
-                            <li>🌌 Snapdragon 8 Elite For Galaxy</li>
-                            <li>📱 Dynamic AMOLED 2X 6.9" 120Hz</li>
-                            <li>📸 200MP quad camera</li>
-                            <li>🔋 5000mAh + 45W fast charge</li>
-                        </ul>
-                        <div style="margin-top: 30px; padding: 20px; background: var(--charcoal); border-radius: 10px;">
-                            <span style="font-size: 1.8rem; color: white; font-weight: bold; display: block; margin-bottom: 15px;">Rp 18.999.000</span>
-                            <a href="pages/leviathan_store_market.html" style="background: #ff0000; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold; font-family: 'Orbitron', sans-serif;">LIHAT DI MARKET</a>
-                        </div>
-                    </details>
+    <!-- ==================== PRODUCT 4: SAMSUNG GALAXY S26 ULTRA ==================== -->
+    <section class="product-section">
+        <div class="product-container">
+            <div class="product-image-col glow-image-only">
+                <img src="assets/handphone/leviathan/samsung_galaxy_s26_ultra_new.jpg" alt="Samsung Galaxy S26 Ultra">
+            </div>
+            <div class="product-text-col">
+                <h2>SAMSUNG GALAXY S26 ULTRA</h2>
+                <p class="tagline">The Next Big Thing Is You.</p>
+                <details>
+                    <summary>Selengkapnya</summary>
+                    <ul class="specs-list">
+                        <li><i>🌌</i> Snapdragon 8 Elite For Galaxy</li>
+                        <li><i>📱</i> Dynamic AMOLED 2X 6.9" 120Hz</li>
+                        <li><i>📸</i> 200MP quad camera</li>
+                        <li><i>🔋</i> 5000mAh + 45W fast charge</li>
+                    </ul>
+                </details>
+                <div class="price-box">
+                    <span class="price">Rp 18.999.000</span>
+                    <a href="pages/leviathan_store_market.html" class="btn-market">LIHAT DI MARKET</a>
                 </div>
             </div>
-        </section>
-    </main>
+        </div>
+    </section>
 
-    <footer id="contact-info" style="padding: 50px 5%; background: var(--charcoal); text-align: center; border-top: 2px solid var(--electric-blue);">
-        <h2 style="font-family: 'Orbitron', sans-serif; color: var(--electric-blue);">HUBUNGI KAMI</h2>
-        <p style="font-size: 1.2rem; color: #b0b0b0;">Siap untuk mendominasi Lautan, hubungi admin di:</p>
-        <a href="https://wa.me/6282374176977" target="_blank" style="font-size: 2rem; color: white; text-decoration: none; font-family: 'Orbitron', sans-serif; display: block; margin-top: 20px;">
-            +62 823-7417-6977 (whatsapp)
+    <!-- ==================== FOOTER ==================== -->
+    <footer id="contact-info" class="abyss-footer">
+        <h2>📡 HUBUNGI ADMIN</h2>
+        <p>Siap untuk mendominasi lautan? Hubungi kami langsung.</p>
+        <a href="https://wa.me/6282374176977" target="_blank" class="wa-link">
+            +62 823-7417-6977 (WhatsApp)
         </a>
-        <p style="margin-top: 30px; font-size: 0.9rem; color: #555;">&copy; 2026 Leviathan Store. Semua Hak Dilindungi.</p>
+        <p class="copyright">© 2026 Leviathan Store — Absolute Apex Performance. All rights reserved.</p>
     </footer>
 </body>
 </html>
