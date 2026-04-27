@@ -266,43 +266,35 @@ function updateDepthGauge() {
   });
 }
 
-/* ─── AUTO HIDE HEADER + FILTER BAR ─────────────────────────── */
+/* ─── SCROLL: SEMBUNYIKAN TOP BAR + DEPTH GAUGE ─────────────── */
+const topBar = document.getElementById('marketTopBar');
 const header = document.getElementById('marketHeader');
-const filterBar = document.getElementById('filterBar');
-
 let lastScrollY = window.scrollY;
-const scrollThreshold = 8;
+const SCROLL_THRESHOLD = 10;
 
-function handleHeaderAndFilterVisibility() {
+function handleScroll() {
   const currentScrollY = window.scrollY;
-  const scrollDiff = currentScrollY - lastScrollY;
+  const diff = currentScrollY - lastScrollY;
 
-  if (Math.abs(scrollDiff) < scrollThreshold) return;
+  // Shadow pada header saat tidak di paling atas
+  header?.classList.toggle('scrolled', currentScrollY > 10);
 
-  /* Selalu tampil di atas halaman */
+  // Sembunyikan / tampilkan top bar (header + breadcrumb + filter)
   if (currentScrollY <= 10) {
-    header?.classList.remove('header-hidden');
-    filterBar?.classList.remove('filter-hidden');
-    filterBar?.classList.remove('header-hidden-state');
-    lastScrollY = currentScrollY;
-    return;
-  }
-
-  const isScrollingDown = scrollDiff > 0;
-  const isScrollingUp = scrollDiff < 0;
-
-  if (isScrollingDown && currentScrollY > 120) {
-    header?.classList.add('header-hidden');
-    filterBar?.classList.add('filter-hidden');
-    filterBar?.classList.add('header-hidden-state');
-  } else if (isScrollingUp) {
-    header?.classList.remove('header-hidden');
-    filterBar?.classList.remove('filter-hidden');
-    filterBar?.classList.remove('header-hidden-state');
+    topBar?.classList.remove('header-hidden');
+  } else if (diff > SCROLL_THRESHOLD && currentScrollY > 150) {
+    // Scroll ke bawah & sudah cukup jauh → sembunyikan
+    topBar?.classList.add('header-hidden');
+  } else if (diff < -SCROLL_THRESHOLD) {
+    // Scroll ke atas → tampilkan
+    topBar?.classList.remove('header-hidden');
   }
 
   lastScrollY = currentScrollY;
+  updateDepthGauge();
 }
+
+window.addEventListener('scroll', handleScroll, { passive: true });
 
 /* ─── HEADER SHADOW ─────────────────────────────────────────── */
 function updateHeaderShadow() {
@@ -355,21 +347,10 @@ abyssToggle?.addEventListener('click', async () => {
   }
 })();
 
-/* ─── SCROLL LISTENERS ──────────────────────────────────────── */
-window.addEventListener('scroll', () => {
-  handleHeaderAndFilterVisibility();
-  updateHeaderShadow();
-  updateDepthGauge();
-}, { passive: true });
-
 /* ─── INIT ──────────────────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
   updateCartBadge();
   applyFilters();
   updateDepthGauge();
   updateHeaderShadow();
-
-  header?.classList.remove('header-hidden');
-  filterBar?.classList.remove('filter-hidden');
-  filterBar?.classList.remove('header-hidden-state');
 });
