@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Leviathan Store | Transaksi</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <link rel="stylesheet" href="../css/leviathan_store_transaksi.css">
+</head>
+
+<body class="trx-body">
+
+  <div class="scan-line-global" aria-hidden="true"></div>
+
+  <!-- HEADER -->
+  <header class="trx-header" id="trxHeader">
+    <a href="leviathan_store_home.html" class="trx-logo">
+      <div class="trx-logo-orb">
+        <img src="../assets/leviathan_store.png" alt="Leviathan Store">
+      </div>
+
+      <div>
+        <span>LEVIATHAN</span>
+        <small>STORE</small>
+      </div>
+    </a>
+
+    <div class="trx-mini-steps">
+      <span class="mini-step active" data-step-mini="cart">CART</span>
+      <i class="fas fa-chevron-right"></i>
+      <span class="mini-step" data-step-mini="checkout">CHECKOUT</span>
+      <i class="fas fa-chevron-right"></i>
+      <span class="mini-step" data-step-mini="receipt">RECEIPT</span>
+    </div>
+
+    <nav class="trx-tools">
+      <a href="leviathan_store_home.html" title="Home">
+        <i class="fas fa-home"></i>
+      </a>
+
+      <a href="leviathan_store_market.html" title="Market">
+        <i class="fas fa-store"></i>
+      </a>
+
+      <a href="leviathan_store_user.html#wishlist" title="Wishlist">
+        <i class="fas fa-heart"></i>
+      </a>
+
+      <a href="leviathan_store_user.html" title="User">
+        <i class="fas fa-user"></i>
+      </a>
+    </nav>
+  </header>
+
+  <main class="trx-main">
+
+    <!-- HERO -->
+    <section class="trx-hero">
+      <span class="trx-tag">[ LEVIATHAN CHECKOUT SYSTEM ]</span>
+      <h1>CONTRACT CHECKOUT</h1>
+      <p>
+        Periksa keranjang, isi data pengiriman, pilih pembayaran, lalu sistem akan membuat
+        struk belanja Leviathan Store.
+      </p>
+
+      <div class="trx-stepper">
+        <div class="step-node active" data-step-node="cart">
+          <span>01</span>
+          <p>Cart</p>
+        </div>
+
+        <div class="step-line"></div>
+
+        <div class="step-node" data-step-node="checkout">
+          <span>02</span>
+          <p>Checkout</p>
+        </div>
+
+        <div class="step-line"></div>
+
+        <div class="step-node" data-step-node="receipt">
+          <span>03</span>
+          <p>Receipt</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 1: CART -->
+    <section class="trx-section active" id="cartSection">
+
+      <div class="trx-section-head">
+        <span class="trx-tag">[ STEP 01 // CART ]</span>
+        <h2>KERANJANG BELANJA</h2>
+        <p>Produk dari Market dan Wishlist akan muncul otomatis di sini.</p>
+      </div>
+
+      <div class="trx-layout">
+
+        <div class="trx-content">
+
+          <section class="trx-panel">
+            <div class="panel-head">
+              <div>
+                <i class="fas fa-cart-shopping"></i>
+                <span>CART SUMMARY</span>
+              </div>
+
+              <strong id="cartItemCount">0 ITEM</strong>
+            </div>
+
+            <div class="cart-list" id="cartList">
+              <!-- JS render cart item -->
+            </div>
+
+            <div class="cart-empty hidden" id="cartEmpty">
+              <i class="fas fa-cart-arrow-down"></i>
+              <h3>Keranjang Kosong</h3>
+              <p>Belum ada produk yang kamu pilih.</p>
+
+              <a href="leviathan_store_market.html" class="btn-primary">
+                <span>BUKA MARKET</span>
+                <i class="fas fa-store"></i>
+              </a>
+            </div>
+          </section>
+
+          <div class="cart-actions" id="cartActions">
+            <a href="leviathan_store_market.html" class="btn-ghost">
+              <i class="fas fa-arrow-left"></i>
+              <span>LANJUTKAN BELANJA</span>
+            </a>
+
+            <button class="btn-primary" id="goCheckoutBtn" type="button">
+              <span>LANJUT KE CHECKOUT</span>
+              <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
+
+        </div>
+
+        <aside class="trx-sidebar">
+
+          <section class="trx-panel promo-panel">
+            <div class="panel-head">
+              <div>
+                <i class="fas fa-ticket"></i>
+                <span>PROMO CODE</span>
+              </div>
+            </div>
+
+            <div class="promo-input-row">
+              <input type="text" id="promoInput" placeholder="Contoh: LEVI10">
+              <button id="applyPromoBtn" type="button">
+                <i class="fas fa-check"></i>
+              </button>
+            </div>
+
+            <p class="promo-feedback" id="promoFeedback">
+              Kode promo: LEVI10, ABYSS15, HUNTER20, MONARCH25, SOVEREIGN50K.
+            </p>
+          </section>
+
+          <section class="trx-panel total-panel">
+            <span class="sidebar-label">CART TOTAL</span>
+
+            <div class="price-row">
+              <span>Subtotal</span>
+              <strong id="cartSubtotal">Rp 0</strong>
+            </div>
+
+            <div class="price-row discount hidden" id="cartDiscountRow">
+              <span>Diskon</span>
+              <strong id="cartDiscount">- Rp 0</strong>
+            </div>
+
+            <div class="price-divider"></div>
+
+            <div class="price-row grand">
+              <span>Total Sementara</span>
+              <strong id="cartTotal">Rp 0</strong>
+            </div>
+          </section>
+
+        </aside>
+
+      </div>
+    </section>
+
+    <!-- STEP 2: CHECKOUT -->
+    <section class="trx-section hidden" id="checkoutSection">
+
+      <div class="trx-section-head">
+        <span class="trx-tag">[ STEP 02 // CHECKOUT ]</span>
+        <h2>CHECKOUT PESANAN</h2>
+        <p>Isi data penerima, pilih kurir, lalu pilih metode pembayaran.</p>
+      </div>
+
+      <div class="trx-layout">
+
+        <div class="trx-content">
+
+          <!-- DATA PENERIMA -->
+          <section class="trx-panel">
+            <div class="panel-head">
+              <div>
+                <i class="fas fa-user-shield"></i>
+                <span>DATA PENERIMA</span>
+              </div>
+
+              <strong>AUTO FILL</strong>
+            </div>
+
+            <form class="checkout-form" id="checkoutForm">
+
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="buyerName">Nama Lengkap</label>
+                  <div class="input-shell">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="buyerName" placeholder="Nama penerima">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="buyerPhone">Nomor WhatsApp</label>
+                  <div class="input-shell">
+                    <i class="fab fa-whatsapp"></i>
+                    <input type="tel" id="buyerPhone" placeholder="+62 8xx xxxx xxxx">
+                  </div>
+                </div>
+
+                <div class="form-group full">
+                  <label for="buyerAddress">Alamat Lengkap</label>
+                  <div class="input-shell textarea-shell">
+                    <i class="fas fa-location-dot"></i>
+                    <textarea id="buyerAddress" rows="4" placeholder="Jalan, nomor rumah, kota, provinsi, kode pos"></textarea>
+                  </div>
+                </div>
+
+                <div class="form-group full">
+                  <label for="buyerNote">Catatan Tambahan</label>
+                  <div class="input-shell textarea-shell">
+                    <i class="fas fa-note-sticky"></i>
+                    <textarea id="buyerNote" rows="3" placeholder="Opsional"></textarea>
+                  </div>
+                </div>
+              </div>
+
+            </form>
+          </section>
+
+          <!-- SHIPPING -->
+          <section class="trx-panel">
+            <div class="panel-head">
+              <div>
+                <i class="fas fa-truck-fast"></i>
+                <span>PENGIRIMAN</span>
+              </div>
+
+              <strong>SHIPPING</strong>
+            </div>
+
+            <div class="option-grid" id="shippingOptions">
+
+              <label class="option-card">
+                <input type="radio" name="shipping" value="JNE Regular" data-cost="20000" checked>
+                <div>
+                  <strong>JNE Regular</strong>
+                  <span>Estimasi 2–4 hari</span>
+                  <p>Rp 20.000</p>
+                </div>
+              </label>
+
+              <label class="option-card">
+                <input type="radio" name="shipping" value="J&T Express" data-cost="22000">
+                <div>
+                  <strong>J&T Express</strong>
+                  <span>Estimasi 2–5 hari</span>
+                  <p>Rp 22.000</p>
+                </div>
+              </label>
+
+              <label class="option-card">
+                <input type="radio" name="shipping" value="SiCepat BEST" data-cost="25000">
+                <div>
+                  <strong>SiCepat BEST</strong>
+                  <span>Estimasi 1–3 hari</span>
+                  <p>Rp 25.000</p>
+                </div>
+              </label>
+
+              <label class="option-card">
+                <input type="radio" name="shipping" value="Cargo + Packing Kayu" data-cost="50000">
+                <div>
+                  <strong>Cargo + Packing Kayu</strong>
+                  <span>Untuk produk besar/mahal</span>
+                  <p>Rp 50.000</p>
+                </div>
+              </label>
+
+            </div>
+
+            <p class="panel-note">
+              <i class="fas fa-shield-halved"></i>
+              Untuk barang mahal, packing tambahan sangat disarankan.
+            </p>
+          </section>
+
+          <!-- PAYMENT -->
+          <section class="trx-panel">
+            <div class="panel-head">
+              <div>
+                <i class="fas fa-credit-card"></i>
+                <span>PEMBAYARAN</span>
+              </div>
+
+              <strong>PAYMENT</strong>
+            </div>
+
+            <div class="payment-block">
+              <h3>Transfer Bank</h3>
+
+              <div class="payment-grid">
+                <label class="payment-card">
+                  <input type="radio" name="payment" value="BCA Virtual Account" checked>
+                  <span>BCA</span>
+                </label>
+
+                <label class="payment-card">
+                  <input type="radio" name="payment" value="Mandiri Virtual Account">
+                  <span>Mandiri</span>
+                </label>
+
+                <label class="payment-card">
+                  <input type="radio" name="payment" value="BNI Virtual Account">
+                  <span>BNI</span>
+                </label>
+
+                <label class="payment-card">
+                  <input type="radio" name="payment" value="BRI Virtual Account">
+                  <span>BRI</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="payment-block">
+              <h3>E-Wallet</h3>
+
+              <div class="payment-grid">
+                <label class="payment-card">
+                  <input type="radio" name="payment" value="GoPay">
+                  <span>GoPay</span>
+                </label>
+
+                <label class="payment-card">
+                  <input type="radio" name="payment" value="OVO">
+                  <span>OVO</span>
+                </label>
+
+                <label class="payment-card">
+                  <input type="radio" name="payment" value="DANA">
+                  <span>DANA</span>
+                </label>
+
+                <label class="payment-card">
+                  <input type="radio" name="payment" value="ShopeePay">
+                  <span>ShopeePay</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="payment-block">
+              <h3>QRIS / Gerai</h3>
+
+              <div class="payment-grid">
+                <label class="payment-card">
+                  <input type="radio" name="payment" value="QRIS">
+                  <span>QRIS</span>
+                </label>
+
+                <label class="payment-card">
+                  <input type="radio" name="payment" value="Indomaret / Alfamart">
+                  <span>Retail</span>
+                </label>
+              </div>
+            </div>
+          </section>
+
+          <button class="checkout-back" id="backToCartBtn" type="button">
+            <i class="fas fa-arrow-left"></i>
+            <span>KEMBALI KE KERANJANG</span>
+          </button>
+
+        </div>
+
+        <aside class="trx-sidebar">
+          <section class="trx-panel order-summary-panel">
+            <span class="sidebar-label">ORDER SUMMARY</span>
+
+            <div class="summary-preview" id="summaryPreview">
+              <!-- JS render ringkasan item -->
+            </div>
+
+            <div class="price-divider"></div>
+
+            <div class="price-row">
+              <span>Subtotal Produk</span>
+              <strong id="summarySubtotal">Rp 0</strong>
+            </div>
+
+            <div class="price-row">
+              <span>Ongkir</span>
+              <strong id="summaryShipping">Rp 0</strong>
+            </div>
+
+            <div class="price-row discount hidden" id="summaryDiscountRow">
+              <span>Diskon</span>
+              <strong id="summaryDiscount">- Rp 0</strong>
+            </div>
+
+            <div class="price-divider"></div>
+
+            <div class="price-row grand">
+              <span>Total Bayar</span>
+              <strong id="summaryGrandTotal">Rp 0</strong>
+            </div>
+
+            <button class="btn-pay" id="payNowBtn" type="button">
+              <span>BUAT PESANAN</span>
+              <i class="fas fa-lock"></i>
+            </button>
+          </section>
+        </aside>
+
+      </div>
+    </section>
+
+    <!-- STEP LOADING -->
+    <section class="trx-loading hidden" id="loadingSection">
+      <div class="loading-box">
+        <div class="loading-core">
+          <i class="fas fa-dragon"></i>
+          <span></span>
+          <span></span>
+        </div>
+
+        <span class="trx-tag">[ SYSTEM PROCESSING ]</span>
+        <h2>Membuat Pesanan...</h2>
+        <p>Sistem sedang membuat nomor pesanan dan struk belanja.</p>
+
+        <div class="loading-bar">
+          <div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 3: RECEIPT -->
+    <section class="trx-section hidden" id="receiptSection">
+
+      <div class="receipt-success">
+        <div class="success-icon">
+          <i class="fas fa-circle-check"></i>
+        </div>
+
+        <span class="trx-tag">[ PAYMENT STATUS ]</span>
+        <h2>PESANAN BERHASIL DIBUAT!</h2>
+        <p>Struk Leviathan Store sudah dibuat. Kamu bisa cetak atau simpan sebagai PDF.</p>
+      </div>
+
+      <article class="leviathan-receipt" id="leviathanReceipt">
+
+        <div class="receipt-watermark">LEVIATHAN</div>
+
+        <div class="receipt-header">
+          <div class="receipt-brand">
+            <img src="../assets/leviathan_store.png" alt="Leviathan Store">
+
+            <div>
+              <h3>LEVIATHAN STORE</h3>
+              <p>Official Gaming Arsenal Receipt</p>
+            </div>
+          </div>
+
+          <div class="receipt-status">
+            <i class="fas fa-check"></i>
+            <span>TERKONFIRMASI</span>
+          </div>
+        </div>
+
+        <div class="receipt-info-grid">
+          <div>
+            <span>NO. PESANAN</span>
+            <strong id="receiptOrderNumber">LEV-000000</strong>
+          </div>
+
+          <div>
+            <span>TANGGAL</span>
+            <strong id="receiptDate">-</strong>
+          </div>
+
+          <div>
+            <span>PEMBAYARAN</span>
+            <strong id="receiptPayment">-</strong>
+          </div>
+
+          <div>
+            <span>PENGIRIMAN</span>
+            <strong id="receiptShipping">-</strong>
+          </div>
+        </div>
+
+        <section class="receipt-section">
+          <h4>DATA PENERIMA</h4>
+
+          <p><strong>Nama:</strong> <span id="receiptBuyerName">-</span></p>
+          <p><strong>WhatsApp:</strong> <span id="receiptBuyerPhone">-</span></p>
+          <p><strong>Alamat:</strong> <span id="receiptBuyerAddress">-</span></p>
+        </section>
+
+        <section class="receipt-section">
+          <h4>RINGKASAN BARANG</h4>
+
+          <div id="receiptItems">
+            <!-- JS render receipt items -->
+          </div>
+        </section>
+
+        <section class="receipt-section">
+          <h4>RINCIAN PEMBAYARAN</h4>
+
+          <div class="receipt-row">
+            <span>Subtotal Produk</span>
+            <strong id="receiptSubtotal">Rp 0</strong>
+          </div>
+
+          <div class="receipt-row">
+            <span>Biaya Pengiriman</span>
+            <strong id="receiptShippingCost">Rp 0</strong>
+          </div>
+
+          <div class="receipt-row hidden" id="receiptDiscountRow">
+            <span>Diskon Promo</span>
+            <strong id="receiptDiscount">- Rp 0</strong>
+          </div>
+
+          <div class="receipt-row total">
+            <span>TOTAL DIBAYAR</span>
+            <strong id="receiptGrandTotal">Rp 0</strong>
+          </div>
+
+          <p class="payment-instruction" id="receiptPaymentInstruction">
+            Instruksi pembayaran akan muncul di sini.
+          </p>
+        </section>
+
+        <div class="receipt-bottom">
+          <div class="fake-barcode">
+            <span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+
+          <div class="leviathan-stamp">
+            <span>LEVIATHAN</span>
+            <strong>STORE</strong>
+            <p>APPROVED</p>
+          </div>
+        </div>
+
+        <footer class="receipt-footer">
+          <p>
+            Simpan struk ini sebagai bukti pemesanan. Untuk konfirmasi manual,
+            hubungi WhatsApp Leviathan Store.
+          </p>
+        </footer>
+
+      </article>
+
+      <div class="receipt-actions">
+        <a href="https://wa.me/6282374176977" target="_blank" class="btn-primary" id="whatsappConfirmBtn">
+          <i class="fab fa-whatsapp"></i>
+          <span>KONFIRMASI WHATSAPP</span>
+        </a>
+
+        <button class="btn-ghost" id="printReceiptBtn" type="button">
+          <i class="fas fa-print"></i>
+          <span>CETAK / SIMPAN PDF</span>
+        </button>
+
+        <a href="leviathan_store_market.html" class="btn-ghost">
+          <i class="fas fa-store"></i>
+          <span>KEMBALI KE MARKET</span>
+        </a>
+
+        <a href="leviathan_store_user.html#orders" class="btn-primary">
+          <i class="fas fa-receipt"></i>
+          <span>LIHAT PESANAN</span>
+        </a>
+      </div>
+
+    </section>
+
+  </main>
+
+  <div class="trx-toast hidden" id="trxToast">
+    <i class="fas fa-circle-check"></i>
+    <span>Berhasil</span>
+  </div>
+
+  <script src="../js/leviathan_store_transaksi.js"></script>
+</body>
+</html>
