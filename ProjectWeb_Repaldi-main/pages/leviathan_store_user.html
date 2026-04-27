@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Leviathan Store | Hunter Terminal</title>
+
+  <!-- FONTS -->
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+
+  <!-- FONT AWESOME -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- CSS USER -->
+  <link rel="stylesheet" href="../css/leviathan_store_user.css">
+</head>
+
+<body class="user-body">
+
+  <!-- ============================================================ -->
+  <!-- GLOBAL SCAN LINE                                             -->
+  <!-- ============================================================ -->
+  <div class="scan-line-global" aria-hidden="true"></div>
+
+  <!-- ============================================================ -->
+  <!-- LOGOUT CONFIRM MODAL                                         -->
+  <!-- ============================================================ -->
+  <div class="logout-modal hidden" id="logoutModal" aria-hidden="true">
+    <div class="logout-modal-backdrop" data-close-logout></div>
+
+    <div class="logout-box">
+      <div class="logout-box-scan"></div>
+
+      <div class="logout-icon">
+        <i class="fas fa-door-open"></i>
+      </div>
+
+      <span class="logout-label">[ EXIT PROTOCOL DETECTED ]</span>
+      <h2>Putuskan Kontrak?</h2>
+
+      <p>
+        Kamu akan keluar dari Hunter Terminal. Sesi identitas akan diputus,
+        dan akses profil akan dikunci sampai kamu melakukan login kembali.
+      </p>
+
+      <div class="logout-actions">
+        <button class="btn-danger" id="confirmLogoutBtn" type="button">
+          <span>YA, KELUAR</span>
+          <i class="fas fa-power-off"></i>
+        </button>
+
+        <button class="btn-safe" id="cancelLogoutBtn" type="button">
+          <span>BATALKAN</span>
+          <i class="fas fa-shield-halved"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- HEADER                                                       -->
+  <!-- ============================================================ -->
+  <header id="userHeader">
+
+    <div class="logo-group">
+      <a href="leviathan_store_home.html" class="logo-link">
+        <div class="crest-wrapper">
+          <img src="../assets/leviathan_store.png" alt="Leviathan Logo" class="header-crest">
+          <div class="crest-glow" aria-hidden="true"></div>
+        </div>
+
+        <div class="logo-text-group">
+          <span class="logo-title">LEVIATHAN</span>
+          <span class="logo-sub">STORE</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="search-container">
+      <div class="search-wrapper">
+        <i class="fas fa-search search-icon"></i>
+        <input
+          type="text"
+          id="userSearch"
+          placeholder="Search Hunter Terminal, orders, wishlist..."
+          autocomplete="off"
+        >
+        <button class="search-clear hidden" id="searchClear" aria-label="Clear search">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <div class="search-suggestions hidden" id="searchSuggestions"></div>
+    </div>
+
+    <div class="user-tools">
+      <a href="#" class="tool-btn" title="Notifications" id="notifBtn">
+        <i class="fas fa-bell"></i>
+        <span class="tool-badge hidden" id="notifBadge">0</span>
+      </a>
+
+      <a href="leviathan_store_transaksi.html" class="tool-btn" title="Cart" id="cartBtn">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="tool-badge hidden" id="cartBadge">0</span>
+      </a>
+
+      <a href="leviathan_store_home.html" class="tool-btn" title="Home">
+        <i class="fas fa-home"></i>
+      </a>
+
+      <a href="leviathan_store_market.html" class="tool-btn" title="Market">
+        <i class="fas fa-store"></i>
+      </a>
+
+      <a href="leviathan_store_other.html" class="tool-btn" title="Codex">
+        <i class="fas fa-book"></i>
+      </a>
+    </div>
+
+  </header>
+
+  <!-- ============================================================ -->
+  <!-- LEFT SIDEBAR NAVIGATION                                      -->
+  <!-- ============================================================ -->
+  <aside class="hunter-sidebar" id="hunterSidebar">
+
+    <div class="sidebar-label">
+      <i class="fas fa-terminal"></i>
+      <span>HUNTER TERMINAL</span>
+    </div>
+
+    <nav class="sidebar-links">
+      <a href="#profile" class="sidebar-link active" data-section="profile">
+        <i class="fas fa-id-card"></i>
+        <span>PROFILE</span>
+      </a>
+
+      <a href="#orders" class="sidebar-link" data-section="orders">
+        <i class="fas fa-receipt"></i>
+        <span>ORDERS</span>
+      </a>
+
+      <a href="#wishlist" class="sidebar-link" data-section="wishlist">
+        <i class="fas fa-heart"></i>
+        <span>WISHLIST</span>
+      </a>
+
+      <div class="sidebar-sep"></div>
+
+      <a href="#address" class="sidebar-link" data-section="address">
+        <i class="fas fa-location-dot"></i>
+        <span>ADDRESS</span>
+      </a>
+
+      <a href="#settings" class="sidebar-link" data-section="settings">
+        <i class="fas fa-gear"></i>
+        <span>SETTINGS</span>
+      </a>
+
+      <a href="#logout" class="sidebar-link danger-link" data-section="logout">
+        <i class="fas fa-right-from-bracket"></i>
+        <span>LOGOUT</span>
+      </a>
+    </nav>
+
+  </aside>
+
+  <!-- ============================================================ -->
+  <!-- MAIN CONTENT                                                 -->
+  <!-- ============================================================ -->
+  <main class="user-main">
+
+    <!-- ============================================================ -->
+    <!-- HERO / TERMINAL OPENING                                      -->
+    <!-- ============================================================ -->
+    <section class="terminal-hero reveal-section">
+
+      <div class="terminal-hero-left">
+        <span class="hero-tag">[ ACCESS GRANTED // HUNTER PROFILE SYSTEM ]</span>
+        <h1>HUNTER TERMINAL</h1>
+        <p>
+          Pusat identitas, riwayat kontrak, wishlist arsenal, alamat pengiriman,
+          dan pengaturan akun Leviathan Store.
+        </p>
+      </div>
+
+      <div class="terminal-hero-right">
+        <div class="system-status-card">
+          <span class="status-dot"></span>
+          <div>
+            <strong>SYSTEM ONLINE</strong>
+            <p>Profile database connected</p>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- PROFILE SECTION                                              -->
+    <!-- ============================================================ -->
+    <section class="u-section reveal-section" id="profile">
+
+      <div class="u-section-head">
+        <span class="u-tag">[ HUNTER IDENTITY ]</span>
+        <h2 class="u-title">INFORMASI PROFIL</h2>
+        <p class="u-sub">
+          Kelola identitas akun yang terhubung dengan sistem Leviathan Store.
+        </p>
+      </div>
+
+      <div class="profile-grid">
+
+        <!-- AVATAR PANEL -->
+        <article class="terminal-panel avatar-panel">
+
+          <div class="panel-head">
+            <div class="panel-head-left">
+              <span class="panel-icon"><i class="fas fa-user-astronaut"></i></span>
+              <span class="panel-title">AVATAR MODULE</span>
+            </div>
+            <span class="panel-badge active">ACTIVE</span>
+          </div>
+
+          <div class="avatar-body">
+
+            <div class="avatar-frame">
+              <img src="" alt="Hunter Avatar" id="avatarImage" class="avatar-image hidden">
+              <div class="avatar-initial" id="avatarInitial">H</div>
+              <div class="avatar-glow"></div>
+            </div>
+
+            <h3 id="profileDisplayName">Hunter</h3>
+            <p id="profileDisplayEmail">hunter@leviathan.store</p>
+
+            <div class="avatar-actions">
+              <label for="avatarUpload" class="btn-user-primary small">
+                <i class="fas fa-upload"></i>
+                <span>UPLOAD FOTO</span>
+              </label>
+
+              <input type="file" id="avatarUpload" accept="image/*" hidden>
+
+              <button class="btn-user-ghost small" id="generateAvatarBtn" type="button">
+                <i class="fas fa-wand-magic-sparkles"></i>
+                <span>CYBER AVATAR</span>
+              </button>
+            </div>
+
+          </div>
+
+        </article>
+
+        <!-- PROFILE FORM -->
+        <article class="terminal-panel profile-form-panel">
+
+          <div class="panel-head">
+            <div class="panel-head-left">
+              <span class="panel-icon"><i class="fas fa-fingerprint"></i></span>
+              <span class="panel-title">IDENTITY DATA</span>
+            </div>
+            <span class="panel-badge">EDITABLE</span>
+          </div>
+
+          <form class="user-form" id="profileForm">
+
+            <div class="input-row">
+              <label for="profileName">Nama Hunter</label>
+              <div class="input-shell">
+                <i class="fas fa-user"></i>
+                <input type="text" id="profileName" placeholder="Masukkan nama kamu">
+              </div>
+            </div>
+
+            <div class="input-row">
+              <label for="profileEmail">Email</label>
+              <div class="input-shell">
+                <i class="fas fa-envelope"></i>
+                <input type="email" id="profileEmail" placeholder="Masukkan email kamu">
+              </div>
+            </div>
+
+            <div class="input-row">
+              <label for="profilePhone">Nomor WhatsApp</label>
+              <div class="input-shell">
+                <i class="fab fa-whatsapp"></i>
+                <input type="tel" id="profilePhone" placeholder="+62 8xx xxxx xxxx">
+              </div>
+            </div>
+
+            <button class="btn-user-primary" type="submit">
+              <span>SIMPAN PROFIL</span>
+              <i class="fas fa-save"></i>
+            </button>
+
+          </form>
+
+        </article>
+
+      </div>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- ORDERS SECTION                                               -->
+    <!-- ============================================================ -->
+    <section class="u-section reveal-section" id="orders">
+
+      <div class="u-section-head">
+        <span class="u-tag">[ CONTRACT HISTORY ]</span>
+        <h2 class="u-title">RIWAYAT PESANAN</h2>
+        <p class="u-sub">
+          Pantau status pesanan dari tahap pembayaran sampai perangkat sampai di tanganmu.
+        </p>
+      </div>
+
+      <div class="orders-list" id="ordersList">
+
+        <article class="order-card">
+          <div class="order-top">
+            <div>
+              <span class="order-id">ORDER #LEV-2401</span>
+              <h3>ASUS ROG Phone 9 Pro</h3>
+              <p>12 Januari 2026 • 1 item</p>
+            </div>
+
+            <span class="order-status delivered">
+              <i class="fas fa-circle-check"></i>
+              Delivered
+            </span>
+          </div>
+
+          <div class="order-timeline">
+            <div class="timeline-step done">
+              <span></span>
+              <p>Pending</p>
+            </div>
+            <div class="timeline-step done">
+              <span></span>
+              <p>Processing</p>
+            </div>
+            <div class="timeline-step done">
+              <span></span>
+              <p>Shipped</p>
+            </div>
+            <div class="timeline-step done">
+              <span></span>
+              <p>Delivered</p>
+            </div>
+          </div>
+
+          <div class="order-bottom">
+            <strong>Total: Rp 14.999.000</strong>
+            <button class="btn-user-ghost small" type="button">
+              <span>DETAIL</span>
+              <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+        </article>
+
+        <article class="order-card">
+          <div class="order-top">
+            <div>
+              <span class="order-id">ORDER #LEV-2402</span>
+              <h3>ROG Zephyrus G14 2025</h3>
+              <p>20 Januari 2026 • 1 item</p>
+            </div>
+
+            <span class="order-status shipped">
+              <i class="fas fa-truck-fast"></i>
+              Shipped
+            </span>
+          </div>
+
+          <div class="order-timeline">
+            <div class="timeline-step done">
+              <span></span>
+              <p>Pending</p>
+            </div>
+            <div class="timeline-step done">
+              <span></span>
+              <p>Processing</p>
+            </div>
+            <div class="timeline-step active">
+              <span></span>
+              <p>Shipped</p>
+            </div>
+            <div class="timeline-step">
+              <span></span>
+              <p>Delivered</p>
+            </div>
+          </div>
+
+          <div class="order-bottom">
+            <strong>Total: Rp 29.999.000</strong>
+            <button class="btn-user-ghost small" type="button">
+              <span>DETAIL</span>
+              <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+        </article>
+
+        <article class="order-card">
+          <div class="order-top">
+            <div>
+              <span class="order-id">ORDER #LEV-2403</span>
+              <h3>Nintendo Switch 2</h3>
+              <p>27 Januari 2026 • 1 item</p>
+            </div>
+
+            <span class="order-status processing">
+              <i class="fas fa-gear"></i>
+              Processing
+            </span>
+          </div>
+
+          <div class="order-timeline">
+            <div class="timeline-step done">
+              <span></span>
+              <p>Pending</p>
+            </div>
+            <div class="timeline-step active">
+              <span></span>
+              <p>Processing</p>
+            </div>
+            <div class="timeline-step">
+              <span></span>
+              <p>Shipped</p>
+            </div>
+            <div class="timeline-step">
+              <span></span>
+              <p>Delivered</p>
+            </div>
+          </div>
+
+          <div class="order-bottom">
+            <strong>Total: Rp 5.499.000</strong>
+            <button class="btn-user-ghost small" type="button">
+              <span>DETAIL</span>
+              <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+        </article>
+
+      </div>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- WISHLIST SECTION                                             -->
+    <!-- ============================================================ -->
+    <section class="u-section reveal-section" id="wishlist">
+
+      <div class="u-section-head">
+        <span class="u-tag">[ SAVED ARSENAL ]</span>
+        <h2 class="u-title">WISHLIST PRODUK</h2>
+        <p class="u-sub">
+          Perangkat yang kamu simpan untuk dipantau sebelum melakukan pembelian.
+        </p>
+      </div>
+
+      <div class="wishlist-grid" id="wishlistGrid">
+
+        <article class="wishlist-card">
+          <div class="wishlist-img">
+            <img src="../assets/handphone/leviathan/asus_rog_phone_9_pro.jpg" alt="ASUS ROG Phone 9 Pro">
+            <span class="wishlist-badge">LEVIATHAN</span>
+          </div>
+
+          <div class="wishlist-body">
+            <h3>ASUS ROG Phone 9 Pro</h3>
+            <p>Rp 14.999.000</p>
+
+            <div class="wishlist-actions">
+              <a href="leviathan_store_market.html?id=rog_phone9_pro" class="btn-user-primary small">
+                <span>VIEW</span>
+              </a>
+              <button class="btn-remove-wishlist" type="button">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="wishlist-card">
+          <div class="wishlist-img">
+            <img src="../assets/laptop/leviathan/rog_zephyrus_g14_2025.jpeg" alt="ROG Zephyrus G14 2025">
+            <span class="wishlist-badge">LEVIATHAN</span>
+          </div>
+
+          <div class="wishlist-body">
+            <h3>ROG Zephyrus G14 2025</h3>
+            <p>Rp 29.999.000</p>
+
+            <div class="wishlist-actions">
+              <a href="leviathan_store_market.html?id=rog_zephyrus_g14" class="btn-user-primary small">
+                <span>VIEW</span>
+              </a>
+              <button class="btn-remove-wishlist" type="button">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="wishlist-card">
+          <div class="wishlist-img">
+            <img src="../assets/console/ps_5_pro.jpg" alt="PS5 Pro">
+            <span class="wishlist-badge nereid">NEREID</span>
+          </div>
+
+          <div class="wishlist-body">
+            <h3>PS5 Pro</h3>
+            <p>Rp 9.999.000</p>
+
+            <div class="wishlist-actions">
+              <a href="leviathan_store_market.html?id=ps5_pro" class="btn-user-primary small">
+                <span>VIEW</span>
+              </a>
+              <button class="btn-remove-wishlist" type="button">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- ADDRESS SECTION                                              -->
+    <!-- ============================================================ -->
+    <section class="u-section reveal-section" id="address">
+
+      <div class="u-section-head">
+        <span class="u-tag">[ BASE LOCATION ]</span>
+        <h2 class="u-title">BUKU ALAMAT</h2>
+        <p class="u-sub">
+          Satu alamat utama untuk kebutuhan pengiriman pesanan Leviathan Store.
+        </p>
+      </div>
+
+      <div class="address-grid">
+
+        <article class="terminal-panel address-card">
+
+          <div class="panel-head">
+            <div class="panel-head-left">
+              <span class="panel-icon"><i class="fas fa-map-location-dot"></i></span>
+              <span class="panel-title">PRIMARY ADDRESS</span>
+            </div>
+            <span class="panel-badge active">DEFAULT</span>
+          </div>
+
+          <div class="address-content" id="addressPreview">
+            <h3 id="addressName">Belum Ada Alamat</h3>
+            <p id="addressPhone">Nomor belum diatur</p>
+            <p id="addressFull">Silakan isi alamat utama kamu melalui form di samping.</p>
+          </div>
+
+        </article>
+
+        <article class="terminal-panel address-form-panel">
+
+          <div class="panel-head">
+            <div class="panel-head-left">
+              <span class="panel-icon"><i class="fas fa-pen-to-square"></i></span>
+              <span class="panel-title">EDIT ADDRESS</span>
+            </div>
+            <span class="panel-badge">SIMPLE MODE</span>
+          </div>
+
+          <form class="user-form" id="addressForm">
+
+            <div class="input-row">
+              <label for="addrName">Nama Penerima</label>
+              <div class="input-shell">
+                <i class="fas fa-user"></i>
+                <input type="text" id="addrName" placeholder="Nama penerima">
+              </div>
+            </div>
+
+            <div class="input-row">
+              <label for="addrPhone">Nomor WhatsApp</label>
+              <div class="input-shell">
+                <i class="fab fa-whatsapp"></i>
+                <input type="tel" id="addrPhone" placeholder="+62 8xx xxxx xxxx">
+              </div>
+            </div>
+
+            <div class="input-row">
+              <label for="addrFull">Alamat Lengkap</label>
+              <div class="input-shell textarea-shell">
+                <i class="fas fa-location-dot"></i>
+                <textarea id="addrFull" rows="4" placeholder="Jalan, nomor rumah, kelurahan, kecamatan, kota, provinsi, kode pos"></textarea>
+              </div>
+            </div>
+
+            <button class="btn-user-primary" type="submit">
+              <span>SIMPAN ALAMAT</span>
+              <i class="fas fa-save"></i>
+            </button>
+
+          </form>
+
+        </article>
+
+      </div>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- SETTINGS SECTION                                             -->
+    <!-- ============================================================ -->
+    <section class="u-section reveal-section" id="settings">
+
+      <div class="u-section-head">
+        <span class="u-tag">[ ACCOUNT SETTINGS ]</span>
+        <h2 class="u-title">PENGATURAN AKUN</h2>
+        <p class="u-sub">
+          Pengaturan dasar akun Hunter untuk keamanan dan preferensi notifikasi.
+        </p>
+      </div>
+
+      <div class="settings-grid">
+
+        <article class="terminal-panel">
+
+          <div class="panel-head">
+            <div class="panel-head-left">
+              <span class="panel-icon"><i class="fas fa-key"></i></span>
+              <span class="panel-title">CHANGE PASSWORD</span>
+            </div>
+            <span class="panel-badge">BASIC</span>
+          </div>
+
+          <form class="user-form" id="passwordForm">
+
+            <div class="input-row">
+              <label for="currentPassword">Password Lama</label>
+              <div class="input-shell">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="currentPassword" placeholder="Masukkan password lama">
+              </div>
+            </div>
+
+            <div class="input-row">
+              <label for="newPassword">Password Baru</label>
+              <div class="input-shell">
+                <i class="fas fa-shield-halved"></i>
+                <input type="password" id="newPassword" placeholder="Masukkan password baru">
+              </div>
+            </div>
+
+            <button class="btn-user-primary" type="submit">
+              <span>UPDATE PASSWORD</span>
+              <i class="fas fa-key"></i>
+            </button>
+
+          </form>
+
+        </article>
+
+        <article class="terminal-panel">
+
+          <div class="panel-head">
+            <div class="panel-head-left">
+              <span class="panel-icon"><i class="fas fa-bell"></i></span>
+              <span class="panel-title">NOTIFICATION</span>
+            </div>
+            <span class="panel-badge active">OPTIONAL</span>
+          </div>
+
+          <div class="settings-options">
+
+            <label class="toggle-row">
+              <div>
+                <strong>Email Notification</strong>
+                <p>Terima update pesanan melalui email.</p>
+              </div>
+              <input type="checkbox" id="emailNotif" checked>
+              <span class="toggle-ui"></span>
+            </label>
+
+            <label class="toggle-row">
+              <div>
+                <strong>WhatsApp Notification</strong>
+                <p>Terima update pengiriman lewat WhatsApp.</p>
+              </div>
+              <input type="checkbox" id="waNotif" checked>
+              <span class="toggle-ui"></span>
+            </label>
+
+            <label class="toggle-row">
+              <div>
+                <strong>Promo Notification</strong>
+                <p>Terima info diskon dan produk baru.</p>
+              </div>
+              <input type="checkbox" id="promoNotif">
+              <span class="toggle-ui"></span>
+            </label>
+
+          </div>
+
+        </article>
+
+      </div>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- LOGOUT SECTION                                               -->
+    <!-- ============================================================ -->
+    <section class="u-section reveal-section" id="logout">
+
+      <div class="logout-section-card">
+
+        <div class="logout-section-icon">
+          <i class="fas fa-right-from-bracket"></i>
+        </div>
+
+        <span class="u-tag">[ EXIT PROTOCOL ]</span>
+        <h2 class="u-title">KELUAR DARI AKUN</h2>
+
+        <p>
+          Saat kamu keluar, akses Hunter Terminal akan dikunci hingga login berikutnya.
+          Riwayat lokal seperti profil dummy dan alamat tetap tersimpan di perangkat ini.
+        </p>
+
+        <button class="btn-logout-dramatic" id="openLogoutModal" type="button">
+          <span>AKTIFKAN EXIT PROTOCOL</span>
+          <i class="fas fa-power-off"></i>
+        </button>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ============================================================ -->
+  <!-- TOAST                                                        -->
+  <!-- ============================================================ -->
+  <div class="user-toast hidden" id="userToast">
+    <i class="fas fa-circle-check"></i>
+    <span>Saved successfully</span>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- BACK TO TOP                                                  -->
+  <!-- ============================================================ -->
+  <button class="back-to-top hidden" id="backToTop" aria-label="Back to top">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <!-- JS USER -->
+  <script src="../js/leviathan_store_user.js"></script>
+
+</body>
+</html>
