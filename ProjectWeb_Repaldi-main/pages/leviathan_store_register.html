@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leviathan | Hunter Registration</title>
+
+  <!-- FONTS -->
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;500;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+  <!-- FONT AWESOME -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <!-- CSS LOGIN (shared) -->
+  <link rel="stylesheet" href="../css/leviathan_store_login.css">
+</head>
+<body>
+
+  <!-- LOADING OVERLAY -->
+  <div id="loading-overlay">
+    <div class="loading-inner">
+      <div class="loading-logo">
+        <img src="../assets/leviathan_store.png" alt="Leviathan" class="loading-crest">
+      </div>
+      <h2 class="loading-title">INITIALIZING SYSTEM...</h2>
+      <p class="loading-sub">Establishing Secure Channel</p>
+      <div class="loading-bar-wrapper">
+        <div id="progress-bar"></div>
+      </div>
+      <p class="loading-percent" id="loadingPercent">0%</p>
+    </div>
+  </div>
+
+  <!-- BACKGROUND PARTICLES -->
+  <div class="mana-particles" aria-hidden="true">
+    <div style="left: 5%;  animation-delay: 0s;   animation-duration: 10s;"></div>
+    <div style="left: 15%; animation-delay: 1.5s; animation-duration: 14s;"></div>
+    <div style="left: 28%; animation-delay: 3s;   animation-duration: 11s;"></div>
+    <div style="left: 42%; animation-delay: 0.8s; animation-duration: 13s;"></div>
+    <div style="left: 57%; animation-delay: 2.2s; animation-duration: 9s; "></div>
+    <div style="left: 68%; animation-delay: 4s;   animation-duration: 15s;"></div>
+    <div style="left: 80%; animation-delay: 1s;   animation-duration: 12s;"></div>
+    <div style="left: 91%; animation-delay: 3.5s; animation-duration: 10s;"></div>
+  </div>
+
+  <!-- SCAN LINE GLOBAL -->
+  <div class="scan-line-global" aria-hidden="true"></div>
+
+  <!-- MAIN AUTH SECTION -->
+  <section class="auth-section">
+    <!-- DEPTH INDICATOR -->
+    <div class="depth-indicator" aria-hidden="true">
+      <span class="depth-label">DEPTH</span>
+      <span class="depth-value">0.000m</span>
+      <span class="depth-status">◈ SURFACE PROTOCOL</span>
+    </div>
+
+    <!-- COORDINATE INDICATOR -->
+    <div class="coord-indicator" aria-hidden="true">
+      <span>LAT: -6.2088° S</span>
+      <span>LON: 106.8456° E</span>
+    </div>
+
+    <!-- REGISTER CONTAINER -->
+    <div class="login-container" id="registerContainer">
+      <div class="scan-line-inner" aria-hidden="true"></div>
+      <div class="system-label">[ HUNTER REGISTRATION ]</div>
+
+      <!-- LOGO -->
+      <div class="auth-logo">
+        <img src="../assets/leviathan_store.png" alt="Logo" class="auth-crest">
+        <div class="auth-logo-glow"></div>
+      </div>
+
+      <!-- TAB SWITCHER -->
+      <div class="tab-switcher">
+        <a href="leviathan_store_login.html" class="tab-btn">LOGIN</a>
+        <span class="tab-btn active">REGISTER</span>
+      </div>
+
+      <!-- FORM PANEL -->
+      <div class="form-panel">
+        <h2 class="auth-title">HUNTER REGISTRATION</h2>
+        <p class="auth-subtitle">Join the Leviathan Abyss Fleet</p>
+
+        <form id="registerForm" novalidate>
+          <!-- Name -->
+          <div class="input-group">
+            <span class="input-icon"><i class="fas fa-user"></i></span>
+            <input type="text" id="regName" placeholder="Hunter Codename" required autocomplete="name">
+            <span class="input-error" id="regNameError"></span>
+          </div>
+
+          <!-- Email -->
+          <div class="input-group">
+            <span class="input-icon"><i class="fas fa-envelope"></i></span>
+            <input type="email" id="regEmail" placeholder="Hunter Email Address" required autocomplete="email">
+            <span class="input-error" id="regEmailError"></span>
+          </div>
+
+          <!-- Password -->
+          <div class="input-group">
+            <span class="input-icon"><i class="fas fa-lock"></i></span>
+            <input type="password" id="regPassword" placeholder="Create Secret Code (min. 8 chars)" required autocomplete="new-password">
+            <button type="button" class="toggle-pw" onclick="togglePassword('regPassword', this)">
+              <i class="fas fa-eye"></i>
+            </button>
+            <div class="pw-strength-bar">
+              <div class="pw-strength-fill" id="pwStrengthFill"></div>
+            </div>
+            <span class="pw-strength-label" id="pwStrengthLabel"></span>
+            <span class="input-error" id="regPasswordError"></span>
+          </div>
+
+          <!-- Confirm Password -->
+          <div class="input-group">
+            <span class="input-icon"><i class="fas fa-shield-alt"></i></span>
+            <input type="password" id="regConfirm" placeholder="Confirm Secret Code" required autocomplete="new-password">
+            <button type="button" class="toggle-pw" onclick="togglePassword('regConfirm', this)">
+              <i class="fas fa-eye"></i>
+            </button>
+            <span class="input-error" id="regConfirmError"></span>
+          </div>
+
+          <!-- Terms -->
+          <div class="terms-group">
+            <label class="remember-label">
+              <input type="checkbox" id="agreeTerms" required>
+              <span>I accept the <a href="leviathan_store_other.html" target="_blank">Hunter's Code</a></span>
+            </label>
+            <span class="input-error" id="termsError"></span>
+          </div>
+
+          <!-- Submit -->
+          <button type="submit" class="btn-auth">
+            <span class="btn-text">DEPLOY TO ABYSS</span>
+            <span class="btn-icon"><i class="fas fa-chevron-right"></i></span>
+          </button>
+        </form>
+
+        <!-- Divider -->
+        <div class="auth-divider"><span>OR CONNECT VIA</span></div>
+
+        <!-- Google Register -->
+        <button type="button" class="google-btn" id="googleRegisterBtn">
+          <img src="../assets/google.webp" alt="Google" class="google-icon">
+          <span>Register with System Google</span>
+        </button>
+
+        <!-- Switch link -->
+        <p class="switch-link">
+          Already a Hunter? <a href="leviathan_store_login.html">Login here</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER MINI -->
+  <footer class="login-footer">
+    <span>© 2025 LEVIATHAN STORE</span>
+    <span class="footer-sep">◈</span>
+    <span>Absolute Apex Performance</span>
+    <span class="footer-sep">◈</span>
+    <a href="leviathan_store_other.html">Privacy Policy</a>
+    <span class="footer-sep">◈</span>
+    <a href="leviathan_store_other.html">Terms</a>
+  </footer>
+
+  <!-- TOAST NOTIFICATION -->
+  <div class="toast" id="toastNotif">
+    <span class="toast-icon"><i class="fas fa-info-circle"></i></span>
+    <span class="toast-msg" id="toastMsg">Message</span>
+  </div>
+
+  <!-- INLINE SCRIPT -->
+  <script>
+    (function() {
+      'use strict';
+
+      // ---------- TOGGLE PASSWORD (global) ----------
+      window.togglePassword = function(inputId, btn) {
+        const input = document.getElementById(inputId);
+        const icon = btn?.querySelector('i');
+        if (!input || !icon) return;
+        if (input.type === 'password') {
+          input.type = 'text';
+          icon.classList.replace('fa-eye', 'fa-eye-slash');
+        } else {
+          input.type = 'password';
+          icon.classList.replace('fa-eye-slash', 'fa-eye');
+        }
+      };
+
+      // ---------- TOAST ----------
+      function showToast(msg, type = 'info') {
+        const toast = document.getElementById('toastNotif');
+        const toastMsg = document.getElementById('toastMsg');
+        if (!toast || !toastMsg) return;
+        toastMsg.textContent = msg;
+        toast.className = 'toast show ' + type;
+        const icon = toast.querySelector('.toast-icon i');
+        if (icon) {
+          icon.className = 'fas';
+          if (type === 'success') icon.classList.add('fa-check-circle');
+          else if (type === 'error') icon.classList.add('fa-times-circle');
+          else if (type === 'warning') icon.classList.add('fa-exclamation-triangle');
+          else icon.classList.add('fa-info-circle');
+        }
+        setTimeout(() => toast.classList.remove('show'), 3000);
+      }
+
+      // ---------- PASSWORD STRENGTH METER ----------
+      const pwdInput = document.getElementById('regPassword');
+      const fill = document.getElementById('pwStrengthFill');
+      const label = document.getElementById('pwStrengthLabel');
+      if (pwdInput && fill && label) {
+        pwdInput.addEventListener('input', () => {
+          const val = pwdInput.value;
+          let strength = 0;
+          if (val.length >= 8) strength++;
+          if (/[a-z]/.test(val) && /[A-Z]/.test(val)) strength++;
+          if (/\d/.test(val)) strength++;
+          if (/[^a-zA-Z0-9]/.test(val)) strength++;
+          
+          fill.className = 'pw-strength-fill';
+          label.className = 'pw-strength-label';
+          if (val.length === 0) {
+            fill.style.width = '0%';
+            label.textContent = '';
+          } else if (strength <= 1) {
+            fill.classList.add('weak');
+            label.classList.add('weak');
+            label.textContent = 'Weak';
+          } else if (strength === 2) {
+            fill.classList.add('medium');
+            label.classList.add('medium');
+            label.textContent = 'Medium';
+          } else {
+            fill.classList.add('strong');
+            label.classList.add('strong');
+            label.textContent = 'Strong';
+          }
+        });
+      }
+
+      // ---------- FORM VALIDATION & SUBMIT ----------
+      const form = document.getElementById('registerForm');
+      if (form) {
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+
+          // Ambil nilai
+          const name = document.getElementById('regName').value.trim();
+          const email = document.getElementById('regEmail').value.trim();
+          const pass = document.getElementById('regPassword').value;
+          const confirm = document.getElementById('regConfirm').value;
+          const agree = document.getElementById('agreeTerms').checked;
+
+          // Reset error messages
+          document.querySelectorAll('.input-error').forEach(el => el.textContent = '');
+
+          let valid = true;
+          if (!name) {
+            document.getElementById('regNameError').textContent = 'Codename required';
+            valid = false;
+          }
+          if (!email) {
+            document.getElementById('regEmailError').textContent = 'Email required';
+            valid = false;
+          } else if (!/^\S+@\S+\.\S+$/.test(email)) {
+            document.getElementById('regEmailError').textContent = 'Invalid email format';
+            valid = false;
+          }
+          if (!pass) {
+            document.getElementById('regPasswordError').textContent = 'Secret Code required';
+            valid = false;
+          } else if (pass.length < 8) {
+            document.getElementById('regPasswordError').textContent = 'Min. 8 characters';
+            valid = false;
+          }
+          if (pass !== confirm) {
+            document.getElementById('regConfirmError').textContent = 'Codes do not match';
+            valid = false;
+          }
+          if (!agree) {
+            document.getElementById('termsError').textContent = 'You must accept the Code';
+            valid = false;
+          }
+
+          if (!valid) {
+            showToast('❌ Please fix the errors above', 'error');
+            return;
+          }
+
+          // Cek duplikasi email
+          const users = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+          if (users.some(u => u.email.toLowerCase() === email.toLowerCase())) {
+            showToast('❌ Email already registered', 'error');
+            return;
+          }
+
+          // Simpan user baru
+          const newUser = {
+            name: name,
+            email: email,
+            password: pass,
+            registeredAt: new Date().toISOString()
+          };
+          users.push(newUser);
+          localStorage.setItem('registeredUsers', JSON.stringify(users));
+
+          showToast('✅ Registration successful! Redirecting...', 'success');
+          setTimeout(() => {
+            window.location.href = 'leviathan_store_login.html';
+          }, 1500);
+        });
+      }
+
+      // ---------- GOOGLE REGISTER (SIMULASI) ----------
+      const googleBtn = document.getElementById('googleRegisterBtn');
+      if (googleBtn) {
+        googleBtn.addEventListener('click', () => {
+          const dummyEmail = 'hunter@abyss.deep';
+          const dummyName = 'Abyss Hunter';
+          let users = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+          if (!users.some(u => u.email === dummyEmail)) {
+            users.push({
+              name: dummyName,
+              email: dummyEmail,
+              password: 'google123',
+              registeredAt: new Date().toISOString()
+            });
+            localStorage.setItem('registeredUsers', JSON.stringify(users));
+          }
+          showToast(`✅ Registered as ${dummyName}. Please login.`, 'success');
+          setTimeout(() => {
+            window.location.href = 'leviathan_store_login.html';
+          }, 1500);
+        });
+      }
+
+      // Hide loading overlay
+      const overlay = document.getElementById('loading-overlay');
+      if (overlay) overlay.style.display = 'none';
+
+      console.log('✅ Register page ready');
+    })();
+  </script>
+</body>
+</html>
