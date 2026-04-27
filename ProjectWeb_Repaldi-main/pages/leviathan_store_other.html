@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Leviathan Store | Abyss Codex</title>
+
+  <!-- FONTS -->
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+
+  <!-- FONT AWESOME -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- CSS OTHER -->
+  <link rel="stylesheet" href="../css/leviathan_store_other.css">
+</head>
+
+<body class="other-body">
+
+  <!-- ============================================================ -->
+  <!-- GLOBAL SCAN LINE                                             -->
+  <!-- ============================================================ -->
+  <div class="scan-line-global" aria-hidden="true"></div>
+
+  <!-- ============================================================ -->
+  <!-- HEADER — REFERENSI HOME PAGE                                 -->
+  <!-- ============================================================ -->
+  <header id="otherHeader">
+
+    <div class="logo-group">
+      <a href="leviathan_store_home.html" class="logo-link">
+        <div class="crest-wrapper">
+          <img src="../assets/leviathan_store.png" alt="Leviathan Logo" class="header-crest">
+          <div class="crest-glow" aria-hidden="true"></div>
+        </div>
+
+        <div class="logo-text-group">
+          <span class="logo-title">LEVIATHAN</span>
+          <span class="logo-sub">STORE</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="search-container">
+      <div class="search-wrapper">
+        <i class="fas fa-search search-icon"></i>
+        <input
+          type="text"
+          id="globalSearch"
+          placeholder="Search Abyss Codex, FAQ, Policies..."
+          autocomplete="off"
+        >
+        <button class="search-clear hidden" id="searchClear" aria-label="Clear search">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <div class="search-suggestions hidden" id="searchSuggestions"></div>
+    </div>
+
+    <div class="user-tools">
+      <a href="#" class="tool-btn" title="Notifications" id="notifBtn">
+        <i class="fas fa-bell"></i>
+        <span class="tool-badge hidden" id="notifBadge">0</span>
+      </a>
+
+      <a href="leviathan_store_transaksi.html" class="tool-btn" title="Cart" id="cartBtn">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="tool-badge hidden" id="cartBadge">0</span>
+      </a>
+
+      <a href="leviathan_store_home.html" class="tool-btn" title="Home">
+        <i class="fas fa-home"></i>
+      </a>
+
+      <a href="leviathan_store_market.html" class="tool-btn" title="Market">
+        <i class="fas fa-store"></i>
+      </a>
+
+      <div id="authContainer">
+        <a href="leviathan_store_login.html" class="tool-btn" title="Login">
+          <i class="fas fa-user-circle"></i>
+        </a>
+      </div>
+    </div>
+
+  </header>
+
+  <!-- ============================================================ -->
+  <!-- LEFT SIDEBAR NAVIGATION                                      -->
+  <!-- ============================================================ -->
+  <aside class="intel-sidebar" id="intelSidebar">
+    <div class="sidebar-label">
+      <i class="fas fa-terminal"></i>
+      <span>ABYSS CODEX</span>
+    </div>
+
+    <nav class="sidebar-links">
+      <a href="#about" class="sidebar-link active" data-section="about">
+        <i class="fas fa-scroll"></i>
+        <span>ABOUT</span>
+      </a>
+
+      <a href="#lore" class="sidebar-link" data-section="lore">
+        <i class="fas fa-book-skull"></i>
+        <span>LORE</span>
+      </a>
+
+      <a href="#faq" class="sidebar-link" data-section="faq">
+        <i class="fas fa-question-circle"></i>
+        <span>FAQ</span>
+      </a>
+
+      <div class="sidebar-sep"></div>
+
+      <a href="#shipping" class="sidebar-link" data-section="shipping">
+        <i class="fas fa-truck-fast"></i>
+        <span>SHIPPING</span>
+      </a>
+
+      <a href="#return" class="sidebar-link" data-section="return">
+        <i class="fas fa-rotate-left"></i>
+        <span>RETURN</span>
+      </a>
+
+      <a href="#warranty" class="sidebar-link" data-section="warranty">
+        <i class="fas fa-shield-halved"></i>
+        <span>WARRANTY</span>
+      </a>
+
+      <div class="sidebar-sep"></div>
+
+      <a href="#privacy" class="sidebar-link" data-section="privacy">
+        <i class="fas fa-user-shield"></i>
+        <span>PRIVACY</span>
+      </a>
+
+      <a href="#terms" class="sidebar-link" data-section="terms">
+        <i class="fas fa-file-contract"></i>
+        <span>TERMS</span>
+      </a>
+
+      <a href="#contact" class="sidebar-link" data-section="contact">
+        <i class="fas fa-satellite-dish"></i>
+        <span>CONTACT</span>
+      </a>
+    </nav>
+  </aside>
+
+  <!-- ============================================================ -->
+  <!-- MAIN CONTENT                                                 -->
+  <!-- ============================================================ -->
+  <main class="other-main">
+
+    <!-- ============================================================ -->
+    <!-- ABOUT SECTION                                                -->
+    <!-- ============================================================ -->
+    <section class="o-section reveal-section" id="about">
+
+      <div class="o-section-head center">
+        <span class="o-tag">[ CODEX ENTRY // 001 ]</span>
+        <h1 class="o-title mega-title">LEVIATHAN STORE</h1>
+        <p class="o-sub">
+          Pilihan perangkat gaming tanpa kompromi — hanya yang terbaik di kelasnya,
+          untuk setiap kategori anggaran.
+        </p>
+      </div>
+
+      <div class="about-grid">
+
+        <!-- LEFT CONTENT -->
+        <div class="about-left">
+
+          <article class="quest-panel primary-panel">
+            <div class="qp-head">
+              <div class="qp-head-left">
+                <span class="qp-ico"><i class="fas fa-dragon"></i></span>
+                <span class="qp-head-title">PRIMARY OBJECTIVE</span>
+              </div>
+              <span class="qp-badge active">ACTIVE</span>
+            </div>
+
+            <div class="qp-body">
+              <h2 class="qp-title">Siapa Kami?</h2>
+              <p class="qp-text">
+                Leviathan Store adalah platform perangkat gaming yang didirikan dengan satu prinsip:
+                menghadirkan pilihan terbaik di setiap rentang harga. Kami tidak menjual semua produk
+                yang ada di pasaran. Setiap perangkat yang masuk ke dalam katalog kami telah melalui
+                proses seleksi ketat berdasarkan performa, keandalan, dan nilai yang diberikan kepada
+                pengguna yang telah memakainya.
+              </p>
+            </div>
+          </article>
+
+          <article class="quest-panel">
+            <div class="qp-head">
+              <div class="qp-head-left">
+                <span class="qp-ico"><i class="fas fa-crosshairs"></i></span>
+                <span class="qp-head-title">HUNTER PHILOSOPHY</span>
+              </div>
+              <span class="qp-badge">MONSTER STANDARD</span>
+            </div>
+
+            <div class="qp-body">
+              <h2 class="qp-title">Filosofi “Monster Gaming” di Kelasnya</h2>
+              <p class="qp-text">
+                Dalam dunia gaming, istilah <strong>monster</strong> sering digunakan untuk
+                menggambarkan perangkat dengan performa di atas rata-rata. Di Leviathan Store,
+                metafora itu kami jadikan standar kurasi. Produk yang kami tawarkan bukan sekadar
+                memenuhi spesifikasi teknis, tetapi benar-benar mampu memberikan pengalaman bermain
+                yang superior dibandingkan kompetitor di harga yang sama.
+              </p>
+
+              <div class="qp-list">
+                <div class="qp-item">
+                  <span class="qp-item-mark nereid">01</span>
+                  <div class="qp-item-body">
+                    <span class="qp-item-title">NEREID — ENTRY LEVEL</span>
+                    <p class="qp-item-desc">
+                      Pilihan terbaik untuk memulai, performa solid tanpa menguras kantong.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="qp-item">
+                  <span class="qp-item-mark poseidon">02</span>
+                  <div class="qp-item-body">
+                    <span class="qp-item-title">POSEIDON — MID RANGE</span>
+                    <p class="qp-item-desc">
+                      Keseimbangan sempurna antara harga dan performa untuk gamer serius.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="qp-item">
+                  <span class="qp-item-mark leviathan">03</span>
+                  <div class="qp-item-body">
+                    <span class="qp-item-title">LEVIATHAN — HIGH END</span>
+                    <p class="qp-item-desc">
+                      Performa tanpa kompromi untuk gaming kompetitif dan konten kreasi.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="qp-item">
+                  <span class="qp-item-mark sovereign">04</span>
+                  <div class="qp-item-body">
+                    <span class="qp-item-title">SOVEREIGN — FLAGSHIP</span>
+                    <p class="qp-item-desc">
+                      Puncak teknologi dan kolaborasi eksklusif bagi mereka yang menginginkan yang terbaik.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="quote-contract">
+            <i class="fas fa-quote-left"></i>
+            <p>
+              Kurasi tanpa kompromi. Hanya yang terbaik di kelasnya.
+            </p>
+          </article>
+
+          <article class="quest-panel design-panel">
+            <div class="qp-head">
+              <div class="qp-head-left">
+                <span class="qp-ico"><i class="fas fa-eye"></i></span>
+                <span class="qp-head-title">DESIGN PROTOCOL</span>
+              </div>
+              <span class="qp-badge">VISUAL INTERFACE</span>
+            </div>
+
+            <div class="qp-body">
+              <h2 class="qp-title">Mengapa Desain Website Seperti Ini?</h2>
+              <p class="qp-text">
+                Tampilan visual Leviathan Store sengaja dirancang dengan palet gelap dan aksen biru
+                elektrik. Pendekatan ini bukan sekadar estetika, tetapi didasarkan pada kenyamanan
+                visual dan kejelasan informasi. Latar gelap mengurangi kelelahan mata, terutama saat
+                pengguna membaca spesifikasi teknis dalam waktu lama. Aksen biru digunakan sebagai
+                penanda cepat untuk elemen penting seperti tombol aksi, harga, filter, dan navigasi.
+              </p>
+            </div>
+          </article>
+
+          <article class="quest-panel commitment-panel">
+            <div class="qp-head">
+              <div class="qp-head-left">
+                <span class="qp-ico"><i class="fas fa-handshake"></i></span>
+                <span class="qp-head-title">STORE COMMITMENT</span>
+              </div>
+              <span class="qp-badge active">TRUST</span>
+            </div>
+
+            <div class="qp-body">
+              <h2 class="qp-title">Lebih dari Sekadar Transaksi</h2>
+              <p class="qp-text">
+                Kami memahami bahwa membeli perangkat gaming adalah sebuah investasi. Karena itu,
+                komitmen kami tidak berhenti pada proses penjualan. Setiap produk dilengkapi dengan
+                informasi spesifikasi yang lengkap, transparan, serta dukungan purna jual yang responsif
+                agar setiap Hunter dapat memilih perangkat dengan percaya diri.
+              </p>
+            </div>
+          </article>
+
+          <div class="o-cta-row">
+            <a href="leviathan_store_market.html" class="btn-o-primary">
+              <span>JELAJAHI KATALOG</span>
+              <i class="fas fa-chevron-right"></i>
+            </a>
+
+            <a href="#lore" class="btn-o-ghost">
+              <span>BUKA GREAT CODEX</span>
+              <i class="fas fa-book-open"></i>
+            </a>
+          </div>
+
+        </div>
+
+        <!-- RIGHT INFOGRAPHIC -->
+        <aside class="about-right">
+
+          <div class="depth-core-card">
+            <div class="depth-core-orb">
+              <i class="fas fa-water"></i>
+              <span class="orb-ring"></span>
+              <span class="orb-ring ring-two"></span>
+            </div>
+
+            <span class="depth-core-label">DEPTH SYSTEM</span>
+            <h3>4 TINGKATAN EKOSISTEM</h3>
+
+            <div class="tier-mini-list">
+
+              <div class="tier-mini nereid">
+                <div class="tier-mini-icon">
+                  <i class="fas fa-water"></i>
+                </div>
+                <div>
+                  <strong>NEREID</strong>
+                  <span>Entry-Level Monster</span>
+                </div>
+              </div>
+
+              <div class="tier-mini poseidon">
+                <div class="tier-mini-icon">
+                  <i class="fas fa-crown"></i>
+                </div>
+                <div>
+                  <strong>POSEIDON</strong>
+                  <span>Mid-Range Warrior</span>
+                </div>
+              </div>
+
+              <div class="tier-mini leviathan">
+                <div class="tier-mini-icon">
+                  <i class="fas fa-dragon"></i>
+                </div>
+                <div>
+                  <strong>LEVIATHAN</strong>
+                  <span>High-End Beast</span>
+                </div>
+              </div>
+
+              <div class="tier-mini sovereign">
+                <div class="tier-mini-icon">
+                  <i class="fas fa-star"></i>
+                </div>
+                <div>
+                  <strong>SOVEREIGN</strong>
+                  <span>Flagship Ascension</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="fact-card">
+            <div class="fact-row">
+              <span>PRODUK TERKURASI</span>
+              <strong>32+</strong>
+            </div>
+            <div class="fact-row">
+              <span>TINGKATAN KASTA</span>
+              <strong>4</strong>
+            </div>
+            <div class="fact-row">
+              <span>GARANSI RESMI</span>
+              <strong><i class="fas fa-check-circle"></i></strong>
+            </div>
+            <div class="fact-row">
+              <span>LAYANAN PURNA JUAL</span>
+              <strong>READY</strong>
+            </div>
+          </div>
+
+          <div class="system-warning">
+            <i class="fas fa-triangle-exclamation"></i>
+            <p>
+              Setiap produk bukan hanya barang. Ia adalah monster yang telah dipilih,
+              diuji, lalu dikurung dalam katalog Leviathan.
+            </p>
+          </div>
+
+        </aside>
+
+      </div>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- LORE SECTION                                                 -->
+    <!-- ============================================================ -->
+    <section class="o-section reveal-section" id="lore">
+
+      <div class="o-section-head center">
+        <span class="o-tag">[ THE GREAT CODEX // HIERARKI KEDALAMAN ]</span>
+        <h2 class="o-title lore-title">EMPAT TINGKATAN. SATU TUJUAN.</h2>
+        <p class="o-sub">
+          Menghadirkan yang terbaik dari kedalaman — bukan sekadar perangkat,
+          melainkan karakter bagi setiap tahap perjalanan gamer.
+        </p>
+      </div>
+
+      <article class="lore-scroll">
+
+        <div class="lore-opening">
+          <p>
+            Manusia adalah ras yang pintar dan maju. Mereka telah memetakan setiap jengkal
+            daratan dan menjelajahi bintang-bintang di angkasa. Namun, mereka lupa pada satu hal:
+            Bumi tidak hanya terdiri dari tanah dan udara.
+          </p>
+
+          <p>
+            Di bawah tekanan jutaan ton air, di mana cahaya matahari dianggap sebagai dongeng,
+            kehidupan tidak berjalan sesuai logika permukaan. Di sana, teknologi bukanlah benda mati,
+            melainkan organisme yang bernapas.
+          </p>
+
+          <p class="lore-emphasis">
+            Selamat datang di Leviathan Store. Kamu tidak sedang memasuki toko hardware;
+            kamu sedang menyelam ke dalam ekosistem predator purba yang telah kami jinakkan
+            menjadi senjata digital.
+          </p>
+        </div>
+
+        <div class="codex-divider">
+          <span></span>
+          <i class="fas fa-dragon"></i>
+          <span></span>
+        </div>
+
+        <div class="lore-tier-block nereid">
+          <span class="lore-depth">0M — 3.000M</span>
+          <h3>NEREID — PENGHUNI PERTAMA</h3>
+          <p>
+            Nereid tinggal di kegelapan Palung Mariana. Mereka adalah predator yang lincah
+            dan beradaptasi dengan kesunyian. Kecil, efisien, namun mematikan. Mereka adalah
+            pilihan terbaik bagi Hunter yang baru memulai perburuan, saat langkah pertama
+            menuju kedalaman masih terasa asing namun penuh ambisi.
+          </p>
+        </div>
+
+        <div class="lore-tier-block poseidon">
+          <span class="lore-depth">3.000M — 6.000M</span>
+          <h3>POSEIDON — KEANGGUNAN DARI KOTA YANG HILANG</h3>
+          <p>
+            Poseidon adalah prajurit dari reruntuhan Atlantis yang majestik. Mereka bukan lagi
+            makhluk liar yang hanya mengandalkan insting. Mereka telah terlatih, stabil, dan
+            memiliki wibawa. Performa mereka adalah perpaduan antara keindahan kuno dan
+            kekuatan tempur yang solid.
+          </p>
+        </div>
+
+        <div class="lore-tier-block leviathan">
+          <span class="lore-depth">6.000M — 10.000M</span>
+          <h3>LEVIATHAN — SANG IBLIS YANG TERKURUNG</h3>
+          <p>
+            Leviathan adalah monster tingkat Iblis yang terkurung di dasar laut terdalam
+            karena amarahnya yang liar. Mereka hanya mengenal satu bahasa: kehancuran.
+            Membangun kontrak dengan Leviathan berarti membawa mimpi buruk bagi musuhmu,
+            karena setiap frame, setiap klik, dan setiap respon terasa seperti ancaman.
+          </p>
+        </div>
+
+        <div class="lore-tier-block sovereign">
+          <span class="lore-depth">10.000M+</span>
+          <h3>SOVEREIGN — THE ASCENSION</h3>
+          <p>
+            Bagaimana sebuah monster bisa mencapai tahap Dewa? Setiap produk Sovereign adalah
+            hasil evolusi Leviathan yang telah berhasil melewati tujuh ujian dosa besar. Monster
+            yang berhasil menyucikan dirinya dari ketidakmurnian akan melepaskan rantai penjara
+            dan naik menjadi Penjaga Dunia Bawah.
+          </p>
+
+          <p>
+            Namun berbeda dengan malaikat yang netral dan murni logika, para Sovereign masih
+            memiliki kepribadian. Mereka bukan sekadar puncak teknologi. Mereka adalah identitas,
+            simbol, dan kontrak eksklusif bagi Hunter yang tidak ingin menjadi biasa.
+          </p>
+        </div>
+
+        <div class="contract-box">
+          <div class="contract-head">
+            <i class="fas fa-handshake-angle"></i>
+            <span>THE CONTRACT: TUAN & PELAYAN</span>
+          </div>
+
+          <p>
+            “Saat kamu menekan tombol beli, kamu tidak sedang bertransaksi.
+            Kamu sedang menandatangani kontrak seumur hidup.”
+          </p>
+
+          <p>
+            Monster yang terikat akan melayani tuannya. Ia akan menjadi jantung dari performa
+            gaming-mu, memberikan refleks tajam dan kekuatan yang belum pernah kamu rasakan.
+          </p>
+        </div>
+
+        <div class="lore-closing">
+          <p>
+            Kegelapan tidak lagi menakutkan saat kamu menjadi penguasa di dalamnya.
+            Sekarang, kontrak telah terbentang dan para monster telah menanti perintahmu.
+          </p>
+
+          <p class="closing-emphasis">
+            Pilih senjatamu, ikat pelayanmu, dan biarkan dunia permukaan gemetar
+            mendengar raungan dari kedalaman.
+          </p>
+        </div>
+
+        <div class="o-cta-row center">
+          <a href="leviathan_store_market.html" class="btn-o-primary">
+            <span>DEEP DIVE STARTS NOW</span>
+            <i class="fas fa-chevron-right"></i>
+          </a>
+
+          <a href="#faq" class="btn-o-ghost">
+            <span>BACA FAQ</span>
+            <i class="fas fa-question-circle"></i>
+          </a>
+        </div>
+
+      </article>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- FAQ SECTION                                                  -->
+    <!-- ============================================================ -->
+    <section class="o-section reveal-section" id="faq">
+
+      <div class="o-section-head">
+        <span class="o-tag">[ HUNTER TERMINAL // FAQ ]</span>
+        <h2 class="o-title">FREQUENTLY ASKED QUESTIONS</h2>
+        <p class="o-sub">
+          Pertanyaan umum dari Hunter sebelum melakukan kontrak dengan monster digital.
+        </p>
+      </div>
+
+      <div class="faq-terminal">
+
+        <div class="terminal-top">
+          <span class="terminal-dot"></span>
+          <span class="terminal-dot"></span>
+          <span class="terminal-dot"></span>
+          <p>LEVIATHAN_SUPPORT_TERMINAL.EXE</p>
+        </div>
+
+        <div class="faq-container" id="faqContainer">
+
+          <article class="faq-item active">
+            <button class="faq-question">
+              <span>01</span>
+              Bagaimana jika saya mau membeli gear custom seperti PC?
+              <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="faq-answer">
+              <p>
+                Untuk pemesanan gear custom seperti PC rakitan khusus, silakan datang langsung
+                ke toko fisik kami. Website Leviathan Store saat ini hanya melayani pembelian
+                produk dan set yang sudah tersedia di katalog.
+              </p>
+            </div>
+          </article>
+
+          <article class="faq-item">
+            <button class="faq-question">
+              <span>02</span>
+              Apakah semua produk di Leviathan Store sudah dikurasi?
+              <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="faq-answer">
+              <p>
+                Ya. Setiap produk dipilih berdasarkan performa, reputasi, value harga,
+                serta kecocokan untuk kebutuhan gaming. Kami tidak memasukkan semua produk
+                pasar, hanya perangkat yang pantas disebut monster di kelasnya.
+              </p>
+            </div>
+          </article>
+
+          <article class="faq-item">
+            <button class="faq-question">
+              <span>03</span>
+              Apa perbedaan kasta Nereid, Poseidon, Leviathan, dan Sovereign?
+              <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="faq-answer">
+              <p>
+                Nereid adalah entry-level terbaik, Poseidon adalah mid-range dengan balance kuat,
+                Leviathan adalah high-end tanpa kompromi, sedangkan Sovereign adalah flagship
+                atau edisi khusus untuk pengguna yang menginginkan puncak performa dan identitas.
+              </p>
+            </div>
+          </article>
+
+          <article class="faq-item">
+            <button class="faq-question">
+              <span>04</span>
+              Apakah produk memiliki garansi resmi?
+              <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="faq-answer">
+              <p>
+                Produk yang tersedia di Leviathan Store diutamakan memiliki garansi resmi atau
+                dukungan garansi toko sesuai kategori produk. Detail garansi dapat dilihat di
+                halaman produk atau ditanyakan langsung melalui kontak kami.
+              </p>
+            </div>
+          </article>
+
+          <article class="faq-item">
+            <button class="faq-question">
+              <span>05</span>
+              Apakah bisa konsultasi sebelum membeli?
+              <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="faq-answer">
+              <p>
+                Bisa. Kamu dapat menghubungi kami melalui WhatsApp atau Instagram untuk
+                konsultasi kebutuhan gaming, budget, dan rekomendasi kasta yang paling sesuai.
+              </p>
+            </div>
+          </article>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- SHIPPING SECTION                                             -->
+    <!-- ============================================================ -->
+    <section class="o-section reveal-section" id="shipping">
+
+      <div class="o-section-head">
+        <span class="o-tag">[ LOGISTICS PROTOCOL ]</span>
+        <h2 class="o-title">KEBIJAKAN PENGIRIMAN</h2>
+        <p class="o-sub">
+          Prosedur pengiriman dibuat agar setiap monster sampai ke tangan Hunter dengan aman.
+        </p>
+      </div>
+
+      <div class="policy-grid">
+
+        <article class="policy-card">
+          <div class="policy-icon">
+            <i class="fas fa-box"></i>
+          </div>
+          <h3>Proses Pesanan</h3>
+          <p>
+            Pesanan akan diproses setelah pembayaran dikonfirmasi. Tim kami akan melakukan
+            pengecekan produk, packing, dan validasi alamat sebelum dikirim.
+          </p>
+        </article>
+
+        <article class="policy-card">
+          <div class="policy-icon">
+            <i class="fas fa-truck-fast"></i>
+          </div>
+          <h3>Estimasi Pengiriman</h3>
+          <p>
+            Estimasi pengiriman mengikuti lokasi tujuan dan layanan ekspedisi. Untuk wilayah
+            Sumatera dan Jawa biasanya lebih cepat, sedangkan wilayah luar pulau menyesuaikan
+            jadwal ekspedisi.
+          </p>
+        </article>
+
+        <article class="policy-card">
+          <div class="policy-icon">
+            <i class="fas fa-shield"></i>
+          </div>
+          <h3>Packing Aman</h3>
+          <p>
+            Produk bernilai tinggi akan disarankan menggunakan proteksi tambahan seperti bubble
+            wrap tebal, kardus ekstra, atau packing kayu sesuai kebutuhan.
+          </p>
+        </article>
+
+      </div>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- RETURN SECTION                                               -->
+    <!-- ============================================================ -->
+    <section class="o-section reveal-section" id="return">
+
+      <div class="o-section-head">
+        <span class="o-tag">[ RETURN PROTOCOL ]</span>
+        <h2 class="o-title">KEBIJAKAN PENGEMBALIAN</h2>
+        <p class="o-sub">
+          Pengembalian hanya dapat dilakukan dengan syarat tertentu agar proses tetap adil dan aman.
+        </p>
+      </div>
+
+      <div class="policy-panel">
+        <div class="policy-line">
+          <i class="fas fa-circle-check"></i>
+          <p>
+            Pengajuan pengembalian dapat dilakukan jika produk yang diterima tidak sesuai pesanan,
+            rusak saat diterima, atau memiliki kendala awal yang dapat diverifikasi.
+          </p>
+        </div>
+
+        <div class="policy-line">
+          <i class="fas fa-clock"></i>
+          <p>
+            Pengajuan wajib dilakukan maksimal 7 hari setelah barang diterima, disertai video
+            unboxing dan bukti kondisi produk.
+          </p>
+        </div>
+
+        <div class="policy-line">
+          <i class="fas fa-ban"></i>
+          <p>
+            Produk tidak dapat dikembalikan apabila kerusakan terjadi akibat kelalaian pengguna,
+            modifikasi pribadi, cairan, benturan, atau pembongkaran tanpa izin.
+          </p>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- WARRANTY SECTION                                             -->
+    <!-- ============================================================ -->
+    <section class="o-section reveal-section" id="warranty">
+
+      <div class="o-section-head">
+        <span class="o-tag">[ PROTECTION SYSTEM ]</span>
+        <h2 class="o-title">INFORMASI GARANSI</h2>
+        <p class="o-sub">
+          Setiap monster memiliki perlindungan sesuai kelas, jenis produk, dan ketentuan garansi.
+        </p>
+      </div>
+
+      <div class="policy-grid">
+
+        <article class="policy-card">
+          <div class="policy-icon">
+            <i class="fas fa-certificate"></i>
+          </div>
+          <h3>Garansi Resmi</h3>
+          <p>
+            Produk tertentu memiliki garansi resmi distributor atau brand. Masa garansi mengikuti
+            ketentuan masing-masing produsen.
+          </p>
+        </article>
+
+        <article class="policy-card">
+          <div class="policy-icon">
+            <i class="fas fa-store"></i>
+          </div>
+          <h3>Garansi Toko</h3>
+          <p>
+            Untuk beberapa produk tertentu, tersedia bantuan klaim melalui toko sesuai syarat
+            dan kondisi yang berlaku.
+          </p>
+        </article>
+
+        <article class="policy-card">
+          <div class="policy-icon">
+            <i class="fas fa-screwdriver-wrench"></i>
+          </div>
+          <h3>Bantuan Klaim</h3>
+          <p>
+            Tim kami akan membantu mengarahkan proses klaim agar Hunter tidak tersesat dalam
+            labirin prosedur garansi.
+          </p>
+        </article>
+
+      </div>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- PRIVACY SECTION                                              -->
+    <!-- ============================================================ -->
+    <section class="o-section reveal-section" id="privacy">
+
+      <div class="o-section-head">
+        <span class="o-tag">[ DATA VAULT ]</span>
+        <h2 class="o-title">KEBIJAKAN PRIVASI</h2>
+        <p class="o-sub">
+          Data Hunter dijaga sebagai bagian dari sistem keamanan Leviathan Store.
+        </p>
+      </div>
+
+      <div class="policy-panel">
+        <div class="policy-line">
+          <i class="fas fa-lock"></i>
+          <p>
+            Data seperti nama, kontak, alamat, dan riwayat pesanan digunakan hanya untuk
+            kebutuhan transaksi, pengiriman, pelayanan, dan peningkatan pengalaman pengguna.
+          </p>
+        </div>
+
+        <div class="policy-line">
+          <i class="fas fa-user-shield"></i>
+          <p>
+            Kami tidak menjual data pribadi pengguna kepada pihak luar. Data hanya digunakan
+            oleh sistem dan tim yang berkaitan langsung dengan layanan Leviathan Store.
+          </p>
+        </div>
+
+        <div class="policy-line">
+          <i class="fas fa-database"></i>
+          <p>
+            Penyimpanan data dilakukan secara wajar untuk kebutuhan riwayat pembelian,
+            dukungan pelanggan, dan validasi garansi.
+          </p>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- TERMS SECTION                                                -->
+    <!-- ============================================================ -->
+    <section class="o-section reveal-section" id="terms">
+
+      <div class="o-section-head">
+        <span class="o-tag">[ HUNTER CONTRACT ]</span>
+        <h2 class="o-title">SYARAT & KETENTUAN</h2>
+        <p class="o-sub">
+          Dengan menggunakan Leviathan Store, Hunter dianggap memahami aturan dasar sistem.
+        </p>
+      </div>
+
+      <div class="policy-panel">
+        <div class="policy-line">
+          <i class="fas fa-file-signature"></i>
+          <p>
+            Informasi harga, stok, dan spesifikasi dapat berubah sewaktu-waktu mengikuti kondisi
+            pasar, ketersediaan barang, dan pembaruan dari pihak brand.
+          </p>
+        </div>
+
+        <div class="policy-line">
+          <i class="fas fa-cart-shopping"></i>
+          <p>
+            Pembelian dianggap sah setelah pembayaran diterima dan pesanan dikonfirmasi oleh
+            sistem atau admin Leviathan Store.
+          </p>
+        </div>
+
+        <div class="policy-line">
+          <i class="fas fa-scale-balanced"></i>
+          <p>
+            Penyalahgunaan sistem, pemalsuan data, atau tindakan yang merugikan toko dapat
+            menyebabkan pembatalan transaksi.
+          </p>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- CONTACT SECTION                                              -->
+    <!-- ============================================================ -->
+    <section class="o-section reveal-section" id="contact">
+
+      <div class="o-section-head">
+        <span class="o-tag">[ CONTACT SIGNAL ]</span>
+        <h2 class="o-title">HUBUNGI LEVIATHAN STORE</h2>
+        <p class="o-sub">
+          Butuh konsultasi, lokasi toko fisik, atau ingin memesan gear custom? Hubungi kami.
+        </p>
+      </div>
+
+      <div class="contact-grid">
+
+        <a href="https://wa.me/6282374176977" target="_blank" class="contact-card">
+          <div class="contact-icon whatsapp">
+            <i class="fab fa-whatsapp"></i>
+          </div>
+          <div>
+            <h3>WhatsApp</h3>
+            <p>+62 823-7417-6977</p>
+          </div>
+        </a>
+
+        <a href="https://www.google.com/maps" target="_blank" class="contact-card">
+          <div class="contact-icon maps">
+            <i class="fas fa-map-location-dot"></i>
+          </div>
+          <div>
+            <h3>Google Maps</h3>
+            <p>Lihat lokasi toko fisik kami</p>
+          </div>
+        </a>
+
+        <a href="https://www.instagram.com" target="_blank" class="contact-card">
+          <div class="contact-icon instagram">
+            <i class="fab fa-instagram"></i>
+          </div>
+          <div>
+            <h3>Instagram</h3>
+            <p>Ikuti update produk dan katalog terbaru</p>
+          </div>
+        </a>
+
+      </div>
+
+      <div class="custom-order-warning">
+        <i class="fas fa-screwdriver-wrench"></i>
+        <div>
+          <h3>Custom Gear & PC Build</h3>
+          <p>
+            Untuk pemesanan perangkat custom seperti PC rakitan, silakan datang langsung ke toko
+            fisik kami agar spesifikasi, budget, kompatibilitas komponen, dan kebutuhan penggunaan
+            dapat dibahas secara detail.
+          </p>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ============================================================ -->
+  <!-- BACK TO TOP                                                  -->
+  <!-- ============================================================ -->
+  <button class="back-to-top hidden" id="backToTop" aria-label="Back to top">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <!-- JS OTHER -->
+  <script src="../js/leviathan_store_other.js"></script>
+
+</body>
+</html>
