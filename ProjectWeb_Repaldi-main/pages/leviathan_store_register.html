@@ -85,40 +85,59 @@
           <!-- Name -->
           <div class="input-group">
             <span class="input-icon"><i class="fas fa-user"></i></span>
-            <input type="text" id="regName" placeholder="Hunter Codename" required autocomplete="name">
-            <span class="input-error" id="regNameError"></span>
+            <input type="text" id="registerName" placeholder="Hunter Codename" required autocomplete="name">
+            <span class="input-error" id="registerNameError"></span>
           </div>
 
           <!-- Email -->
           <div class="input-group">
             <span class="input-icon"><i class="fas fa-envelope"></i></span>
-            <input type="email" id="regEmail" placeholder="Hunter Email Address" required autocomplete="email">
-            <span class="input-error" id="regEmailError"></span>
+            <input type="email" id="registerEmail" placeholder="Hunter Email Address" required autocomplete="email">
+            <span class="input-error" id="registerEmailError"></span>
           </div>
 
           <!-- Password -->
           <div class="input-group">
             <span class="input-icon"><i class="fas fa-lock"></i></span>
-            <input type="password" id="regPassword" placeholder="Create Secret Code (min. 8 chars)" required autocomplete="new-password">
-            <button type="button" class="toggle-pw" onclick="togglePassword('regPassword', this)">
+            <input type="password" id="registerPassword" placeholder="Create Secret Code (min. 8 chars)" required autocomplete="new-password">
+            <button type="button" class="toggle-pw" onclick="togglePassword('registerPassword', this)">
               <i class="fas fa-eye"></i>
             </button>
             <div class="pw-strength-bar">
               <div class="pw-strength-fill" id="pwStrengthFill"></div>
             </div>
             <span class="pw-strength-label" id="pwStrengthLabel"></span>
-            <span class="input-error" id="regPasswordError"></span>
+            <span class="input-error" id="registerPasswordError"></span>
           </div>
 
-          <!-- Confirm Password -->
-          <div class="input-group">
-            <span class="input-icon"><i class="fas fa-shield-alt"></i></span>
-            <input type="password" id="regConfirm" placeholder="Confirm Secret Code" required autocomplete="new-password">
-            <button type="button" class="toggle-pw" onclick="togglePassword('regConfirm', this)">
-              <i class="fas fa-eye"></i>
-            </button>
-            <span class="input-error" id="regConfirmError"></span>
-          </div>
+<!-- Confirm Password -->
+<div class="input-group">
+  <span class="input-icon">
+    <i class="fas fa-shield-alt"></i>
+  </span>
+
+  <!-- EDIT HERE: Input konfirmasi password -->
+  <input 
+    type="password" 
+    id="registerConfirm" 
+    placeholder="Confirm Secret Code" 
+    required 
+    autocomplete="new-password"
+  >
+
+  <!-- FIX: Toggle password harus pakai ID yang sama dengan input -->
+  <!-- Fungsi: Menampilkan / menyembunyikan password -->
+  <button 
+    type="button" 
+    class="toggle-pw" 
+    onclick="togglePassword('registerConfirm', this)"
+  >
+    <i class="fas fa-eye"></i>
+  </button>
+
+  <!-- Error message -->
+  <span class="input-error" id="registerConfirmError"></span>
+</div>
 
           <!-- Terms -->
           <div class="terms-group">
@@ -164,22 +183,22 @@
     <a href="leviathan_store_other.html">Terms</a>
   </footer>
 
-  <!-- TOAST NOTIFICATION -->
+   <!-- TOAST NOTIFICATION -->
   <div class="toast" id="toastNotif">
     <span class="toast-icon"><i class="fas fa-info-circle"></i></span>
     <span class="toast-msg" id="toastMsg">Message</span>
   </div>
 
-  <!-- INLINE SCRIPT -->
+  <!-- REGISTER PAGE SCRIPT -->
   <script>
     (function() {
       'use strict';
 
-      // ---------- TOGGLE PASSWORD (global) ----------
       window.togglePassword = function(inputId, btn) {
         const input = document.getElementById(inputId);
         const icon = btn?.querySelector('i');
         if (!input || !icon) return;
+
         if (input.type === 'password') {
           input.type = 'text';
           icon.classList.replace('fa-eye', 'fa-eye-slash');
@@ -189,13 +208,14 @@
         }
       };
 
-      // ---------- TOAST ----------
       function showToast(msg, type = 'info') {
         const toast = document.getElementById('toastNotif');
         const toastMsg = document.getElementById('toastMsg');
         if (!toast || !toastMsg) return;
+
         toastMsg.textContent = msg;
         toast.className = 'toast show ' + type;
+
         const icon = toast.querySelector('.toast-icon i');
         if (icon) {
           icon.className = 'fas';
@@ -204,24 +224,39 @@
           else if (type === 'warning') icon.classList.add('fa-exclamation-triangle');
           else icon.classList.add('fa-info-circle');
         }
+
         setTimeout(() => toast.classList.remove('show'), 3000);
       }
 
-      // ---------- PASSWORD STRENGTH METER ----------
-      const pwdInput = document.getElementById('regPassword');
-      const fill = document.getElementById('pwStrengthFill');
-      const label = document.getElementById('pwStrengthLabel');
+      function saveUserSession(userData) {
+        sessionStorage.setItem('isLoggedIn', 'true');
+        sessionStorage.setItem('userEmail', userData.email);
+        sessionStorage.setItem('userName', userData.name);
+        sessionStorage.setItem('loginProvider', userData.provider || 'email');
+
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('userEmail', userData.email);
+        localStorage.setItem('userName', userData.name);
+        localStorage.setItem('lev_user', JSON.stringify(userData));
+      }
+
+      const pwdInput = document.getElementById('registerPassword');
+const fill = document.getElementById('pwStrengthFill');
+const label = document.getElementById('pwStrengthLabel');
+
       if (pwdInput && fill && label) {
         pwdInput.addEventListener('input', () => {
           const val = pwdInput.value;
           let strength = 0;
+
           if (val.length >= 8) strength++;
           if (/[a-z]/.test(val) && /[A-Z]/.test(val)) strength++;
           if (/\d/.test(val)) strength++;
           if (/[^a-zA-Z0-9]/.test(val)) strength++;
-          
+
           fill.className = 'pw-strength-fill';
           label.className = 'pw-strength-label';
+
           if (val.length === 0) {
             fill.style.width = '0%';
             label.textContent = '';
@@ -241,108 +276,119 @@
         });
       }
 
-      // ---------- FORM VALIDATION & SUBMIT ----------
       const form = document.getElementById('registerForm');
+
       if (form) {
         form.addEventListener('submit', function(e) {
           e.preventDefault();
 
-          // Ambil nilai
-          const name = document.getElementById('regName').value.trim();
-          const email = document.getElementById('regEmail').value.trim();
-          const pass = document.getElementById('regPassword').value;
-          const confirm = document.getElementById('regConfirm').value;
-          const agree = document.getElementById('agreeTerms').checked;
+const name = document.getElementById('registerName').value.trim();
+const email = document.getElementById('registerEmail').value.trim();
+const pass = document.getElementById('registerPassword').value;
+const confirm = document.getElementById('registerConfirm').value;
 
-          // Reset error messages
           document.querySelectorAll('.input-error').forEach(el => el.textContent = '');
 
           let valid = true;
+
           if (!name) {
-            document.getElementById('regNameError').textContent = 'Codename required';
+            document.getElementById('registerNameError').textContent = 'Codename required';
             valid = false;
           }
+
           if (!email) {
-            document.getElementById('regEmailError').textContent = 'Email required';
+            document.getElementById('registerEmailError').textContent = 'Email required';
             valid = false;
           } else if (!/^\S+@\S+\.\S+$/.test(email)) {
-            document.getElementById('regEmailError').textContent = 'Invalid email format';
+            document.getElementById('registerEmailError').textContent = 'Invalid email format';
             valid = false;
           }
+
           if (!pass) {
-            document.getElementById('regPasswordError').textContent = 'Secret Code required';
+            document.getElementById('registerPasswordError').textContent = 'Secret Code required';
             valid = false;
           } else if (pass.length < 8) {
-            document.getElementById('regPasswordError').textContent = 'Min. 8 characters';
+            document.getElementById('registerPasswordError').textContent = 'Min. 8 characters';
             valid = false;
           }
-          if (pass !== confirm) {
-            document.getElementById('regConfirmError').textContent = 'Codes do not match';
-            valid = false;
-          }
-          if (!agree) {
-            document.getElementById('termsError').textContent = 'You must accept the Code';
-            valid = false;
-          }
+
+          // Validasi confirm password
+if (pass !== confirm) {
+  document.getElementById('registerConfirmError').textContent = 'Codes do not match';
+  valid = false;
+}
+
+// Validasi checkbox terms
+const agree = document.getElementById('agreeTerms').checked;
+
+if (!agree) {
+  document.getElementById('termsError').textContent = 'You must accept the Code';
+  valid = false;
+}
 
           if (!valid) {
             showToast('❌ Please fix the errors above', 'error');
             return;
           }
 
-          // Cek duplikasi email
           const users = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
-          if (users.some(u => u.email.toLowerCase() === email.toLowerCase())) {
+
+          if (users.some(user => user.email.toLowerCase() === email.toLowerCase())) {
             showToast('❌ Email already registered', 'error');
             return;
           }
 
-          // Simpan user baru
           const newUser = {
-            name: name,
-            email: email,
+            name,
+            email,
             password: pass,
+            provider: 'email',
             registeredAt: new Date().toISOString()
           };
+
           users.push(newUser);
           localStorage.setItem('registeredUsers', JSON.stringify(users));
 
           showToast('✅ Registration successful! Redirecting...', 'success');
+
           setTimeout(() => {
             window.location.href = 'leviathan_store_login.html';
           }, 1500);
         });
       }
 
-      // ---------- GOOGLE REGISTER (SIMULASI) ----------
       const googleBtn = document.getElementById('googleRegisterBtn');
+
       if (googleBtn) {
         googleBtn.addEventListener('click', () => {
-          const dummyEmail = 'hunter@abyss.deep';
-          const dummyName = 'Abyss Hunter';
-          let users = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
-          if (!users.some(u => u.email === dummyEmail)) {
-            users.push({
-              name: dummyName,
-              email: dummyEmail,
-              password: 'google123',
-              registeredAt: new Date().toISOString()
-            });
+          const googleUser = {
+            name: 'Abyss Hunter',
+            email: 'hunter@abyss.deep',
+            password: 'google123',
+            picture: '../assets/leviathan_store.png',
+            provider: 'google-sim',
+            registeredAt: new Date().toISOString()
+          };
+
+          const users = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+
+          if (!users.some(user => user.email.toLowerCase() === googleUser.email.toLowerCase())) {
+            users.push(googleUser);
             localStorage.setItem('registeredUsers', JSON.stringify(users));
           }
-          showToast(`✅ Registered as ${dummyName}. Please login.`, 'success');
+
+          saveUserSession(googleUser);
+          showToast(`✅ Registered as ${googleUser.name}`, 'success');
           setTimeout(() => {
-            window.location.href = 'leviathan_store_login.html';
+            window.location.href = 'leviathan_store_home.html';
           }, 1500);
         });
       }
 
-      // Hide loading overlay
       const overlay = document.getElementById('loading-overlay');
       if (overlay) overlay.style.display = 'none';
-
-      console.log('✅ Register page ready');
     })();
   </script>
+
 </body>
 </html>

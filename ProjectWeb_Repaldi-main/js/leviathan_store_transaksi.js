@@ -32,7 +32,47 @@ document.addEventListener('DOMContentLoaded', () => {
   initStepButtons();
   initPrintButton();
   updateTotals();
+  initAuthDisplay();           // <-- fungsi baru untuk menampilkan avatar pengguna
 });
+
+/* ============================================================ */
+/* AUTH DISPLAY (PROFILE PILL DI HEADER)                        */
+/* ============================================================ */
+
+function initAuthDisplay() {
+  const container = document.getElementById('authContainer');
+  if (!container) return;
+
+  let user = null;
+  try {
+    user = JSON.parse(localStorage.getItem('lev_user') || 'null');
+  } catch {
+    user = null;
+  }
+
+  const isLoggedIn = user || localStorage.getItem('isLoggedIn') === 'true';
+  if (!isLoggedIn) return;
+
+  const displayName =
+    user?.name ||
+    localStorage.getItem('userName') ||
+    localStorage.getItem('userEmail')?.split('@')[0] ||
+    'Hunter';
+
+  const avatarUrl = user?.avatar || localStorage.getItem('userPicture') || '';
+  const initial = displayName.charAt(0).toUpperCase();
+
+  container.innerHTML = `
+    <a href="leviathan_store_user.html" title="Hunter Profile" style="display:flex; align-items:center; gap:6px; text-decoration:none; color:var(--monarch-blue);">
+      ${
+        avatarUrl
+          ? `<img src="${avatarUrl}" style="width:30px; height:30px; border-radius:50%; border:1px solid var(--monarch-blue); object-fit:cover;">`
+          : `<span style="width:30px; height:30px; background:var(--monarch-blue); color:#000; display:grid; place-items:center; border-radius:50%; font-weight:bold;">${initial}</span>`
+      }
+      <span style="font-family:var(--font-hud); font-size:0.7rem;">${displayName}</span>
+    </a>
+  `;
+}
 
 /* ============================================================ */
 /* STORAGE                                                      */
@@ -557,6 +597,7 @@ function generateOrderNumber() {
   return `LEV-${date}-${random}`;
 }
 
+
 function clearCartAfterOrder() {
   TRX.cart = [];
   saveCart();
@@ -598,6 +639,7 @@ function renderReceipt(order) {
   }
 
   setText('receiptPaymentInstruction', getPaymentInstruction(order));
+  renderQrisCode(order);
   updateWhatsappLink(order);
 }
 
@@ -615,6 +657,39 @@ function getPaymentInstruction(order) {
   }
 
   return `Bayar sebesar ${formatRupiah(order.total)} melalui ${order.paymentName}.`;
+}
+
+function renderQrisCode(order) {
+  const qrisBox = document.getElementById('qrisBox');
+  const qrisImage = document.getElementById('qrisImage');
+  const qrisText = document.getElementById('qrisText');
+
+  if (!qrisBox || !qrisImage) return;
+
+  if (order.paymentName !== 'QRIS') {
+    qrisBox.classList.add('hidden');
+    qrisImage.src = '';
+    return;
+  }
+
+  const qrisPayload = [
+    'LEVIATHAN STORE QRIS PAYMENT',
+    `Order: ${order.id}`,
+    `Name: ${order.buyer.name}`,
+    `Total: ${formatRupiah(order.total)}`,
+    `Payment: ${order.paymentName}`,
+    'Status: Waiting for payment'
+  ].join('\n');
+
+  qrisImage.src =
+    'https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=' +
+    encodeURIComponent(qrisPayload);
+
+  if (qrisText) {
+    qrisText.textContent = `Scan QRIS untuk membayar ${formatRupiah(order.total)}. Ini adalah QR simulasi untuk project tugas.`;
+  }
+
+  qrisBox.classList.remove('hidden');
 }
 
 function updateWhatsappLink(order) {

@@ -37,23 +37,27 @@
       <span class="mini-step" data-step-mini="receipt">RECEIPT</span>
     </div>
 
-    <nav class="trx-tools">
-      <a href="leviathan_store_home.html" title="Home">
-        <i class="fas fa-home"></i>
-      </a>
+<nav class="trx-tools">
+  <!-- Container profil pengguna akan diisi oleh JS -->
+  <div id="authContainer" style="display:flex; align-items:center; gap:6px;"></div>
 
-      <a href="leviathan_store_market.html" title="Market">
-        <i class="fas fa-store"></i>
-      </a>
+  <a href="leviathan_store_home.html" title="Home">
+    <i class="fas fa-home"></i>
+  </a>
 
-      <a href="leviathan_store_user.html#wishlist" title="Wishlist">
-        <i class="fas fa-heart"></i>
-      </a>
+  <a href="leviathan_store_market.html" title="Market">
+    <i class="fas fa-store"></i>
+  </a>
 
-      <a href="leviathan_store_user.html" title="User">
-        <i class="fas fa-user"></i>
-      </a>
-    </nav>
+  <a href="leviathan_store_user.html#wishlist" title="Wishlist">
+    <i class="fas fa-heart"></i>
+  </a>
+
+  <a href="leviathan_store_user.html" title="User">
+    <i class="fas fa-user"></i>
+  </a>
+</nav>
+
   </header>
 
   <main class="trx-main">
@@ -555,6 +559,20 @@
           <p class="payment-instruction" id="receiptPaymentInstruction">
             Instruksi pembayaran akan muncul di sini.
           </p>
+
+          <!-- QRIS PAYMENT QR CODE -->
+          <div class="qris-box hidden" id="qrisBox">
+            <div class="qris-head">
+              <i class="fas fa-qrcode"></i>
+              <span>QRIS PAYMENT CODE</span>
+            </div>
+
+            <img id="qrisImage" src="" alt="QRIS Payment Code">
+
+            <p id="qrisText">
+              Scan kode QR ini menggunakan aplikasi pembayaran yang mendukung QRIS.
+            </p>
+          </div>
         </section>
 
         <div class="receipt-bottom">

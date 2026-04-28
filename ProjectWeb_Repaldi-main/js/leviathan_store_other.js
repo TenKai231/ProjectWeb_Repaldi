@@ -299,10 +299,14 @@ function initAuthDisplay() {
     'Hunter';
 
   const initial = displayName.charAt(0).toUpperCase();
+  const avatarUrl = user?.avatar || localStorage.getItem('userPicture') || '';
 
   container.innerHTML = `
     <button class="user-profile-pill" id="profilePill" type="button" title="Hunter Profile">
-      <span class="user-initial">${initial}</span>
+      ${avatarUrl ? 
+        `<img src="${avatarUrl}" class="user-avatar-img" alt="Avatar">` :
+        `<span class="user-initial">${initial}</span>`
+      }
       <span class="user-name">${displayName}</span>
     </button>
   `;

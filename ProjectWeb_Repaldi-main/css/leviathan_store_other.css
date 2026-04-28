@@ -114,6 +114,15 @@ button {
   100% { top: 102%; }
 }
 
+/* User Avatar */
+.user-avatar-img {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--monarch-blue);
+}
+
 /* ============================================================ */
 /* HEADER — HOME STYLE                                           */
 /* ============================================================ */
@@ -367,6 +376,55 @@ header#otherHeader.header-hidden {
   font-weight: 700;
   border-radius: 50%;
   box-shadow: 0 0 8px rgba(255, 51, 51, 0.6);
+}
+
+/* ============================================================ */
+/* AUTH PROFILE PILL                                             */
+/* Muncul saat user sudah login                                  */
+/* ============================================================ */
+
+.user-profile-pill {
+  height: 38px;
+  max-width: 170px;
+  padding: 0 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--monarch-blue);
+  background: rgba(0, 229, 255, 0.045);
+  border: 1px solid var(--system-blue);
+  transition: var(--transition-normal);
+}
+
+.user-profile-pill:hover {
+  color: #ffffff;
+  border-color: var(--monarch-blue);
+  background: rgba(0, 229, 255, 0.08);
+  box-shadow: 0 0 12px var(--mana-glow);
+}
+
+.user-initial {
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  color: #000000;
+  background: var(--monarch-blue);
+  border-radius: 50%;
+  font-family: var(--font-hud);
+  font-size: 0.65rem;
+  font-weight: 700;
+}
+
+.user-name {
+  max-width: 105px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-family: var(--font-hud);
+  font-size: 0.58rem;
+  letter-spacing: 1.2px;
 }
 
 /* ============================================================ */
@@ -1557,8 +1615,24 @@ header#otherHeader.header-hidden {
 }
 
 @media (max-width: 480px) {
-  .user-tools a[title="Notifications"] {
+  .user-tools [title="Notifications"] {
     display: none;
+  }
+
+  .user-profile-pill {
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    justify-content: center;
+  }
+
+  .user-name {
+    display: none;
+  }
+
+  .user-initial {
+    width: 24px;
+    height: 24px;
   }
 
   .o-title {

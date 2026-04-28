@@ -195,6 +195,7 @@ function clearAllFilters() {
 }
 
 document.getElementById('clearAllFilters')?.addEventListener('click', clearAllFilters);
+document.getElementById('clearAllFiltersBottom')?.addEventListener('click', clearAllFilters);
 
 /* ─── SEARCH ────────────────────────────────────────────────── */
 const searchInput = document.getElementById('marketSearch');
@@ -242,17 +243,18 @@ function updateDepthGauge() {
       color = 'var(--sovereign-color)';
     }
 
-    fill.style.background = color;
-  }
+  fill.style.backgroundColor = color;
+  fill.style.boxShadow = `0 0 10px ${color}`;
+}
 
   if (value) value.textContent = `${depth.toLocaleString('id-ID')}m`;
   if (bc) bc.textContent = `— ${depth.toLocaleString('id-ID')}m`;
 
   const labels = [
     { id: 'dgNereid', depth: 0 },
-    { id: 'dgPoseidon', depth: 2000 },
-    { id: 'dgLeviathan', depth: 5500 },
-    { id: 'dgSovereign', depth: 9000 }
+    { id: 'dgPoseidon', depth: 2020 },
+    { id: 'dgLeviathan', depth: 5300 },
+    { id: 'dgSovereign', depth: 8300 }
   ];
 
   let active = labels[0];
@@ -269,6 +271,7 @@ function updateDepthGauge() {
 /* ─── AUTO HIDE HEADER + FILTER BAR ─────────────────────────── */
 const header = document.getElementById('marketHeader');
 const filterBar = document.getElementById('filterBar');
+const breadcrumbs = document.getElementById('breadcrumbs');
 
 let lastScrollY = window.scrollY;
 const scrollThreshold = 8;
@@ -279,11 +282,14 @@ function handleHeaderAndFilterVisibility() {
 
   if (Math.abs(scrollDiff) < scrollThreshold) return;
 
-  /* Selalu tampil di atas halaman */
+  /* Saat di paling atas halaman: semua kembali normal */
   if (currentScrollY <= 10) {
     header?.classList.remove('header-hidden');
+
+    breadcrumbs?.classList.remove('header-hidden-state');
+
     filterBar?.classList.remove('filter-hidden');
-    filterBar?.classList.remove('header-hidden-state');
+
     lastScrollY = currentScrollY;
     return;
   }
@@ -291,14 +297,22 @@ function handleHeaderAndFilterVisibility() {
   const isScrollingDown = scrollDiff > 0;
   const isScrollingUp = scrollDiff < 0;
 
+  /* Scroll down: header hilang, filter hilang, breadcrumbs naik ke atas */
   if (isScrollingDown && currentScrollY > 120) {
     header?.classList.add('header-hidden');
+
+    breadcrumbs?.classList.add('header-hidden-state');
+
     filterBar?.classList.add('filter-hidden');
-    filterBar?.classList.add('header-hidden-state');
-  } else if (isScrollingUp) {
+  }
+
+  /* Scroll up: header muncul, filter muncul, breadcrumbs turun lagi */
+  if (isScrollingUp) {
     header?.classList.remove('header-hidden');
+
+    breadcrumbs?.classList.remove('header-hidden-state');
+
     filterBar?.classList.remove('filter-hidden');
-    filterBar?.classList.remove('header-hidden-state');
   }
 
   lastScrollY = currentScrollY;
@@ -335,24 +349,30 @@ abyssToggle?.addEventListener('click', async () => {
   try {
     const user = JSON.parse(localStorage.getItem('lev_user') || 'null');
     const container = document.getElementById('authContainer');
+    if (!container) return;
 
-    if (user && container) {
+    const isLoggedIn = user || localStorage.getItem('isLoggedIn') === 'true';
+    const userName = user?.name || localStorage.getItem('userName') || sessionStorage.getItem('userName');
+    const userEmail = user?.email || localStorage.getItem('userEmail') || sessionStorage.getItem('userEmail');
+    const userAvatar = user?.avatar || localStorage.getItem('userPicture') || '';
+
+    if (isLoggedIn && userEmail) {
+      const displayName = userName || userEmail.split('@')[0];
+      const initial = displayName.charAt(0).toUpperCase();
+
       container.innerHTML = `
-        <span class="tool-btn" style="cursor:default;font-size:0.7rem;opacity:0.8">
-          ${user.name || 'Hunter'}
-        </span>
-        <button
-          class="tool-btn"
-          title="Logout"
-          onclick="localStorage.removeItem('lev_user'); location.reload();"
-        >
+        <a href="leviathan_store_user.html" class="tool-btn" title="Hunter Profile" style="width:auto; padding:0 8px;">
+          ${userAvatar ? 
+            `<img src="${userAvatar}" class="user-avatar-img" alt="Avatar" style="width:30px;height:30px;border-radius:50%;border:1px solid var(--monarch-blue);object-fit:cover;">` :
+            `<span class="user-initial" style="width:30px;height:30px;display:grid;place-items:center;background:var(--monarch-blue);color:#000;border-radius:50%;font-weight:700;">${initial}</span>`
+          }
+          <span style="margin-left:6px;font-family:var(--font-hud);font-size:0.7rem;">${displayName}</span>
+        </a>
+        <button class="tool-btn" title="Logout" onclick="localStorage.clear();sessionStorage.clear();location.reload();">
           <i class="fas fa-sign-out-alt"></i>
-        </button>
-      `;
+        </button>`;
     }
-  } catch (e) {
-    console.warn('Auth check failed:', e);
-  }
+  } catch (e) {}
 })();
 
 /* ─── WISHLIST ──────────────────────────────────────────────── */
@@ -438,5 +458,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   header?.classList.remove('header-hidden');
   filterBar?.classList.remove('filter-hidden');
-  filterBar?.classList.remove('header-hidden-state');
+  breadcrumbs?.classList.remove('header-hidden-state');
 });
+

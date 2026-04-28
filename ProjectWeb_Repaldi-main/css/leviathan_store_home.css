@@ -362,6 +362,18 @@ header.scrolled {
 .suggestion-item-kasta.sovereign { color: var(--sovereign-color); }
 
 /* ============================================================ */
+/* SECTION 5: USER AVATAR                                       */
+/* ============================================================ */
+.user-avatar-img {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--monarch-blue);
+  flex-shrink: 0;
+}
+
+/* ============================================================ */
 /* SECTION 6: USER TOOLS                                        */
 /* ============================================================ */
 
@@ -1710,15 +1722,20 @@ header.scrolled {
   margin-top: 2px;
   font-size: 0.82rem;
   flex-shrink: 0;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
 }
 
 .footer-contact-list li a {
   color: var(--text-gray);
   text-decoration: none;
-  transition: color var(--transition-fast);
+  transition: color 0.3s ease, text-shadow 0.3s ease;
 }
 
-.footer-contact-list li a:hover { color: var(--monarch-blue); }
+.footer-contact-list li:hover i,
+.footer-contact-list li:hover a {
+  color: var(--monarch-blue);
+  text-shadow: 0 0 8px var(--monarch-blue);
+}
 
 /* Payment icons */
 .payment-icons { margin-top: 4px; }

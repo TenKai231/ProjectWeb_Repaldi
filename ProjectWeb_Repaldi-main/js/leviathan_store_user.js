@@ -27,17 +27,202 @@ const USER_STATE = {
   ],
 };
 
+function guardUserPage() {
+  const user = localStorage.getItem('lev_user');
+  const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+
+  if (!user && !isLoggedIn) {
+    window.location.href = 'leviathan_store_login.html';
+  }
+}
+
+/* ============================================================ */
+/* ORDERS FROM TRANSACTION PAGE                                 */
+/* Membaca riwayat pesanan dari localStorage key: lev_orders     */
+/* ============================================================ */
+
+function getUserOrders() {
+  try {
+    return JSON.parse(localStorage.getItem('lev_orders') || '[]');
+  } catch {
+    return [];
+  }
+}
+
+function formatOrderPrice(value) {
+  return new Intl.NumberFormat('id-ID', {
+    style: 'currency',
+    currency: 'IDR',
+    maximumFractionDigits: 0
+  }).format(Number(value || 0));
+}
+
+function safeOrderText(text) {
+  return String(text || '')
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#039;');
+}
+
+function getOrderStatusIcon(status) {
+  const cleanStatus = String(status || '').toLowerCase();
+
+  if (cleanStatus.includes('delivered')) return 'fa-circle-check';
+  if (cleanStatus.includes('shipped')) return 'fa-truck-fast';
+  if (cleanStatus.includes('processing')) return 'fa-gear';
+
+  return 'fa-clock';
+}
+
+function getOrderStatusClass(status) {
+  const cleanStatus = String(status || 'processing').toLowerCase();
+
+  if (cleanStatus.includes('delivered')) return 'delivered';
+  if (cleanStatus.includes('shipped')) return 'shipped';
+  if (cleanStatus.includes('processing')) return 'processing';
+
+  return 'processing';
+}
+
+function renderUserOrders() {
+  const ordersList = document.getElementById('ordersList');
+  if (!ordersList) return;
+
+  const orders = getUserOrders();
+
+  if (!orders.length) {
+    ordersList.innerHTML = `
+      <article class="order-card">
+        <div class="order-top">
+          <div>
+            <span class="order-id">NO CONTRACT FOUND</span>
+            <h3>Belum Ada Pesanan</h3>
+            <p>Pesanan yang dibuat dari halaman transaksi akan muncul di sini.</p>
+          </div>
+
+          <span class="order-status processing">
+            <i class="fas fa-clock"></i>
+            Empty
+          </span>
+        </div>
+
+        <div class="order-bottom">
+          <strong>Total: Rp 0</strong>
+          <a href="leviathan_store_market.html" class="btn-user-ghost small">
+            <span>BELANJA</span>
+            <i class="fas fa-store"></i>
+          </a>
+        </div>
+      </article>
+    `;
+    return;
+  }
+
+  ordersList.innerHTML = orders.map(order => {
+    const items = Array.isArray(order.items) ? order.items : [];
+    const firstItem = items[0]?.name || 'Unknown Product';
+    const itemCount = items.reduce((sum, item) => sum + Number(item.qty || 1), 0);
+    const status = order.status || 'Processing';
+    const statusClass = getOrderStatusClass(status);
+    const statusIcon = getOrderStatusIcon(status);
+
+    return `
+      <article class="order-card">
+        <div class="order-top">
+          <div>
+            <span class="order-id">ORDER #${safeOrderText(order.id)}</span>
+            <h3>${safeOrderText(firstItem)}</h3>
+            <p>${safeOrderText(order.dateText || '-')} • ${itemCount} item</p>
+          </div>
+
+          <span class="order-status ${statusClass}">
+            <i class="fas ${statusIcon}"></i>
+            ${safeOrderText(status)}
+          </span>
+        </div>
+
+        <div class="order-timeline">
+          <div class="timeline-step done">
+            <span></span>
+            <p>Pending</p>
+          </div>
+
+          <div class="timeline-step active">
+            <span></span>
+            <p>Processing</p>
+          </div>
+
+          <div class="timeline-step">
+            <span></span>
+            <p>Shipped</p>
+          </div>
+
+          <div class="timeline-step">
+            <span></span>
+            <p>Delivered</p>
+          </div>
+        </div>
+
+        <div class="order-bottom">
+          <strong>Total: ${formatOrderPrice(order.total)}</strong>
+
+          <button class="btn-user-ghost small" type="button" onclick="showOrderDetail('${safeOrderText(order.id)}')">
+            <span>DETAIL</span>
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+      </article>
+    `;
+  }).join('');
+}
+
+function showOrderDetail(orderId) {
+  const orders = getUserOrders();
+  const order = orders.find(item => item.id === orderId);
+
+  if (!order) {
+    showToast('Order tidak ditemukan.');
+    return;
+  }
+
+  const items = Array.isArray(order.items)
+    ? order.items.map(item => `• ${item.name} × ${item.qty}`).join('\n')
+    : '-';
+
+  alert(
+`DETAIL PESANAN LEVIATHAN STORE
+
+No Pesanan: ${order.id}
+Tanggal: ${order.dateText}
+Status: ${order.status}
+Pembayaran: ${order.paymentName}
+Pengiriman: ${order.shippingName}
+
+Item:
+${items}
+
+Total: ${formatOrderPrice(order.total)}`
+  );
+}
+
 /* ============================================================ */
 /* INIT                                                         */
 /* ============================================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
+  guardUserPage();
+
   initHeaderScroll();
   initSidebarScrollSpy();
   initSearchTerminal();
   initCartBadge();
   initProfileData();
   initAvatarUpload();
+
+renderUserOrders();
+
   initProfileForm();
   initAddressData();
   initAddressForm();
@@ -726,17 +911,27 @@ function initLogoutModal() {
     el.addEventListener('click', closeModal);
   });
 
-  confirmBtn.addEventListener('click', () => {
-    localStorage.removeItem('isLoggedIn');
-    localStorage.removeItem('userEmail');
-    localStorage.removeItem('userName');
+confirmBtn.addEventListener('click', () => {
+  // Menghapus data login utama
+  localStorage.removeItem('lev_user');
 
-    showToast('Exit protocol activated.');
+  // Menghapus data login cadangan / legacy
+  localStorage.removeItem('isLoggedIn');
+  localStorage.removeItem('userEmail');
+  localStorage.removeItem('userName');
+  localStorage.removeItem('userPhone');
+  localStorage.removeItem('userPicture');
+  localStorage.removeItem('loginProvider');
 
-    setTimeout(() => {
-      window.location.href = 'leviathan_store_login.html';
-    }, 650);
-  });
+  // Menghapus session aktif di tab browser
+  sessionStorage.clear();
+
+  showToast('Exit protocol activated.');
+
+  setTimeout(() => {
+    window.location.href = 'leviathan_store_login.html';
+  }, 650);
+});
 
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape' && !modal.classList.contains('hidden')) {

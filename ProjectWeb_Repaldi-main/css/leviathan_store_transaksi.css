@@ -1253,6 +1253,46 @@ img {
   border-left: 3px solid #00a6c2;
 }
 
+/* ============================================================ */
+/* QRIS PAYMENT BOX                                             */
+/* ============================================================ */
+
+.qris-box {
+  margin-top: 14px;
+  padding: 16px;
+  text-align: center;
+  background: rgba(0, 229, 255, 0.06);
+  border: 1px dashed #00a6c2;
+}
+
+.qris-head {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  color: #0056b3;
+  font-family: var(--font-hud);
+  font-size: 0.58rem;
+  letter-spacing: 2px;
+}
+
+.qris-box img {
+  width: 180px;
+  height: 180px;
+  margin: 0 auto;
+  padding: 10px;
+  background: #ffffff;
+  border: 1px solid #dce8ef;
+  object-fit: contain;
+}
+
+.qris-box p {
+  margin-top: 10px;
+  color: #34434d !important;
+  font-size: 0.78rem;
+}
+
 .receipt-bottom {
   display: flex;
   align-items: center;
